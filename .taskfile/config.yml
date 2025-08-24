@@ -1,0 +1,124 @@
+version: '3'
+
+tasks:
+  # Module Management
+  enable-modules:
+    desc: Enable essential Dolibarr modules for full functionality
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task services:start"
+    cmds:
+      - echo "Enabling essential Dolibarr modules..."
+      - |
+        # Enable modules directly in database
+        docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
+        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES 
+        ('MAIN_MODULE_SOCIETE', '1', 'chaine', 0, 'To enable module Third parties', 1),
+        ('MAIN_MODULE_FACTURE', '1', 'chaine', 0, 'To enable module Invoices', 1),
+        ('MAIN_MODULE_COMMANDE', '1', 'chaine', 0, 'To enable module Orders', 1),
+        ('MAIN_MODULE_PROPAL', '1', 'chaine', 0, 'To enable module Proposals', 1),
+        ('MAIN_MODULE_PRODUCT', '1', 'chaine', 0, 'To enable module Products/Services', 1),
+        ('MAIN_MODULE_STOCK', '1', 'chaine', 0, 'To enable module Stock', 1),
+        ('MAIN_MODULE_PROJET', '1', 'chaine', 0, 'To enable module Projects', 1),
+        ('MAIN_MODULE_ACTIONCOMM', '1', 'chaine', 0, 'To enable module Events/Agenda', 1),
+        ('MAIN_MODULE_CATEGORIE', '1', 'chaine', 0, 'To enable module Categories', 1)
+        ON DUPLICATE KEY UPDATE value='1';
+        "
+      - echo "Essential modules enabled successfully"
+
+  enable-api:
+    desc: Enable REST API module and configure API access
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task services:start"
+    cmds:
+      - echo "Enabling REST API module..."
+      - |
+        # Enable API module directly in database
+        docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
+        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES 
+        ('MAIN_MODULE_API', '1', 'chaine', 0, 'To enable module API', 1)
+        ON DUPLICATE KEY UPDATE value='1';
+        "
+      - echo "API enabled. Generate API keys via Users & Groups > Users > Edit User > API Keys"
+      - echo "API Documentation available at http://localhost:18080/api/index.php/explorer"
+
+  list-modules:
+    desc: List all available and enabled modules
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task services:start"
+    cmds:
+      - echo "Listing Dolibarr modules..."
+      - |
+        docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
+        SELECT 
+          SUBSTRING(name, 13) as 'Module',
+          CASE 
+            WHEN value = '1' THEN 'Enabled'
+            WHEN value = '0' THEN 'Disabled'
+            ELSE value
+          END as 'Status'
+        FROM llx_const 
+        WHERE name LIKE 'MAIN_MODULE_%' 
+        ORDER BY name;"
+
+  # Configuration Management  
+  configure-company:
+    desc: Configure company information and settings
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task services:start"
+    cmds:
+      - echo "Configuring company information..."
+      - |
+        # Configure company information directly in database
+        docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
+        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES 
+        ('MAIN_INFO_SOCIETE_NOM', 'Demo Company Inc.', 'chaine', 0, 'Company name', 1),
+        ('MAIN_INFO_SOCIETE_MAIL', 'contact@demo-company.com', 'chaine', 0, 'Company email', 1),
+        ('MAIN_MONNAIE', 'EUR', 'chaine', 0, 'Currency', 1)
+        ON DUPLICATE KEY UPDATE 
+        value = VALUES(value);
+        "
+      - echo "Company information configured successfully"
+
+  # Complete Setup
+  setup-dev-environment:
+    desc: Complete development environment setup
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task services:start"
+    cmds:
+      - echo "Setting up development environment..."
+      - task: enable-modules
+      - task: enable-api
+      - task: configure-company
+      - echo "Development environment setup completed!"
+      - echo "Dolibarr http://localhost:18080"
+      - echo "API Explorer http://localhost:18080/api/index.php/explorer"
+
+  # Status and validation
+  show-config:
+    desc: Display current Dolibarr configuration status
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task services:start"
+    cmds:
+      - echo "Current Dolibarr Configuration Status"
+      - echo ""
+      - echo "Enabled Modules"
+      - |
+        docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
+        SELECT SUBSTRING(name, 13) as 'Module'
+        FROM llx_const 
+        WHERE name LIKE 'MAIN_MODULE_%' AND value = '1' 
+        ORDER BY name;" 2>/dev/null || echo "Error accessing database"
+      - echo ""
+      - echo "Company Information"
+      - |
+        docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
+        SELECT name as 'Setting', value as 'Value'
+        FROM llx_const 
+        WHERE name IN ('MAIN_INFO_SOCIETE_NOM', 'MAIN_INFO_SOCIETE_MAIL', 'MAIN_MONNAIE')
+        ORDER BY name;" 2>/dev/null || echo "Error accessing database"

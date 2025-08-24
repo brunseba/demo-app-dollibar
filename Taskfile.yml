@@ -6,6 +6,8 @@ includes:
     taskfile: .taskfile/setup.yml
   services:
     taskfile: .taskfile/services.yml
+  config:
+    taskfile: .taskfile/config.yml
   backup:
     taskfile: .taskfile/backup.yml
   maintenance:
