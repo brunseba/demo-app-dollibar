@@ -1,0 +1,46 @@
+version: '3'
+
+tasks:
+  start:
+    desc: Start Dolibarr with internal database
+    cmds:
+      - docker-compose --profile internal-db up -d
+      - echo "✅ Dolibarr started with internal database"
+
+  start-with-tools:
+    desc: Start Dolibarr with internal database and phpMyAdmin
+    cmds:
+      - docker-compose --profile internal-db --profile internal-db-tools up -d
+      - echo "✅ Dolibarr started with internal database and phpMyAdmin"
+
+  start-external:
+    desc: Start Dolibarr with external database
+    cmds:
+      - docker-compose --profile external-db up -d
+      - echo "✅ Dolibarr started with external database"
+
+  stop:
+    desc: Stop all Dolibarr services
+    cmds:
+      - docker-compose down
+      - echo "✅ Dolibarr services stopped"
+
+  status:
+    desc: Show status of all services
+    cmds:
+      - docker-compose ps
+
+  logs:
+    desc: Show logs from all services
+    cmds:
+      - docker-compose logs -f
+
+  logs-app:
+    desc: Show Dolibarr application logs
+    cmds:
+      - docker-compose logs -f dolibarr
+
+  logs-db:
+    desc: Show database logs
+    cmds:
+      - docker-compose logs -f dolibarr-db

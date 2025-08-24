@@ -1,0 +1,9 @@
+version: '3'
+
+tasks:
+  init:
+    desc: Initialize Dolibarr setup (create directories and set permissions)
+    cmds:
+      - mkdir -p custom logs db-init {{.BACKUP_DIR}}
+      - chmod 755 custom logs db-init {{.BACKUP_DIR}}
+      - echo "✅ Dolibarr directories initialized"

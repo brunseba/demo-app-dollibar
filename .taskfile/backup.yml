@@ -1,0 +1,30 @@
+version: '3'
+
+tasks:
+  backup:
+    desc: Create complete backup (database + application data)
+    deps: [backup-db, backup-app]
+    cmds:
+      - echo "✅ Complete backup created in {{.BACKUP_DIR}}/{{.TIMESTAMP}}"
+
+  backup-db:
+    desc: Create database backup
+    preconditions:
+      - sh: docker-compose ps dolibarr-db | grep -q "Up"
+        msg: "Database container is not running. Start with: task start"
+    cmds:
+      - mkdir -p {{.BACKUP_DIR}}/{{.TIMESTAMP}}
+      - docker-compose exec -T dolibarr-db mysqldump -u root -p$DB_ROOT_PASSWORD --single-transaction --routines --triggers dolibarr | gzip > {{.BACKUP_DIR}}/{{.TIMESTAMP}}/database_{{.TIMESTAMP}}.sql.gz
+      - echo "✅ Database backup created"
+
+  backup-app:
+    desc: Create application data backup (documents, custom modules)
+    cmds:
+      - mkdir -p {{.BACKUP_DIR}}/{{.TIMESTAMP}}
+      - docker run --rm -v dolibarr_dolibarr-documents:/source/documents:ro -v dolibarr_dolibarr-html:/source/html:ro -v $(pwd)/custom:/source/custom:ro -v $(pwd)/{{.BACKUP_DIR}}/{{.TIMESTAMP}}:/backup alpine:latest sh -c 'cd /backup && tar -czf app_data_{{.TIMESTAMP}}.tar.gz -C /source documents html custom'
+      - echo "✅ Application backup created"
+
+  list-backups:
+    desc: List available backups
+    cmds:
+      - 'if [ -d "{{.BACKUP_DIR}}" ]; then echo "📁 Available backups:"; ls -la {{.BACKUP_DIR}}/; else echo "No backups directory found. Run ''task backup'' to create first backup."; fi'

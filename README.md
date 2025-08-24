@@ -190,10 +190,10 @@ Once your services are running, you can access the following tools:
 - **Command**: `task --list` (shows all available tasks)
 - **Examples**:
   ```bash
-  task health                  # Check all services
-  task logs-app               # View Dolibarr logs
-  task backup                 # Create full backup
-  task shell-app              # Open shell in Dolibarr container
+  task utilities:health        # Check all services
+  task services:logs-app       # View Dolibarr logs
+  task backup:backup           # Create full backup
+  task utilities:shell-app     # Open shell in Dolibarr container
   ```
 
 ### Custom Port Configuration
@@ -385,7 +385,7 @@ stateDiagram-v2
 
 ## Task Automation
 
-This project includes a `Taskfile.yml` for common operations. Install [Task](https://taskfile.dev/) to use these commands:
+This project includes organized Taskfiles for common operations. Install [Task](https://taskfile.dev/) to use these commands:
 
 ```bash
 # Install Task (macOS)
@@ -393,17 +393,84 @@ brew install go-task/tap/go-task
 
 # Show all available tasks
 task
+```
 
-# Common operations
-task start                    # Start with internal database
-task start-with-tools        # Start with internal database + phpMyAdmin
-task start-external          # Start with external database
-task stop                    # Stop all services
-task backup                  # Create complete backup
-task restore-db BACKUP_FILE=path/to/backup.sql.gz
-task restore-app BACKUP_FILE=path/to/backup.tar.gz
-task reset-data              # Reset all data (DANGEROUS)
-task health                  # Check service health
+### Task Organization
+
+Tasks are organized into separate files in the `.taskfile/` directory for better maintainability:
+
+```
+.taskfile/
+├── setup.yml        # Initialization and setup tasks
+├── services.yml     # Service management (start/stop/status/logs)
+├── backup.yml       # Backup and restore operations
+├── maintenance.yml  # Cleanup and maintenance tasks
+└── utilities.yml    # Utility functions (shell, health checks)
+```
+
+### Available Task Categories
+
+#### 🚀 Setup & Initialization
+```bash
+task setup:init               # Initialize Dolibarr directories and permissions
+```
+
+#### ⚙️ Service Management
+```bash
+task services:start           # Start with internal database
+task services:start-with-tools # Start with internal database + phpMyAdmin
+task services:start-external  # Start with external database
+task services:stop            # Stop all services
+task services:status          # Show service status
+task services:logs            # Show logs from all services
+task services:logs-app        # Show Dolibarr application logs
+task services:logs-db         # Show database logs
+```
+
+#### 💾 Backup & Restore
+```bash
+task backup:backup            # Create complete backup (database + app data)
+task backup:backup-db         # Create database backup only
+task backup:backup-app        # Create application data backup only
+task backup:list-backups      # List available backups
+# Note: Restore tasks require BACKUP_FILE parameter:
+# task backup:restore-db BACKUP_FILE=path/to/backup.sql.gz
+# task backup:restore-app BACKUP_FILE=path/to/backup.tar.gz
+```
+
+#### 🧹 Maintenance
+```bash
+task maintenance:cleanup      # Clean up Docker resources
+task maintenance:update       # Update containers to latest versions
+task maintenance:reset-data   # Reset all data (DANGEROUS)
+task maintenance:reset-logs   # Clear application logs
+task maintenance:reset-custom # Clear custom modules
+```
+
+#### 🔧 Utilities
+```bash
+task utilities:health         # Check health of all services
+task utilities:shell-app      # Open shell in Dolibarr container
+task utilities:shell-db       # Open MySQL shell in database container
+task utilities:permissions    # Fix file permissions for Dolibarr
+```
+
+### Quick Start with Tasks
+```bash
+# 1. Initialize the environment
+task setup:init
+
+# 2. Start services
+task services:start-with-tools
+
+# 3. Check health
+task utilities:health
+
+# 4. View logs if needed
+task services:logs-app
+
+# 5. Create backup when ready
+task backup:backup
 ```
 
 **Requirements for External Database:**
@@ -526,7 +593,13 @@ docker-compose up -d
 ```
 .
 ├── docker-compose.yml      # Main compose configuration with profiles
-├── Taskfile.yml           # Task automation for common operations
+├── Taskfile.yml           # Main task configuration with includes
+├── .taskfile/             # Organized task files
+│   ├── setup.yml         # Initialization and setup tasks
+│   ├── services.yml      # Service management tasks
+│   ├── backup.yml        # Backup and restore operations
+│   ├── maintenance.yml   # Cleanup and maintenance tasks
+│   └── utilities.yml     # Utility functions and health checks
 ├── .env.example           # Environment variables template
 ├── .env                    # Environment variables (created from .env.example)
 ├── .gitignore             # Git ignore patterns

@@ -1,0 +1,40 @@
+version: '3'
+
+tasks:
+  shell-app:
+    desc: Open shell in Dolibarr application container
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task start"
+    cmds:
+      - docker-compose exec dolibarr bash
+
+  shell-db:
+    desc: Open MySQL shell in database container
+    preconditions:
+      - sh: docker-compose ps dolibarr-db | grep -q "Up"
+        msg: "Database container is not running. Start with: task start"
+    cmds:
+      - docker-compose exec dolibarr-db mysql -u root -p$DB_ROOT_PASSWORD dolibarr
+
+  permissions:
+    desc: Fix file permissions for Dolibarr
+    preconditions:
+      - sh: docker-compose ps dolibarr | grep -q "Up"
+        msg: "Dolibarr container is not running. Start with: task start"
+    cmds:
+      - docker-compose exec dolibarr chown -R www-data:www-data /var/www/html
+      - docker-compose exec dolibarr chown -R www-data:www-data /var/www/documents
+      - echo "✅ File permissions fixed"
+
+  health:
+    desc: Check health of all services
+    cmds:
+      - echo "🔍 Checking service health..."
+      - docker-compose ps
+      - echo ""
+      - echo "🌐 Testing web access..."
+      - |
+        curl -s -o /dev/null -w "Dolibarr web interface: %{http_code}\n" http://localhost:${DOLIBARR_PORT:-8080} || echo "Dolibarr web interface: unreachable"
+      - |
+        curl -s -o /dev/null -w "phpMyAdmin: %{http_code}\n" http://localhost:${PHPMYADMIN_PORT:-8081} || echo "phpMyAdmin: not available"

@@ -1,0 +1,87 @@
+site_name: Dolibarr Database Analysis
+site_description: Comprehensive analysis of Dolibarr ERP/CRM database structure with entity-relationship diagrams
+site_author: Database Analysis Team
+site_url: https://brun-s.github.io/dollibar/
+
+# Repository
+repo_name: brun_s/dollibar
+repo_url: https://github.com/brun_s/dollibar
+
+# Theme configuration
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.annotate
+    - content.code.copy
+
+# Navigation
+nav:
+  - Home: index.md
+  - Database Model: database-model.md
+  - Modules Status: modules-status.md
+
+# Markdown extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+
+# Plugins
+plugins:
+  - search
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - mermaid2
+
+# Extra
+extra:
+  version:
+    provider: mike
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/brun_s/dollibar
+
+# PDF export support
+extra_css:
+  - stylesheets/extra.css
+
+# Mermaid support
+extra_javascript:
+  - https://unpkg.com/mermaid/dist/mermaid.min.js

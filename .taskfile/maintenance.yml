@@ -1,0 +1,43 @@
+version: '3'
+
+tasks:
+  reset-data:
+    desc: Reset all data (DANGEROUS - removes all volumes and data)
+    prompt: This will delete ALL Dolibarr data including database and documents. Continue?
+    cmds:
+      - task: services:stop
+      - docker-compose down -v
+      - docker volume prune -f
+      - rm -rf logs/*
+      - echo "✅ All data reset. Use 'task start' to initialize fresh installation"
+
+  reset-logs:
+    desc: Clear application logs
+    cmds:
+      - rm -rf logs/*
+      - mkdir -p logs
+      - echo "✅ Application logs cleared"
+
+  reset-custom:
+    desc: Clear custom modules (keeps directory structure)
+    prompt: This will delete all custom Dolibarr modules. Continue?
+    cmds:
+      - find custom -type f -name "*.php" -delete 2>/dev/null || true
+      - find custom -type f -name "*.js" -delete 2>/dev/null || true
+      - find custom -type f -name "*.css" -delete 2>/dev/null || true
+      - find custom -mindepth 1 -type d -empty -delete 2>/dev/null || true
+      - echo "✅ Custom modules cleared"
+
+  cleanup:
+    desc: Clean up Docker resources (images, containers, networks)
+    cmds:
+      - docker-compose down --rmi local --volumes --remove-orphans
+      - docker system prune -f
+      - echo "✅ Docker cleanup completed"
+
+  update:
+    desc: Update Dolibarr containers to latest versions
+    cmds:
+      - docker-compose pull
+      - docker-compose up -d --force-recreate
+      - echo "✅ Containers updated and restarted"
