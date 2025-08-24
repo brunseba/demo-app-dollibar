@@ -1,16 +1,17 @@
-# Dolibarr Database Analysis
+# Dolibarr Docker Setup Documentation
 
-Welcome to the comprehensive database analysis documentation for the Dolibarr ERP/CRM system.
+Welcome to the comprehensive documentation for the Dolibarr ERP/CRM Docker deployment system.
 
 ## Overview
 
-This documentation provides a detailed analysis of the Dolibarr database structure, including:
+This documentation provides complete information about deploying, configuring, and managing Dolibarr using Docker, including:
 
-- **Entity-Relationship Diagrams** using Mermaid syntax
-- **Comprehensive data model documentation**
-- **Business flow diagrams** showing key processes
-- **Entity descriptions** with field explanations
-- **Relationship mappings** between business objects
+- **🐳 Docker Setup & Configuration** - Complete deployment guides
+- **⚙️ Task Automation System** - Modular task management with organized workflows
+- **🏗️ Architecture Documentation** - System design and service relationships
+- **🗄️ Database Analysis** - Entity-relationship diagrams and data model documentation
+- **🔧 Troubleshooting Guides** - Solutions to common issues
+- **💾 Backup & Restore** - Data protection and recovery procedures
 
 ## What is Dolibarr?
 

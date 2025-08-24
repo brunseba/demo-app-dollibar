@@ -1,6 +1,6 @@
-site_name: Dolibarr Database Analysis
-site_description: Comprehensive analysis of Dolibarr ERP/CRM database structure with entity-relationship diagrams
-site_author: Database Analysis Team
+site_name: Dolibarr Docker Documentation
+site_description: Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis
+site_author: Dolibarr Docker Team
 site_url: https://brun-s.github.io/dollibar/
 
 # Repository
@@ -38,8 +38,17 @@ theme:
 # Navigation
 nav:
   - Home: index.md
-  - Database Model: database-model.md
-  - Modules Status: modules-status.md
+  - Setup & Deployment:
+    - Docker Setup: docker-setup.md
+    - Task Automation: task-automation.md
+    - Architecture: architecture.md
+  - Operations:
+    - Backup & Restore: backup-restore.md
+    - Troubleshooting: troubleshooting.md
+    - API Reference: api-reference.md
+  - Database Analysis:
+    - Database Model: database-model.md
+    - Modules Status: modules-status.md
 
 # Markdown extensions
 markdown_extensions:
