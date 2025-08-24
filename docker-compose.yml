@@ -15,14 +15,14 @@ services:
       DOLI_DB_USER: ${DB_USER:-dolibarr}
       DOLI_DB_PASSWORD: ${DB_PASSWORD}
       DOLI_DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-}
-      
+
       # Dolibarr configuration
       DOLI_ADMIN_LOGIN: ${DOLIBARR_ADMIN_LOGIN:-admin}
       DOLI_ADMIN_PASSWORD: ${DOLIBARR_ADMIN_PASSWORD}
       DOLI_URL_ROOT: ${DOLIBARR_URL_ROOT:-http://localhost:8080}
       DOLI_NOCSRFCHECK: ${DOLIBARR_NOCSRFCHECK:-0}
       DOLI_HTTPS: ${DOLIBARR_HTTPS:-0}
-      
+
       # PHP configuration
       PHP_INI_DATE_TIMEZONE: ${TIMEZONE:-Europe/Paris}
     volumes:

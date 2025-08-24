@@ -39,30 +39,30 @@ theme:
 nav:
   - Home: index.md
   - Quick Start:
-    - Cheat Sheet: reference/cheat-sheet.md
-    - Setup Guide: docker-setup.md
-    - Task Automation: task-automation.md
-    - Deployment Scenarios: deployment-scenarios.md
+      - Cheat Sheet: reference/cheat-sheet.md
+      - Setup Guide: docker-setup.md
+      - Task Automation: task-automation.md
+      - Deployment Scenarios: deployment-scenarios.md
   - Reference Documentation:
-    - Overview: reference/README.md
-    - Taskfile Commands: reference/taskfile-commands.md
-    - Environment Variables: reference/environment-variables.md
-    - Docker Services: reference/docker-services.md
-    - Configuration Files: reference/configuration-reference.md
-    - API Reference: reference/api-reference.md
-    - Tools & Resources: reference/uri.md
+      - Overview: reference/README.md
+      - Taskfile Commands: reference/taskfile-commands.md
+      - Environment Variables: reference/environment-variables.md
+      - Docker Services: reference/docker-services.md
+      - Configuration Files: reference/configuration-reference.md
+      - API Reference: reference/api-reference.md
+      - Tools & Resources: reference/uri.md
   - API & Integration:
-    - API Reference: api-reference.md
-    - Integration Examples: api-integration-examples.md
+      - API Reference: api-reference.md
+      - Integration Examples: api-integration-examples.md
   - Use Cases: use-cases.md
   - Operations & Troubleshooting:
-    - Troubleshooting Guide: reference/troubleshooting.md
-    - General Troubleshooting: troubleshooting.md
-    - Backup & Restore: backup-restore.md
-    - System Architecture: architecture.md
+      - Troubleshooting Guide: reference/troubleshooting.md
+      - General Troubleshooting: troubleshooting.md
+      - Backup & Restore: backup-restore.md
+      - System Architecture: architecture.md
   - Database Analysis:
-    - Database Model: database-model.md
-    - Modules Status: modules-status.md
+      - Database Model: database-model.md
+      - Modules Status: modules-status.md
 
 # Markdown extensions
 markdown_extensions:

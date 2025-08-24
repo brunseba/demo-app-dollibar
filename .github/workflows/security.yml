@@ -243,10 +243,10 @@ jobs:
             # Install Dockle
             curl -L -o dockle.tar.gz https://github.com/goodwithtech/dockle/releases/latest/download/dockle_Linux-64bit.tar.gz
             tar zxf dockle.tar.gz
-            
+
             # Build image for scanning
             docker build -t dockle-scan:latest .
-            
+
             # Run Dockle scan
             ./dockle --exit-code 1 --exit-level warn --format json --output dockle-results.json dockle-scan:latest || true
           fi
@@ -286,11 +286,11 @@ jobs:
           echo "| Dependency Security Scan | ${{ needs.dependency-security-scan.result }} |"
           echo "| Docker Security Best Practices | ${{ needs.docker-security-best-practices.result }} |"
           echo ""
-          
+
           # Check if any critical security checks failed
           if [[ "${{ needs.secrets-detection.result }}" == "failure" ]]; then
             echo "🚨 **CRITICAL**: Secrets detected in repository!"
             exit 1
           fi
-          
+
           echo "✅ Security analysis completed. Check individual job results for details."

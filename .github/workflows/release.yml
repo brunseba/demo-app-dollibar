@@ -44,17 +44,17 @@ jobs:
             TAG=${GITHUB_REF#refs/tags/}
             VERSION=${TAG#v}
           fi
-          
+
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-          
+
           # Check if this is a pre-release (contains alpha, beta, rc, pre)
           if [[ "$VERSION" =~ (alpha|beta|rc|pre) ]]; then
             echo "is-prerelease=true" >> $GITHUB_OUTPUT
           else
             echo "is-prerelease=false" >> $GITHUB_OUTPUT
           fi
-          
+
           echo "📦 Preparing release for version: $VERSION"
           echo "🏷️ Tag: $TAG"
           echo "🧪 Pre-release: ${{ steps.get-version.outputs.is-prerelease }}"
@@ -134,32 +134,32 @@ jobs:
           # Get the previous tag
           PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
           CURRENT_TAG="${{ needs.prepare-release.outputs.tag }}"
-          
+
           echo "Generating changelog from $PREVIOUS_TAG to $CURRENT_TAG"
-          
+
           # Generate changelog using git log
           if [[ -n "$PREVIOUS_TAG" ]]; then
             CHANGELOG=$(git log --pretty=format:"- %s (%h)" $PREVIOUS_TAG..HEAD)
           else
             CHANGELOG=$(git log --pretty=format:"- %s (%h)")
           fi
-          
+
           # Create a formatted changelog
           cat << EOF > changelog.md
           ## What's Changed
-          
+
           $CHANGELOG
-          
+
           ## Docker Images
-          
+
           - \`ghcr.io/${{ github.repository }}:${{ needs.prepare-release.outputs.version }}\`
           - \`ghcr.io/${{ github.repository }}:latest\`
-          
+
           ## Full Changelog
-          
+
           **Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREVIOUS_TAG}...${CURRENT_TAG}
           EOF
-          
+
           # Output for GitHub release
           {
             echo 'changelog<<EOF'
@@ -214,17 +214,17 @@ jobs:
       - name: Update version references
         run: |
           VERSION="${{ needs.prepare-release.outputs.version }}"
-          
+
           # Update version in docs if version files exist
           if [ -f docs/version.md ]; then
             echo "Current version: $VERSION" > docs/version.md
           fi
-          
+
           # Update README.md with latest version
           if [ -f README.md ]; then
             sed -i "s/version-[0-9]\+\.[0-9]\+\.[0-9]\+/version-$VERSION/g" README.md
           fi
-          
+
           # Update docker-compose examples
           find . -name "docker-compose*.yml" -exec sed -i "s/dolibarr:[0-9]\+\.[0-9]\+\.[0-9]\+/dolibarr:$VERSION/g" {} \;
 

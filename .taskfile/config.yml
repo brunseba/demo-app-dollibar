@@ -12,7 +12,7 @@ tasks:
       - |
         # Enable modules directly in database
         docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
-        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES 
+        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES
         ('MAIN_MODULE_SOCIETE', '1', 'chaine', 0, 'To enable module Third parties', 1),
         ('MAIN_MODULE_FACTURE', '1', 'chaine', 0, 'To enable module Invoices', 1),
         ('MAIN_MODULE_COMMANDE', '1', 'chaine', 0, 'To enable module Orders', 1),
@@ -36,7 +36,7 @@ tasks:
       - |
         # Enable API module directly in database
         docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
-        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES 
+        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES
         ('MAIN_MODULE_API', '1', 'chaine', 0, 'To enable module API', 1)
         ON DUPLICATE KEY UPDATE value='1';
         "
@@ -52,18 +52,18 @@ tasks:
       - echo "Listing Dolibarr modules..."
       - |
         docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
-        SELECT 
+        SELECT
           SUBSTRING(name, 13) as 'Module',
-          CASE 
+          CASE
             WHEN value = '1' THEN 'Enabled'
             WHEN value = '0' THEN 'Disabled'
             ELSE value
           END as 'Status'
-        FROM llx_const 
-        WHERE name LIKE 'MAIN_MODULE_%' 
+        FROM llx_const
+        WHERE name LIKE 'MAIN_MODULE_%'
         ORDER BY name;"
 
-  # Configuration Management  
+  # Configuration Management
   configure-company:
     desc: Configure company information and settings
     preconditions:
@@ -74,11 +74,11 @@ tasks:
       - |
         # Configure company information directly in database
         docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
-        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES 
+        INSERT IGNORE INTO llx_const (name, value, type, visible, note, entity) VALUES
         ('MAIN_INFO_SOCIETE_NOM', 'Demo Company Inc.', 'chaine', 0, 'Company name', 1),
         ('MAIN_INFO_SOCIETE_MAIL', 'contact@demo-company.com', 'chaine', 0, 'Company email', 1),
         ('MAIN_MONNAIE', 'EUR', 'chaine', 0, 'Currency', 1)
-        ON DUPLICATE KEY UPDATE 
+        ON DUPLICATE KEY UPDATE
         value = VALUES(value);
         "
       - echo "Company information configured successfully"
@@ -111,14 +111,14 @@ tasks:
       - |
         docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
         SELECT SUBSTRING(name, 13) as 'Module'
-        FROM llx_const 
-        WHERE name LIKE 'MAIN_MODULE_%' AND value = '1' 
+        FROM llx_const
+        WHERE name LIKE 'MAIN_MODULE_%' AND value = '1'
         ORDER BY name;" 2>/dev/null || echo "Error accessing database"
       - echo ""
       - echo "Company Information"
       - |
         docker-compose exec dolibarr-db mysql -u root -pyour-secure-root-password dolibarr -e "
         SELECT name as 'Setting', value as 'Value'
-        FROM llx_const 
+        FROM llx_const
         WHERE name IN ('MAIN_INFO_SOCIETE_NOM', 'MAIN_INFO_SOCIETE_MAIL', 'MAIN_MONNAIE')
         ORDER BY name;" 2>/dev/null || echo "Error accessing database"
