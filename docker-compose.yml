@@ -1,0 +1,99 @@
+services:
+  # Dolibarr application service
+  dolibarr:
+    image: dolibarr/dolibarr:latest
+    container_name: dolibarr-app
+    restart: unless-stopped
+    ports:
+      - "${DOLIBARR_PORT:-8080}:80"
+    environment:
+      # Database configuration (switches based on profile)
+      DOLI_DB_TYPE: ${DB_TYPE:-mysqli}
+      DOLI_DB_HOST: ${DB_HOST:-dolibarr-db}
+      DOLI_DB_PORT: ${DB_PORT:-3306}
+      DOLI_DB_NAME: ${DB_NAME:-dolibarr}
+      DOLI_DB_USER: ${DB_USER:-dolibarr}
+      DOLI_DB_PASSWORD: ${DB_PASSWORD}
+      DOLI_DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-}
+      
+      # Dolibarr configuration
+      DOLI_ADMIN_LOGIN: ${DOLIBARR_ADMIN_LOGIN:-admin}
+      DOLI_ADMIN_PASSWORD: ${DOLIBARR_ADMIN_PASSWORD}
+      DOLI_URL_ROOT: ${DOLIBARR_URL_ROOT:-http://localhost:8080}
+      DOLI_NOCSRFCHECK: ${DOLIBARR_NOCSRFCHECK:-0}
+      DOLI_HTTPS: ${DOLIBARR_HTTPS:-0}
+      
+      # PHP configuration
+      PHP_INI_DATE_TIMEZONE: ${TIMEZONE:-Europe/Paris}
+    volumes:
+      - dolibarr-html:/var/www/html
+      - dolibarr-documents:/var/www/documents
+      - ./custom:/var/www/html/custom
+      - ./logs:/var/www/html/documents/admin/temp
+    depends_on:
+      dolibarr-db:
+        condition: service_healthy
+        required: false
+    networks:
+      - dolibarr-network
+
+  # Internal MariaDB database (only for internal-db profile)
+  dolibarr-db:
+    image: mariadb:10.11
+    container_name: dolibarr-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME:-dolibarr}
+      MYSQL_USER: ${DB_USER:-dolibarr}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - dolibarr-db-data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d
+    ports:
+      - "${DB_EXTERNAL_PORT:-3306}:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - dolibarr-network
+    profiles:
+      - internal-db
+
+  # Optional: phpMyAdmin for database management (only with internal database)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: dolibarr-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: dolibarr-db
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USER:-dolibarr}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "${PHPMYADMIN_PORT:-8081}:80"
+    depends_on:
+      dolibarr-db:
+        condition: service_healthy
+    networks:
+      - dolibarr-network
+    profiles:
+      - internal-db-tools
+
+volumes:
+  dolibarr-html:
+    driver: local
+  dolibarr-documents:
+    driver: local
+  dolibarr-db-data:
+    driver: local
+
+networks:
+  dolibarr-network:
+    driver: bridge

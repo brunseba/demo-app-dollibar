@@ -1,0 +1,128 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker volumes data
+/data/
+/logs/
+/custom/
+
+# Backups directory
+/backups/
+
+# Database initialization scripts (if containing sensitive data)
+/db-init/*.sql
+
+# Workspace root folder exclusion (as per user rules)
+/dollibar/
+
+# Python-related (as per user rules)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+*.mo
+*.pot
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
+.scrapy
+docs/_build/
+.pybuilder/
+target/
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+__pypackages__/
+celerybeat-schedule
+celerybeat.pid
+*.sage.py
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.spyderproject
+.spyproject
+.ropeproject
+/site
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+
+# MkDocs (as per user rules)
+site/
+.mkdocs_cache/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker related
+.dockerignore
+# Keep potential override files out of git (user-specific configuration)
+docker-compose.override.yml
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Temporary files
+*.tmp
+*.temp
