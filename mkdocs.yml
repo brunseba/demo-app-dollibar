@@ -54,7 +54,7 @@ nav:
   - API & Integration:
     - API Reference: api-reference.md
     - Integration Examples: api-integration-examples.md
-    - Use Cases: use-cases.md
+  - Use Cases: use-cases.md
   - Operations & Troubleshooting:
     - Troubleshooting Guide: reference/troubleshooting.md
     - General Troubleshooting: troubleshooting.md
