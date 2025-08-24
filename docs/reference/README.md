@@ -4,6 +4,16 @@ This directory contains comprehensive reference materials for the Dolibarr Docke
 
 ## 📚 Reference Documents
 
+### [Quick Reference Cheat Sheet](cheat-sheet.md) ⚡
+One-page reference with essential commands, configurations, and troubleshooting.
+
+- **Quick Start**: Setup commands for development and production
+- **Essential Commands**: Most-used Task commands organized by category
+- **Configuration Examples**: Development and production `.env` templates
+- **Troubleshooting**: Quick diagnostic commands for common issues
+- **Security Checklists**: Development and production security requirements
+- **Emergency Commands**: System recovery and cleanup procedures
+
 ### [Taskfile Commands Reference](taskfile-commands.md)
 Complete reference of all Task commands with descriptions, parameters, and usage examples.
 
