@@ -11,9 +11,7 @@ on:
         required: true
         type: string
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+# No Docker builds - removed registry configuration
 
 permissions:
   contents: write
@@ -59,62 +57,7 @@ jobs:
           echo "🏷️ Tag: $TAG"
           echo "🧪 Pre-release: ${{ steps.get-version.outputs.is-prerelease }}"
 
-  build-and-push-images:
-    name: Build and Push Docker Images
-    runs-on: ubuntu-latest
-    needs: prepare-release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=tag
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=${{ needs.prepare-release.outputs.version }}
-            type=sha,prefix={{branch}}-
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            VERSION=${{ needs.prepare-release.outputs.version }}
-            BUILD_DATE=${{ github.event.head_commit.timestamp }}
-            VCS_REF=${{ github.sha }}
-
-      - name: Generate SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.prepare-release.outputs.version }}
-          format: spdx-json
-          output-file: sbom.spdx.json
-
-      - name: Upload SBOM as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: sbom
-          path: sbom.spdx.json
+  # Docker build job removed - no container images built
 
   generate-changelog:
     name: Generate Changelog
@@ -150,10 +93,10 @@ jobs:
 
           $CHANGELOG
 
-          ## Docker Images
+          ## Documentation
 
-          - \`ghcr.io/${{ github.repository }}:${{ needs.prepare-release.outputs.version }}\`
-          - \`ghcr.io/${{ github.repository }}:latest\`
+          - 📚 Live documentation: https://brun_s.github.io/dollibar/
+          - 🔄 Auto-updates with each release
 
           ## Full Changelog
 
@@ -176,7 +119,7 @@ jobs:
   create-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
-    needs: [prepare-release, build-and-push-images, generate-changelog]
+    needs: [prepare-release, generate-changelog]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -194,7 +137,6 @@ jobs:
           body: ${{ needs.generate-changelog.outputs.changelog }}
           prerelease: ${{ needs.prepare-release.outputs.is-prerelease }}
           files: |
-            artifacts/sbom/sbom.spdx.json
             artifacts/changelog/changelog.md
           generate_release_notes: true
         env:
@@ -245,7 +187,5 @@ jobs:
       - name: Release notification
         run: |
           echo "🎉 Release ${{ needs.prepare-release.outputs.tag }} has been created!"
-          echo "📦 Docker images are available at:"
-          echo "   - ghcr.io/${{ github.repository }}:${{ needs.prepare-release.outputs.version }}"
-          echo "   - ghcr.io/${{ github.repository }}:latest"
+          echo "📚 Documentation updated at: https://brun_s.github.io/dollibar/"
           echo "📝 Release notes: https://github.com/${{ github.repository }}/releases/tag/${{ needs.prepare-release.outputs.tag }}"
