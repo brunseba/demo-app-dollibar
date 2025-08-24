@@ -38,14 +38,23 @@ theme:
 # Navigation
 nav:
   - Home: index.md
-  - Setup & Deployment:
-    - Docker Setup: docker-setup.md
+  - Quick Start:
+    - Cheat Sheet: reference/cheat-sheet.md
+    - Setup Guide: docker-setup.md
     - Task Automation: task-automation.md
-    - Architecture: architecture.md
-  - Operations:
+    - Deployment Scenarios: deployment-scenarios.md
+  - Reference Documentation:
+    - Overview: reference/README.md
+    - Taskfile Commands: reference/taskfile-commands.md
+    - Environment Variables: reference/environment-variables.md
+    - Docker Services: reference/docker-services.md
+    - Configuration Files: reference/configuration-reference.md
+    - API Reference: reference/api-reference.md
+    - Tools & Resources: reference/uri.md
+  - Operations & Troubleshooting:
+    - Troubleshooting Guide: reference/troubleshooting.md
     - Backup & Restore: backup-restore.md
-    - Troubleshooting: troubleshooting.md
-    - API Reference: api-reference.md
+    - System Architecture: architecture.md
   - Database Analysis:
     - Database Model: database-model.md
     - Modules Status: modules-status.md
