@@ -1,0 +1,2834 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/reference/api-reference/" rel="canonical"/>
+<link href="../configuration-reference/" rel="prev"/>
+<link href="../uri/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>API Reference - Dolibarr Docker Documentation</title>
+<link href="../../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#dolibarr-api-reference">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../troubleshooting/">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../taskfile-commands/">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../environment-variables/">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-overview">
+<span class="md-ellipsis">
+      API Overview
+    </span>
+</a>
+<nav aria-label="API Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#base-url">
+<span class="md-ellipsis">
+      Base URL
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-version">
+<span class="md-ellipsis">
+      API Version
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#content-type">
+<span class="md-ellipsis">
+      Content Type
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#authentication">
+<span class="md-ellipsis">
+      Authentication
+    </span>
+</a>
+<nav aria-label="Authentication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-key-authentication">
+<span class="md-ellipsis">
+      API Key Authentication
+    </span>
+</a>
+<nav aria-label="API Key Authentication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#generating-api-keys">
+<span class="md-ellipsis">
+      Generating API Keys
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-api-keys">
+<span class="md-ellipsis">
+      Using API Keys
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-best-practices">
+<span class="md-ellipsis">
+      Security Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-explorer">
+<span class="md-ellipsis">
+      API Explorer
+    </span>
+</a>
+<nav aria-label="API Explorer" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#accessing-the-explorer">
+<span class="md-ellipsis">
+      Accessing the Explorer
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#explorer-features">
+<span class="md-ellipsis">
+      Explorer Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-patterns">
+<span class="md-ellipsis">
+      Common Patterns
+    </span>
+</a>
+<nav aria-label="Common Patterns" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-format">
+<span class="md-ellipsis">
+      Request Format
+    </span>
+</a>
+<nav aria-label="Request Format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#standard-get-request">
+<span class="md-ellipsis">
+      Standard GET Request
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#post-request-with-data">
+<span class="md-ellipsis">
+      POST Request with Data
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#put-request-update">
+<span class="md-ellipsis">
+      PUT Request (Update)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-request">
+<span class="md-ellipsis">
+      DELETE Request
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#response-format">
+<span class="md-ellipsis">
+      Response Format
+    </span>
+</a>
+<nav aria-label="Response Format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#success-response">
+<span class="md-ellipsis">
+      Success Response
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-response">
+<span class="md-ellipsis">
+      Error Response
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pagination">
+<span class="md-ellipsis">
+      Pagination
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-endpoints">
+<span class="md-ellipsis">
+      Core Endpoints
+    </span>
+</a>
+<nav aria-label="Core Endpoints" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#users-management">
+<span class="md-ellipsis">
+      Users Management
+    </span>
+</a>
+<nav aria-label="Users Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-users">
+<span class="md-ellipsis">
+      List Users
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-user-by-id">
+<span class="md-ellipsis">
+      Get User by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-user">
+<span class="md-ellipsis">
+      Create User
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-user">
+<span class="md-ellipsis">
+      Update User
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-user">
+<span class="md-ellipsis">
+      Delete User
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#third-parties-companies">
+<span class="md-ellipsis">
+      Third Parties (Companies)
+    </span>
+</a>
+<nav aria-label="Third Parties (Companies)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-third-parties">
+<span class="md-ellipsis">
+      List Third Parties
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-third-party-by-id">
+<span class="md-ellipsis">
+      Get Third Party by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-third-party">
+<span class="md-ellipsis">
+      Create Third Party
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-third-party">
+<span class="md-ellipsis">
+      Update Third Party
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-third-party">
+<span class="md-ellipsis">
+      Delete Third Party
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#contacts">
+<span class="md-ellipsis">
+      Contacts
+    </span>
+</a>
+<nav aria-label="Contacts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-contacts">
+<span class="md-ellipsis">
+      List Contacts
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-contact-by-id">
+<span class="md-ellipsis">
+      Get Contact by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-contact">
+<span class="md-ellipsis">
+      Create Contact
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#productsservices">
+<span class="md-ellipsis">
+      Products/Services
+    </span>
+</a>
+<nav aria-label="Products/Services" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-products">
+<span class="md-ellipsis">
+      List Products
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-product-by-id">
+<span class="md-ellipsis">
+      Get Product by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-product">
+<span class="md-ellipsis">
+      Create Product
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-product-stock">
+<span class="md-ellipsis">
+      Update Product Stock
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invoices">
+<span class="md-ellipsis">
+      Invoices
+    </span>
+</a>
+<nav aria-label="Invoices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-invoices">
+<span class="md-ellipsis">
+      List Invoices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-invoice-by-id">
+<span class="md-ellipsis">
+      Get Invoice by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-invoice">
+<span class="md-ellipsis">
+      Create Invoice
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validate-invoice">
+<span class="md-ellipsis">
+      Validate Invoice
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#add-payment-to-invoice">
+<span class="md-ellipsis">
+      Add Payment to Invoice
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#orders">
+<span class="md-ellipsis">
+      Orders
+    </span>
+</a>
+<nav aria-label="Orders" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-orders">
+<span class="md-ellipsis">
+      List Orders
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-order-by-id">
+<span class="md-ellipsis">
+      Get Order by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-order">
+<span class="md-ellipsis">
+      Create Order
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-order-status">
+<span class="md-ellipsis">
+      Update Order Status
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#proposalsquotes">
+<span class="md-ellipsis">
+      Proposals/Quotes
+    </span>
+</a>
+<nav aria-label="Proposals/Quotes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-proposals">
+<span class="md-ellipsis">
+      List Proposals
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-proposal-by-id">
+<span class="md-ellipsis">
+      Get Proposal by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-proposal">
+<span class="md-ellipsis">
+      Create Proposal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#set-proposal-status">
+<span class="md-ellipsis">
+      Set Proposal Status
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#projects">
+<span class="md-ellipsis">
+      Projects
+    </span>
+</a>
+<nav aria-label="Projects" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-projects">
+<span class="md-ellipsis">
+      List Projects
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-project-by-id">
+<span class="md-ellipsis">
+      Get Project by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-project">
+<span class="md-ellipsis">
+      Create Project
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#add-task-to-project">
+<span class="md-ellipsis">
+      Add Task to Project
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      Error Handling
+    </span>
+</a>
+<nav aria-label="Error Handling" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#http-status-codes">
+<span class="md-ellipsis">
+      HTTP Status Codes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-response-format">
+<span class="md-ellipsis">
+      Error Response Format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-errors">
+<span class="md-ellipsis">
+      Common Errors
+    </span>
+</a>
+<nav aria-label="Common Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#authentication-errors">
+<span class="md-ellipsis">
+      Authentication Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-errors">
+<span class="md-ellipsis">
+      Validation Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#permission-errors">
+<span class="md-ellipsis">
+      Permission Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rate-limiting">
+<span class="md-ellipsis">
+      Rate Limiting
+    </span>
+</a>
+<nav aria-label="Rate Limiting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#default-limits">
+<span class="md-ellipsis">
+      Default Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#best-practices">
+<span class="md-ellipsis">
+      Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examples">
+<span class="md-ellipsis">
+      Examples
+    </span>
+</a>
+<nav aria-label="Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#javascriptnodejs-example">
+<span class="md-ellipsis">
+      JavaScript/Node.js Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python-example">
+<span class="md-ellipsis">
+      Python Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#php-example">
+<span class="md-ellipsis">
+      PHP Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bashcurl-example">
+<span class="md-ellipsis">
+      Bash/cURL Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sdks-and-libraries">
+<span class="md-ellipsis">
+      SDKs and Libraries
+    </span>
+</a>
+<nav aria-label="SDKs and Libraries" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#official-libraries">
+<span class="md-ellipsis">
+      Official Libraries
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#community-libraries">
+<span class="md-ellipsis">
+      Community Libraries
+    </span>
+</a>
+<nav aria-label="Community Libraries" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#nodejs">
+<span class="md-ellipsis">
+      Node.js
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python">
+<span class="md-ellipsis">
+      Python
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#php">
+<span class="md-ellipsis">
+      PHP
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#creating-your-own-sdk">
+<span class="md-ellipsis">
+      Creating Your Own SDK
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-and-development">
+<span class="md-ellipsis">
+      Testing and Development
+    </span>
+</a>
+<nav aria-label="Testing and Development" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enable-api-for-development">
+<span class="md-ellipsis">
+      Enable API for Development
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-testing-tools">
+<span class="md-ellipsis">
+      API Testing Tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-best-practices">
+<span class="md-ellipsis">
+      Development Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debugging-api-issues">
+<span class="md-ellipsis">
+      Debugging API Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../backup-restore/">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modules-status/">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-overview">
+<span class="md-ellipsis">
+      API Overview
+    </span>
+</a>
+<nav aria-label="API Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#base-url">
+<span class="md-ellipsis">
+      Base URL
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-version">
+<span class="md-ellipsis">
+      API Version
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#content-type">
+<span class="md-ellipsis">
+      Content Type
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#authentication">
+<span class="md-ellipsis">
+      Authentication
+    </span>
+</a>
+<nav aria-label="Authentication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-key-authentication">
+<span class="md-ellipsis">
+      API Key Authentication
+    </span>
+</a>
+<nav aria-label="API Key Authentication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#generating-api-keys">
+<span class="md-ellipsis">
+      Generating API Keys
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-api-keys">
+<span class="md-ellipsis">
+      Using API Keys
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-best-practices">
+<span class="md-ellipsis">
+      Security Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-explorer">
+<span class="md-ellipsis">
+      API Explorer
+    </span>
+</a>
+<nav aria-label="API Explorer" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#accessing-the-explorer">
+<span class="md-ellipsis">
+      Accessing the Explorer
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#explorer-features">
+<span class="md-ellipsis">
+      Explorer Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-patterns">
+<span class="md-ellipsis">
+      Common Patterns
+    </span>
+</a>
+<nav aria-label="Common Patterns" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-format">
+<span class="md-ellipsis">
+      Request Format
+    </span>
+</a>
+<nav aria-label="Request Format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#standard-get-request">
+<span class="md-ellipsis">
+      Standard GET Request
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#post-request-with-data">
+<span class="md-ellipsis">
+      POST Request with Data
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#put-request-update">
+<span class="md-ellipsis">
+      PUT Request (Update)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-request">
+<span class="md-ellipsis">
+      DELETE Request
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#response-format">
+<span class="md-ellipsis">
+      Response Format
+    </span>
+</a>
+<nav aria-label="Response Format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#success-response">
+<span class="md-ellipsis">
+      Success Response
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-response">
+<span class="md-ellipsis">
+      Error Response
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pagination">
+<span class="md-ellipsis">
+      Pagination
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-endpoints">
+<span class="md-ellipsis">
+      Core Endpoints
+    </span>
+</a>
+<nav aria-label="Core Endpoints" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#users-management">
+<span class="md-ellipsis">
+      Users Management
+    </span>
+</a>
+<nav aria-label="Users Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-users">
+<span class="md-ellipsis">
+      List Users
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-user-by-id">
+<span class="md-ellipsis">
+      Get User by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-user">
+<span class="md-ellipsis">
+      Create User
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-user">
+<span class="md-ellipsis">
+      Update User
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-user">
+<span class="md-ellipsis">
+      Delete User
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#third-parties-companies">
+<span class="md-ellipsis">
+      Third Parties (Companies)
+    </span>
+</a>
+<nav aria-label="Third Parties (Companies)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-third-parties">
+<span class="md-ellipsis">
+      List Third Parties
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-third-party-by-id">
+<span class="md-ellipsis">
+      Get Third Party by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-third-party">
+<span class="md-ellipsis">
+      Create Third Party
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-third-party">
+<span class="md-ellipsis">
+      Update Third Party
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-third-party">
+<span class="md-ellipsis">
+      Delete Third Party
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#contacts">
+<span class="md-ellipsis">
+      Contacts
+    </span>
+</a>
+<nav aria-label="Contacts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-contacts">
+<span class="md-ellipsis">
+      List Contacts
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-contact-by-id">
+<span class="md-ellipsis">
+      Get Contact by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-contact">
+<span class="md-ellipsis">
+      Create Contact
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#productsservices">
+<span class="md-ellipsis">
+      Products/Services
+    </span>
+</a>
+<nav aria-label="Products/Services" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-products">
+<span class="md-ellipsis">
+      List Products
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-product-by-id">
+<span class="md-ellipsis">
+      Get Product by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-product">
+<span class="md-ellipsis">
+      Create Product
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-product-stock">
+<span class="md-ellipsis">
+      Update Product Stock
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invoices">
+<span class="md-ellipsis">
+      Invoices
+    </span>
+</a>
+<nav aria-label="Invoices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-invoices">
+<span class="md-ellipsis">
+      List Invoices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-invoice-by-id">
+<span class="md-ellipsis">
+      Get Invoice by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-invoice">
+<span class="md-ellipsis">
+      Create Invoice
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validate-invoice">
+<span class="md-ellipsis">
+      Validate Invoice
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#add-payment-to-invoice">
+<span class="md-ellipsis">
+      Add Payment to Invoice
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#orders">
+<span class="md-ellipsis">
+      Orders
+    </span>
+</a>
+<nav aria-label="Orders" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-orders">
+<span class="md-ellipsis">
+      List Orders
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-order-by-id">
+<span class="md-ellipsis">
+      Get Order by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-order">
+<span class="md-ellipsis">
+      Create Order
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-order-status">
+<span class="md-ellipsis">
+      Update Order Status
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#proposalsquotes">
+<span class="md-ellipsis">
+      Proposals/Quotes
+    </span>
+</a>
+<nav aria-label="Proposals/Quotes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-proposals">
+<span class="md-ellipsis">
+      List Proposals
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-proposal-by-id">
+<span class="md-ellipsis">
+      Get Proposal by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-proposal">
+<span class="md-ellipsis">
+      Create Proposal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#set-proposal-status">
+<span class="md-ellipsis">
+      Set Proposal Status
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#projects">
+<span class="md-ellipsis">
+      Projects
+    </span>
+</a>
+<nav aria-label="Projects" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#list-projects">
+<span class="md-ellipsis">
+      List Projects
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get-project-by-id">
+<span class="md-ellipsis">
+      Get Project by ID
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-project">
+<span class="md-ellipsis">
+      Create Project
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#add-task-to-project">
+<span class="md-ellipsis">
+      Add Task to Project
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      Error Handling
+    </span>
+</a>
+<nav aria-label="Error Handling" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#http-status-codes">
+<span class="md-ellipsis">
+      HTTP Status Codes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-response-format">
+<span class="md-ellipsis">
+      Error Response Format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-errors">
+<span class="md-ellipsis">
+      Common Errors
+    </span>
+</a>
+<nav aria-label="Common Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#authentication-errors">
+<span class="md-ellipsis">
+      Authentication Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-errors">
+<span class="md-ellipsis">
+      Validation Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#permission-errors">
+<span class="md-ellipsis">
+      Permission Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rate-limiting">
+<span class="md-ellipsis">
+      Rate Limiting
+    </span>
+</a>
+<nav aria-label="Rate Limiting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#default-limits">
+<span class="md-ellipsis">
+      Default Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#best-practices">
+<span class="md-ellipsis">
+      Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examples">
+<span class="md-ellipsis">
+      Examples
+    </span>
+</a>
+<nav aria-label="Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#javascriptnodejs-example">
+<span class="md-ellipsis">
+      JavaScript/Node.js Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python-example">
+<span class="md-ellipsis">
+      Python Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#php-example">
+<span class="md-ellipsis">
+      PHP Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bashcurl-example">
+<span class="md-ellipsis">
+      Bash/cURL Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sdks-and-libraries">
+<span class="md-ellipsis">
+      SDKs and Libraries
+    </span>
+</a>
+<nav aria-label="SDKs and Libraries" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#official-libraries">
+<span class="md-ellipsis">
+      Official Libraries
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#community-libraries">
+<span class="md-ellipsis">
+      Community Libraries
+    </span>
+</a>
+<nav aria-label="Community Libraries" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#nodejs">
+<span class="md-ellipsis">
+      Node.js
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python">
+<span class="md-ellipsis">
+      Python
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#php">
+<span class="md-ellipsis">
+      PHP
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#creating-your-own-sdk">
+<span class="md-ellipsis">
+      Creating Your Own SDK
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-and-development">
+<span class="md-ellipsis">
+      Testing and Development
+    </span>
+</a>
+<nav aria-label="Testing and Development" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enable-api-for-development">
+<span class="md-ellipsis">
+      Enable API for Development
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-testing-tools">
+<span class="md-ellipsis">
+      API Testing Tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-best-practices">
+<span class="md-ellipsis">
+      Development Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debugging-api-issues">
+<span class="md-ellipsis">
+      Debugging API Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="dolibarr-api-reference">Dolibarr API Reference<a class="headerlink" href="#dolibarr-api-reference" title="Permanent link">¶</a></h1>
+<p>This document provides a comprehensive reference for the Dolibarr REST API, including authentication, endpoints, and usage examples.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="#api-overview">API Overview</a></li>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#api-explorer">API Explorer</a></li>
+<li><a href="#common-patterns">Common Patterns</a></li>
+<li><a href="#core-endpoints">Core Endpoints</a></li>
+<li><a href="#error-handling">Error Handling</a></li>
+<li><a href="#rate-limiting">Rate Limiting</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#sdks-and-libraries">SDKs and Libraries</a></li>
+</ul>
+<hr/>
+<h2 id="api-overview">API Overview<a class="headerlink" href="#api-overview" title="Permanent link">¶</a></h2>
+<p>The Dolibarr REST API provides programmatic access to most Dolibarr functionality, allowing you to integrate Dolibarr with other systems, build custom applications, or automate business processes.</p>
+<h3 id="base-url">Base URL<a class="headerlink" href="#base-url" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>http://localhost:8080/api/index.php
+</code></pre></div>
+<h3 id="api-version">API Version<a class="headerlink" href="#api-version" title="Permanent link">¶</a></h3>
+<p>The API follows semantic versioning and supports multiple versions. The current version is embedded in the response headers.</p>
+<h3 id="content-type">Content Type<a class="headerlink" href="#content-type" title="Permanent link">¶</a></h3>
+<p>All API requests and responses use JSON format:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>Content-Type: application/json
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>Accept: application/json
+</code></pre></div></p>
+<hr/>
+<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">¶</a></h2>
+<h3 id="api-key-authentication">API Key Authentication<a class="headerlink" href="#api-key-authentication" title="Permanent link">¶</a></h3>
+<p>Dolibarr uses API key authentication. Each user can have multiple API keys.</p>
+<h4 id="generating-api-keys">Generating API Keys<a class="headerlink" href="#generating-api-keys" title="Permanent link">¶</a></h4>
+<p><strong>Via Web Interface</strong>:
+1. Login to Dolibarr as an administrator
+2. Go to <code>Users &amp; Groups</code> &gt; <code>Users</code>
+3. Edit a user account
+4. Navigate to <code>API Keys</code> tab
+5. Generate a new API key</p>
+<p><strong>Via Task Command</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Enable API module first</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>task<span class="w"> </span>config:enable-api
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># Then generate keys via web interface</span>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"API Explorer: http://localhost:</span><span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span><span class="s2">/api/index.php/explorer"</span>
+</code></pre></div></p>
+<h4 id="using-api-keys">Using API Keys<a class="headerlink" href="#using-api-keys" title="Permanent link">¶</a></h4>
+<p>Include the API key in the request header:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/users"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Accept: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key_here"</span>
+</code></pre></div>
+<p>Or as a query parameter:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>curl<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/users?api_key=your_api_key_here"</span>
+</code></pre></div></p>
+<h4 id="security-best-practices">Security Best Practices<a class="headerlink" href="#security-best-practices" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>Never expose API keys</strong>: Don't commit API keys to version control</li>
+<li><strong>Use environment variables</strong>: Store API keys in environment variables</li>
+<li><strong>Rotate keys regularly</strong>: Generate new keys and revoke old ones</li>
+<li><strong>Use HTTPS</strong>: Always use HTTPS in production</li>
+<li><strong>Limit permissions</strong>: Create users with minimal required permissions</li>
+</ul>
+<hr/>
+<h2 id="api-explorer">API Explorer<a class="headerlink" href="#api-explorer" title="Permanent link">¶</a></h2>
+<p>Dolibarr includes a built-in API explorer for testing and documentation.</p>
+<h3 id="accessing-the-explorer">Accessing the Explorer<a class="headerlink" href="#accessing-the-explorer" title="Permanent link">¶</a></h3>
+<p><strong>URL</strong>: <code>http://localhost:8080/api/index.php/explorer</code></p>
+<p><strong>Prerequisites</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Enable API module</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>task<span class="w"> </span>config:enable-api
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="c1"># Ensure services are running</span>
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>task<span class="w"> </span>services:start-with-tools
+</code></pre></div></p>
+<h3 id="explorer-features">Explorer Features<a class="headerlink" href="#explorer-features" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Interactive Documentation</strong>: Browse all available endpoints</li>
+<li><strong>Try It Out</strong>: Execute API calls directly from the browser</li>
+<li><strong>Schema Information</strong>: View request/response schemas</li>
+<li><strong>Authentication</strong>: Test API keys directly in the interface</li>
+</ul>
+<hr/>
+<h2 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">¶</a></h2>
+<h3 id="request-format">Request Format<a class="headerlink" href="#request-format" title="Permanent link">¶</a></h3>
+<h4 id="standard-get-request">Standard GET Request<a class="headerlink" href="#standard-get-request" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/endpoint"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Accept: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+</code></pre></div>
+<h4 id="post-request-with-data">POST Request with Data<a class="headerlink" href="#post-request-with-data" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/endpoint"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Accept: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="s1">    "field1": "value1",</span>
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="s1">    "field2": "value2"</span>
+<a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="s1">  }'</span>
+</code></pre></div>
+<h4 id="put-request-update">PUT Request (Update)<a class="headerlink" href="#put-request-update" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/endpoint/123"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Accept: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"field1": "updated_value"}'</span>
+</code></pre></div>
+<h4 id="delete-request">DELETE Request<a class="headerlink" href="#delete-request" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/endpoint/123"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Accept: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+</code></pre></div>
+<h3 id="response-format">Response Format<a class="headerlink" href="#response-format" title="Permanent link">¶</a></h3>
+<h4 id="success-response">Success Response<a class="headerlink" href="#success-response" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="p">{</span>
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">  </span><span class="nt">"success"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operation successful"</span>
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">  </span><span class="p">},</span>
+<a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">    </span><span class="c1">// Response data here</span>
+<a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="error-response">Error Response<a class="headerlink" href="#error-response" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="p">{</span>
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bad Request"</span><span class="p">,</span>
+<a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">    </span><span class="nt">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Specific error description"</span>
+<a href="#__codelineno-11-6" id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-11-7" id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="pagination">Pagination<a class="headerlink" href="#pagination" title="Permanent link">¶</a></h3>
+<p>For endpoints that return lists, use pagination parameters:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a>curl<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/users?limit=20&amp;page=1"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+</code></pre></div>
+<p>Parameters:
+- <code>limit</code>: Number of items per page (default: 100, max: 1000)
+- <code>page</code>: Page number (starts at 1)
+- <code>sortfield</code>: Field to sort by
+- <code>sortorder</code>: ASC or DESC</p>
+<hr/>
+<h2 id="core-endpoints">Core Endpoints<a class="headerlink" href="#core-endpoints" title="Permanent link">¶</a></h2>
+<h3 id="users-management">Users Management<a class="headerlink" href="#users-management" title="Permanent link">¶</a></h3>
+<h4 id="list-users">List Users<a class="headerlink" href="#list-users" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="err">GET /api/index.php/users</span>
+</code></pre></div>
+<p><strong>Parameters</strong>:
+- <code>sqlfilters</code>: SQL WHERE clause conditions
+- <code>limit</code>: Results per page
+- <code>page</code>: Page number</p>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a>curl<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/users?limit=10"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+</code></pre></div></p>
+<h4 id="get-user-by-id">Get User by ID<a class="headerlink" href="#get-user-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="err">GET /api/index.php/users/{id}</span>
+</code></pre></div>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>curl<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/users/1"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+</code></pre></div></p>
+<h4 id="create-user">Create User<a class="headerlink" href="#create-user" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="err">POST /api/index.php/users</span>
+</code></pre></div>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/users"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<a href="#__codelineno-18-5" id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="s1">    "login": "newuser",</span>
+<a href="#__codelineno-18-6" id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="s1">    "firstname": "John",</span>
+<a href="#__codelineno-18-7" id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="s1">    "lastname": "Doe",</span>
+<a href="#__codelineno-18-8" id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="s1">    "email": "john.doe@example.com",</span>
+<a href="#__codelineno-18-9" id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="s1">    "pass": "securepassword"</span>
+<a href="#__codelineno-18-10" id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="s1">  }'</span>
+</code></pre></div></p>
+<h4 id="update-user">Update User<a class="headerlink" href="#update-user" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="err">PUT /api/index.php/users/{id}</span>
+</code></pre></div>
+<h4 id="delete-user">Delete User<a class="headerlink" href="#delete-user" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="err">DELETE /api/index.php/users/{id}</span>
+</code></pre></div>
+<hr/>
+<h3 id="third-parties-companies">Third Parties (Companies)<a class="headerlink" href="#third-parties-companies" title="Permanent link">¶</a></h3>
+<h4 id="list-third-parties">List Third Parties<a class="headerlink" href="#list-third-parties" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="err">GET /api/index.php/thirdparties</span>
+</code></pre></div>
+<p><strong>Parameters</strong>:
+- <code>sortfield</code>: Sort field (name, code, etc.)
+- <code>sortorder</code>: ASC or DESC
+- <code>limit</code>: Results per page
+- <code>page</code>: Page number
+- <code>mode</code>: 1 for customers, 2 for prospects, 3 for suppliers</p>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a>curl<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/thirdparties?mode=1&amp;limit=20"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+</code></pre></div></p>
+<h4 id="get-third-party-by-id">Get Third Party by ID<a class="headerlink" href="#get-third-party-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="err">GET /api/index.php/thirdparties/{id}</span>
+</code></pre></div>
+<h4 id="create-third-party">Create Third Party<a class="headerlink" href="#create-third-party" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="err">POST /api/index.php/thirdparties</span>
+</code></pre></div>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/thirdparties"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-25-2" id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-25-3" id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-25-4" id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<a href="#__codelineno-25-5" id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="s1">    "name": "Acme Corp",</span>
+<a href="#__codelineno-25-6" id="__codelineno-25-6" name="__codelineno-25-6"></a><span class="s1">    "client": 1,</span>
+<a href="#__codelineno-25-7" id="__codelineno-25-7" name="__codelineno-25-7"></a><span class="s1">    "email": "contact@acme.com",</span>
+<a href="#__codelineno-25-8" id="__codelineno-25-8" name="__codelineno-25-8"></a><span class="s1">    "phone": "+1-555-0123",</span>
+<a href="#__codelineno-25-9" id="__codelineno-25-9" name="__codelineno-25-9"></a><span class="s1">    "address": "123 Business St",</span>
+<a href="#__codelineno-25-10" id="__codelineno-25-10" name="__codelineno-25-10"></a><span class="s1">    "zip": "12345",</span>
+<a href="#__codelineno-25-11" id="__codelineno-25-11" name="__codelineno-25-11"></a><span class="s1">    "town": "Business City",</span>
+<a href="#__codelineno-25-12" id="__codelineno-25-12" name="__codelineno-25-12"></a><span class="s1">    "country_code": "US"</span>
+<a href="#__codelineno-25-13" id="__codelineno-25-13" name="__codelineno-25-13"></a><span class="s1">  }'</span>
+</code></pre></div></p>
+<h4 id="update-third-party">Update Third Party<a class="headerlink" href="#update-third-party" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="err">PUT /api/index.php/thirdparties/{id}</span>
+</code></pre></div>
+<h4 id="delete-third-party">Delete Third Party<a class="headerlink" href="#delete-third-party" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="err">DELETE /api/index.php/thirdparties/{id}</span>
+</code></pre></div>
+<hr/>
+<h3 id="contacts">Contacts<a class="headerlink" href="#contacts" title="Permanent link">¶</a></h3>
+<h4 id="list-contacts">List Contacts<a class="headerlink" href="#list-contacts" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-28-1" id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="err">GET /api/index.php/contacts</span>
+</code></pre></div>
+<h4 id="get-contact-by-id">Get Contact by ID<a class="headerlink" href="#get-contact-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-29-1" id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="err">GET /api/index.php/contacts/{id}</span>
+</code></pre></div>
+<h4 id="create-contact">Create Contact<a class="headerlink" href="#create-contact" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-30-1" id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="err">POST /api/index.php/contacts</span>
+</code></pre></div>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-31-1" id="__codelineno-31-1" name="__codelineno-31-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/contacts"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-31-2" id="__codelineno-31-2" name="__codelineno-31-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-31-3" id="__codelineno-31-3" name="__codelineno-31-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-31-4" id="__codelineno-31-4" name="__codelineno-31-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<a href="#__codelineno-31-5" id="__codelineno-31-5" name="__codelineno-31-5"></a><span class="s1">    "firstname": "Jane",</span>
+<a href="#__codelineno-31-6" id="__codelineno-31-6" name="__codelineno-31-6"></a><span class="s1">    "lastname": "Smith",</span>
+<a href="#__codelineno-31-7" id="__codelineno-31-7" name="__codelineno-31-7"></a><span class="s1">    "email": "jane.smith@example.com",</span>
+<a href="#__codelineno-31-8" id="__codelineno-31-8" name="__codelineno-31-8"></a><span class="s1">    "phone": "+1-555-0124",</span>
+<a href="#__codelineno-31-9" id="__codelineno-31-9" name="__codelineno-31-9"></a><span class="s1">    "socid": 1,</span>
+<a href="#__codelineno-31-10" id="__codelineno-31-10" name="__codelineno-31-10"></a><span class="s1">    "poste": "Manager"</span>
+<a href="#__codelineno-31-11" id="__codelineno-31-11" name="__codelineno-31-11"></a><span class="s1">  }'</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="productsservices">Products/Services<a class="headerlink" href="#productsservices" title="Permanent link">¶</a></h3>
+<h4 id="list-products">List Products<a class="headerlink" href="#list-products" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-32-1" id="__codelineno-32-1" name="__codelineno-32-1"></a><span class="err">GET /api/index.php/products</span>
+</code></pre></div>
+<p><strong>Parameters</strong>:
+- <code>type</code>: 0 for products, 1 for services
+- <code>category</code>: Filter by category ID
+- <code>limit</code>: Results per page</p>
+<h4 id="get-product-by-id">Get Product by ID<a class="headerlink" href="#get-product-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-33-1" id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="err">GET /api/index.php/products/{id}</span>
+</code></pre></div>
+<h4 id="create-product">Create Product<a class="headerlink" href="#create-product" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-34-1" id="__codelineno-34-1" name="__codelineno-34-1"></a><span class="err">POST /api/index.php/products</span>
+</code></pre></div>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-35-1" id="__codelineno-35-1" name="__codelineno-35-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/products"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-35-2" id="__codelineno-35-2" name="__codelineno-35-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-35-3" id="__codelineno-35-3" name="__codelineno-35-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-35-4" id="__codelineno-35-4" name="__codelineno-35-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<a href="#__codelineno-35-5" id="__codelineno-35-5" name="__codelineno-35-5"></a><span class="s1">    "ref": "PROD001",</span>
+<a href="#__codelineno-35-6" id="__codelineno-35-6" name="__codelineno-35-6"></a><span class="s1">    "label": "Premium Widget",</span>
+<a href="#__codelineno-35-7" id="__codelineno-35-7" name="__codelineno-35-7"></a><span class="s1">    "description": "High-quality widget for professional use",</span>
+<a href="#__codelineno-35-8" id="__codelineno-35-8" name="__codelineno-35-8"></a><span class="s1">    "price": 29.99,</span>
+<a href="#__codelineno-35-9" id="__codelineno-35-9" name="__codelineno-35-9"></a><span class="s1">    "type": 0,</span>
+<a href="#__codelineno-35-10" id="__codelineno-35-10" name="__codelineno-35-10"></a><span class="s1">    "status": 1</span>
+<a href="#__codelineno-35-11" id="__codelineno-35-11" name="__codelineno-35-11"></a><span class="s1">  }'</span>
+</code></pre></div></p>
+<h4 id="update-product-stock">Update Product Stock<a class="headerlink" href="#update-product-stock" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-36-1" id="__codelineno-36-1" name="__codelineno-36-1"></a><span class="err">POST /api/index.php/products/{id}/stock</span>
+</code></pre></div>
+<hr/>
+<h3 id="invoices">Invoices<a class="headerlink" href="#invoices" title="Permanent link">¶</a></h3>
+<h4 id="list-invoices">List Invoices<a class="headerlink" href="#list-invoices" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-37-1" id="__codelineno-37-1" name="__codelineno-37-1"></a><span class="err">GET /api/index.php/invoices</span>
+</code></pre></div>
+<p><strong>Parameters</strong>:
+- <code>thirdparty_ids</code>: Filter by third party ID(s)
+- <code>status</code>: Filter by status
+- <code>sqlfilters</code>: Custom SQL filters</p>
+<h4 id="get-invoice-by-id">Get Invoice by ID<a class="headerlink" href="#get-invoice-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-38-1" id="__codelineno-38-1" name="__codelineno-38-1"></a><span class="err">GET /api/index.php/invoices/{id}</span>
+</code></pre></div>
+<h4 id="create-invoice">Create Invoice<a class="headerlink" href="#create-invoice" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-39-1" id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="err">POST /api/index.php/invoices</span>
+</code></pre></div>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-40-1" id="__codelineno-40-1" name="__codelineno-40-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/invoices"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-40-2" id="__codelineno-40-2" name="__codelineno-40-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-40-3" id="__codelineno-40-3" name="__codelineno-40-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-40-4" id="__codelineno-40-4" name="__codelineno-40-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<a href="#__codelineno-40-5" id="__codelineno-40-5" name="__codelineno-40-5"></a><span class="s1">    "socid": 1,</span>
+<a href="#__codelineno-40-6" id="__codelineno-40-6" name="__codelineno-40-6"></a><span class="s1">    "date": "2024-01-15",</span>
+<a href="#__codelineno-40-7" id="__codelineno-40-7" name="__codelineno-40-7"></a><span class="s1">    "lines": [</span>
+<a href="#__codelineno-40-8" id="__codelineno-40-8" name="__codelineno-40-8"></a><span class="s1">      {</span>
+<a href="#__codelineno-40-9" id="__codelineno-40-9" name="__codelineno-40-9"></a><span class="s1">        "fk_product": 1,</span>
+<a href="#__codelineno-40-10" id="__codelineno-40-10" name="__codelineno-40-10"></a><span class="s1">        "qty": 2,</span>
+<a href="#__codelineno-40-11" id="__codelineno-40-11" name="__codelineno-40-11"></a><span class="s1">        "subprice": 29.99,</span>
+<a href="#__codelineno-40-12" id="__codelineno-40-12" name="__codelineno-40-12"></a><span class="s1">        "description": "Premium Widget"</span>
+<a href="#__codelineno-40-13" id="__codelineno-40-13" name="__codelineno-40-13"></a><span class="s1">      }</span>
+<a href="#__codelineno-40-14" id="__codelineno-40-14" name="__codelineno-40-14"></a><span class="s1">    ]</span>
+<a href="#__codelineno-40-15" id="__codelineno-40-15" name="__codelineno-40-15"></a><span class="s1">  }'</span>
+</code></pre></div></p>
+<h4 id="validate-invoice">Validate Invoice<a class="headerlink" href="#validate-invoice" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-41-1" id="__codelineno-41-1" name="__codelineno-41-1"></a><span class="err">POST /api/index.php/invoices/{id}/validate</span>
+</code></pre></div>
+<h4 id="add-payment-to-invoice">Add Payment to Invoice<a class="headerlink" href="#add-payment-to-invoice" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-42-1" id="__codelineno-42-1" name="__codelineno-42-1"></a><span class="err">POST /api/index.php/invoices/{id}/payments</span>
+</code></pre></div>
+<hr/>
+<h3 id="orders">Orders<a class="headerlink" href="#orders" title="Permanent link">¶</a></h3>
+<h4 id="list-orders">List Orders<a class="headerlink" href="#list-orders" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-43-1" id="__codelineno-43-1" name="__codelineno-43-1"></a><span class="err">GET /api/index.php/orders</span>
+</code></pre></div>
+<h4 id="get-order-by-id">Get Order by ID<a class="headerlink" href="#get-order-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-44-1" id="__codelineno-44-1" name="__codelineno-44-1"></a><span class="err">GET /api/index.php/orders/{id}</span>
+</code></pre></div>
+<h4 id="create-order">Create Order<a class="headerlink" href="#create-order" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-45-1" id="__codelineno-45-1" name="__codelineno-45-1"></a><span class="err">POST /api/index.php/orders</span>
+</code></pre></div>
+<h4 id="update-order-status">Update Order Status<a class="headerlink" href="#update-order-status" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-46-1" id="__codelineno-46-1" name="__codelineno-46-1"></a><span class="err">POST /api/index.php/orders/{id}/status</span>
+</code></pre></div>
+<hr/>
+<h3 id="proposalsquotes">Proposals/Quotes<a class="headerlink" href="#proposalsquotes" title="Permanent link">¶</a></h3>
+<h4 id="list-proposals">List Proposals<a class="headerlink" href="#list-proposals" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-47-1" id="__codelineno-47-1" name="__codelineno-47-1"></a><span class="err">GET /api/index.php/proposals</span>
+</code></pre></div>
+<h4 id="get-proposal-by-id">Get Proposal by ID<a class="headerlink" href="#get-proposal-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-48-1" id="__codelineno-48-1" name="__codelineno-48-1"></a><span class="err">GET /api/index.php/proposals/{id}</span>
+</code></pre></div>
+<h4 id="create-proposal">Create Proposal<a class="headerlink" href="#create-proposal" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-49-1" id="__codelineno-49-1" name="__codelineno-49-1"></a><span class="err">POST /api/index.php/proposals</span>
+</code></pre></div>
+<h4 id="set-proposal-status">Set Proposal Status<a class="headerlink" href="#set-proposal-status" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-50-1" id="__codelineno-50-1" name="__codelineno-50-1"></a><span class="err">POST /api/index.php/proposals/{id}/status</span>
+</code></pre></div>
+<hr/>
+<h3 id="projects">Projects<a class="headerlink" href="#projects" title="Permanent link">¶</a></h3>
+<h4 id="list-projects">List Projects<a class="headerlink" href="#list-projects" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-51-1" id="__codelineno-51-1" name="__codelineno-51-1"></a><span class="err">GET /api/index.php/projects</span>
+</code></pre></div>
+<h4 id="get-project-by-id">Get Project by ID<a class="headerlink" href="#get-project-by-id" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-52-1" id="__codelineno-52-1" name="__codelineno-52-1"></a><span class="err">GET /api/index.php/projects/{id}</span>
+</code></pre></div>
+<h4 id="create-project">Create Project<a class="headerlink" href="#create-project" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-53-1" id="__codelineno-53-1" name="__codelineno-53-1"></a><span class="err">POST /api/index.php/projects</span>
+</code></pre></div>
+<h4 id="add-task-to-project">Add Task to Project<a class="headerlink" href="#add-task-to-project" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-54-1" id="__codelineno-54-1" name="__codelineno-54-1"></a><span class="err">POST /api/index.php/projects/{id}/tasks</span>
+</code></pre></div>
+<hr/>
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h2>
+<h3 id="http-status-codes">HTTP Status Codes<a class="headerlink" href="#http-status-codes" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>Request successful</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>Resource created successfully</td>
+</tr>
+<tr>
+<td>204</td>
+<td>No Content</td>
+<td>Request successful, no content returned</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>Invalid request format or parameters</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>Invalid or missing API key</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>Insufficient permissions</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>Resource not found</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Conflict</td>
+<td>Resource conflict (e.g., duplicate key)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>Server error</td>
+</tr>
+</tbody>
+</table>
+<h3 id="error-response-format">Error Response Format<a class="headerlink" href="#error-response-format" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-55-1" id="__codelineno-55-1" name="__codelineno-55-1"></a><span class="p">{</span>
+<a href="#__codelineno-55-2" id="__codelineno-55-2" name="__codelineno-55-2"></a><span class="w">  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-55-3" id="__codelineno-55-3" name="__codelineno-55-3"></a><span class="w">    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<a href="#__codelineno-55-4" id="__codelineno-55-4" name="__codelineno-55-4"></a><span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Validation failed"</span><span class="p">,</span>
+<a href="#__codelineno-55-5" id="__codelineno-55-5" name="__codelineno-55-5"></a><span class="w">    </span><span class="nt">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-55-6" id="__codelineno-55-6" name="__codelineno-55-6"></a><span class="w">      </span><span class="nt">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email"</span><span class="p">,</span>
+<a href="#__codelineno-55-7" id="__codelineno-55-7" name="__codelineno-55-7"></a><span class="w">      </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid email format"</span>
+<a href="#__codelineno-55-8" id="__codelineno-55-8" name="__codelineno-55-8"></a><span class="w">    </span><span class="p">}</span>
+<a href="#__codelineno-55-9" id="__codelineno-55-9" name="__codelineno-55-9"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-55-10" id="__codelineno-55-10" name="__codelineno-55-10"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="common-errors">Common Errors<a class="headerlink" href="#common-errors" title="Permanent link">¶</a></h3>
+<h4 id="authentication-errors">Authentication Errors<a class="headerlink" href="#authentication-errors" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-56-1" id="__codelineno-56-1" name="__codelineno-56-1"></a><span class="p">{</span>
+<a href="#__codelineno-56-2" id="__codelineno-56-2" name="__codelineno-56-2"></a><span class="w">  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-56-3" id="__codelineno-56-3" name="__codelineno-56-3"></a><span class="w">    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">401</span><span class="p">,</span>
+<a href="#__codelineno-56-4" id="__codelineno-56-4" name="__codelineno-56-4"></a><span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Access denied. Wrong API key."</span>
+<a href="#__codelineno-56-5" id="__codelineno-56-5" name="__codelineno-56-5"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-56-6" id="__codelineno-56-6" name="__codelineno-56-6"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="validation-errors">Validation Errors<a class="headerlink" href="#validation-errors" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-57-1" id="__codelineno-57-1" name="__codelineno-57-1"></a><span class="p">{</span>
+<a href="#__codelineno-57-2" id="__codelineno-57-2" name="__codelineno-57-2"></a><span class="w">  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-57-3" id="__codelineno-57-3" name="__codelineno-57-3"></a><span class="w">    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<a href="#__codelineno-57-4" id="__codelineno-57-4" name="__codelineno-57-4"></a><span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bad parameters"</span><span class="p">,</span>
+<a href="#__codelineno-57-5" id="__codelineno-57-5" name="__codelineno-57-5"></a><span class="w">    </span><span class="nt">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Required field 'name' is missing"</span>
+<a href="#__codelineno-57-6" id="__codelineno-57-6" name="__codelineno-57-6"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-57-7" id="__codelineno-57-7" name="__codelineno-57-7"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="permission-errors">Permission Errors<a class="headerlink" href="#permission-errors" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-58-1" id="__codelineno-58-1" name="__codelineno-58-1"></a><span class="p">{</span>
+<a href="#__codelineno-58-2" id="__codelineno-58-2" name="__codelineno-58-2"></a><span class="w">  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-58-3" id="__codelineno-58-3" name="__codelineno-58-3"></a><span class="w">    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">403</span><span class="p">,</span>
+<a href="#__codelineno-58-4" id="__codelineno-58-4" name="__codelineno-58-4"></a><span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Forbidden: You don't have permission to access this resource"</span>
+<a href="#__codelineno-58-5" id="__codelineno-58-5" name="__codelineno-58-5"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-58-6" id="__codelineno-58-6" name="__codelineno-58-6"></a><span class="p">}</span>
+</code></pre></div>
+<hr/>
+<h2 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">¶</a></h2>
+<h3 id="default-limits">Default Limits<a class="headerlink" href="#default-limits" title="Permanent link">¶</a></h3>
+<p>Dolibarr doesn't enforce strict rate limits by default, but it's recommended to implement reasonable request patterns:</p>
+<ul>
+<li><strong>Recommended</strong>: Max 100 requests per minute per API key</li>
+<li><strong>Bulk Operations</strong>: Use batch endpoints when available</li>
+<li><strong>Long Operations</strong>: Implement exponential backoff for retries</li>
+</ul>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-59-1" id="__codelineno-59-1" name="__codelineno-59-1"></a><span class="c1">// Example with exponential backoff</span>
+<a href="#__codelineno-59-2" id="__codelineno-59-2" name="__codelineno-59-2"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">apiRequest</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">,</span><span class="w"> </span><span class="nx">retries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-59-3" id="__codelineno-59-3" name="__codelineno-59-3"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">retries</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-59-4" id="__codelineno-59-4" name="__codelineno-59-4"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-59-5" id="__codelineno-59-5" name="__codelineno-59-5"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">);</span>
+<a href="#__codelineno-59-6" id="__codelineno-59-6" name="__codelineno-59-6"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
+<a href="#__codelineno-59-7" id="__codelineno-59-7" name="__codelineno-59-7"></a>
+<a href="#__codelineno-59-8" id="__codelineno-59-8" name="__codelineno-59-8"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">429</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-59-9" id="__codelineno-59-9" name="__codelineno-59-9"></a><span class="w">        </span><span class="c1">// Rate limited, wait and retry</span>
+<a href="#__codelineno-59-10" id="__codelineno-59-10" name="__codelineno-59-10"></a><span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="nx">sleep</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">);</span>
+<a href="#__codelineno-59-11" id="__codelineno-59-11" name="__codelineno-59-11"></a><span class="w">        </span><span class="k">continue</span><span class="p">;</span>
+<a href="#__codelineno-59-12" id="__codelineno-59-12" name="__codelineno-59-12"></a><span class="w">      </span><span class="p">}</span>
+<a href="#__codelineno-59-13" id="__codelineno-59-13" name="__codelineno-59-13"></a>
+<a href="#__codelineno-59-14" id="__codelineno-59-14" name="__codelineno-59-14"></a><span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`HTTP </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<a href="#__codelineno-59-15" id="__codelineno-59-15" name="__codelineno-59-15"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-59-16" id="__codelineno-59-16" name="__codelineno-59-16"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">i</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">retries</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<a href="#__codelineno-59-17" id="__codelineno-59-17" name="__codelineno-59-17"></a><span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">sleep</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">);</span>
+<a href="#__codelineno-59-18" id="__codelineno-59-18" name="__codelineno-59-18"></a><span class="w">    </span><span class="p">}</span>
+<a href="#__codelineno-59-19" id="__codelineno-59-19" name="__codelineno-59-19"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-59-20" id="__codelineno-59-20" name="__codelineno-59-20"></a><span class="p">}</span>
+</code></pre></div>
+<hr/>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
+<h3 id="javascriptnodejs-example">JavaScript/Node.js Example<a class="headerlink" href="#javascriptnodejs-example" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-60-1" id="__codelineno-60-1" name="__codelineno-60-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+<a href="#__codelineno-60-2" id="__codelineno-60-2" name="__codelineno-60-2"></a>
+<a href="#__codelineno-60-3" id="__codelineno-60-3" name="__codelineno-60-3"></a><span class="kd">class</span><span class="w"> </span><span class="nx">DolibarrAPI</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-4" id="__codelineno-60-4" name="__codelineno-60-4"></a><span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">baseUrl</span><span class="p">,</span><span class="w"> </span><span class="nx">apiKey</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-5" id="__codelineno-60-5" name="__codelineno-60-5"></a><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">baseUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">baseUrl</span><span class="p">;</span>
+<a href="#__codelineno-60-6" id="__codelineno-60-6" name="__codelineno-60-6"></a><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">apiKey</span><span class="p">;</span>
+<a href="#__codelineno-60-7" id="__codelineno-60-7" name="__codelineno-60-7"></a>
+<a href="#__codelineno-60-8" id="__codelineno-60-8" name="__codelineno-60-8"></a><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+<a href="#__codelineno-60-9" id="__codelineno-60-9" name="__codelineno-60-9"></a><span class="w">      </span><span class="nx">baseURL</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">baseUrl</span><span class="si">}</span><span class="sb">/api/index.php`</span><span class="p">,</span>
+<a href="#__codelineno-60-10" id="__codelineno-60-10" name="__codelineno-60-10"></a><span class="w">      </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-11" id="__codelineno-60-11" name="__codelineno-60-11"></a><span class="w">        </span><span class="s1">'Content-Type'</span><span class="o">:</span><span class="w"> </span><span class="s1">'application/json'</span><span class="p">,</span>
+<a href="#__codelineno-60-12" id="__codelineno-60-12" name="__codelineno-60-12"></a><span class="w">        </span><span class="s1">'Accept'</span><span class="o">:</span><span class="w"> </span><span class="s1">'application/json'</span><span class="p">,</span>
+<a href="#__codelineno-60-13" id="__codelineno-60-13" name="__codelineno-60-13"></a><span class="w">        </span><span class="s1">'DOLAPIKEY'</span><span class="o">:</span><span class="w"> </span><span class="nx">apiKey</span>
+<a href="#__codelineno-60-14" id="__codelineno-60-14" name="__codelineno-60-14"></a><span class="w">      </span><span class="p">}</span>
+<a href="#__codelineno-60-15" id="__codelineno-60-15" name="__codelineno-60-15"></a><span class="w">    </span><span class="p">});</span>
+<a href="#__codelineno-60-16" id="__codelineno-60-16" name="__codelineno-60-16"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-60-17" id="__codelineno-60-17" name="__codelineno-60-17"></a>
+<a href="#__codelineno-60-18" id="__codelineno-60-18" name="__codelineno-60-18"></a><span class="w">  </span><span class="c1">// Get all third parties</span>
+<a href="#__codelineno-60-19" id="__codelineno-60-19" name="__codelineno-60-19"></a><span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">getThirdParties</span><span class="p">(</span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-20" id="__codelineno-60-20" name="__codelineno-60-20"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-21" id="__codelineno-60-21" name="__codelineno-60-21"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/thirdparties'</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="p">});</span>
+<a href="#__codelineno-60-22" id="__codelineno-60-22" name="__codelineno-60-22"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+<a href="#__codelineno-60-23" id="__codelineno-60-23" name="__codelineno-60-23"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-24" id="__codelineno-60-24" name="__codelineno-60-24"></a><span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'API Error:'</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="o">?</span><span class="p">.</span><span class="nx">data</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+<a href="#__codelineno-60-25" id="__codelineno-60-25" name="__codelineno-60-25"></a><span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<a href="#__codelineno-60-26" id="__codelineno-60-26" name="__codelineno-60-26"></a><span class="w">    </span><span class="p">}</span>
+<a href="#__codelineno-60-27" id="__codelineno-60-27" name="__codelineno-60-27"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-60-28" id="__codelineno-60-28" name="__codelineno-60-28"></a>
+<a href="#__codelineno-60-29" id="__codelineno-60-29" name="__codelineno-60-29"></a><span class="w">  </span><span class="c1">// Create a new third party</span>
+<a href="#__codelineno-60-30" id="__codelineno-60-30" name="__codelineno-60-30"></a><span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">createThirdParty</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-31" id="__codelineno-60-31" name="__codelineno-60-31"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-32" id="__codelineno-60-32" name="__codelineno-60-32"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/thirdparties'</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">);</span>
+<a href="#__codelineno-60-33" id="__codelineno-60-33" name="__codelineno-60-33"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+<a href="#__codelineno-60-34" id="__codelineno-60-34" name="__codelineno-60-34"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-35" id="__codelineno-60-35" name="__codelineno-60-35"></a><span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'API Error:'</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="o">?</span><span class="p">.</span><span class="nx">data</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+<a href="#__codelineno-60-36" id="__codelineno-60-36" name="__codelineno-60-36"></a><span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<a href="#__codelineno-60-37" id="__codelineno-60-37" name="__codelineno-60-37"></a><span class="w">    </span><span class="p">}</span>
+<a href="#__codelineno-60-38" id="__codelineno-60-38" name="__codelineno-60-38"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-60-39" id="__codelineno-60-39" name="__codelineno-60-39"></a>
+<a href="#__codelineno-60-40" id="__codelineno-60-40" name="__codelineno-60-40"></a><span class="w">  </span><span class="c1">// Create invoice</span>
+<a href="#__codelineno-60-41" id="__codelineno-60-41" name="__codelineno-60-41"></a><span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">createInvoice</span><span class="p">(</span><span class="nx">invoiceData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-42" id="__codelineno-60-42" name="__codelineno-60-42"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-43" id="__codelineno-60-43" name="__codelineno-60-43"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/invoices'</span><span class="p">,</span><span class="w"> </span><span class="nx">invoiceData</span><span class="p">);</span>
+<a href="#__codelineno-60-44" id="__codelineno-60-44" name="__codelineno-60-44"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+<a href="#__codelineno-60-45" id="__codelineno-60-45" name="__codelineno-60-45"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-46" id="__codelineno-60-46" name="__codelineno-60-46"></a><span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'API Error:'</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="o">?</span><span class="p">.</span><span class="nx">data</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+<a href="#__codelineno-60-47" id="__codelineno-60-47" name="__codelineno-60-47"></a><span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<a href="#__codelineno-60-48" id="__codelineno-60-48" name="__codelineno-60-48"></a><span class="w">    </span><span class="p">}</span>
+<a href="#__codelineno-60-49" id="__codelineno-60-49" name="__codelineno-60-49"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-60-50" id="__codelineno-60-50" name="__codelineno-60-50"></a><span class="p">}</span>
+<a href="#__codelineno-60-51" id="__codelineno-60-51" name="__codelineno-60-51"></a>
+<a href="#__codelineno-60-52" id="__codelineno-60-52" name="__codelineno-60-52"></a><span class="c1">// Usage</span>
+<a href="#__codelineno-60-53" id="__codelineno-60-53" name="__codelineno-60-53"></a><span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">DolibarrAPI</span><span class="p">(</span><span class="s1">'http://localhost:8080'</span><span class="p">,</span><span class="w"> </span><span class="s1">'your_api_key'</span><span class="p">);</span>
+<a href="#__codelineno-60-54" id="__codelineno-60-54" name="__codelineno-60-54"></a>
+<a href="#__codelineno-60-55" id="__codelineno-60-55" name="__codelineno-60-55"></a><span class="c1">// Example usage</span>
+<a href="#__codelineno-60-56" id="__codelineno-60-56" name="__codelineno-60-56"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">example</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-57" id="__codelineno-60-57" name="__codelineno-60-57"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-58" id="__codelineno-60-58" name="__codelineno-60-58"></a><span class="w">    </span><span class="c1">// Create a company</span>
+<a href="#__codelineno-60-59" id="__codelineno-60-59" name="__codelineno-60-59"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">company</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">createThirdParty</span><span class="p">({</span>
+<a href="#__codelineno-60-60" id="__codelineno-60-60" name="__codelineno-60-60"></a><span class="w">      </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'Tech Solutions Inc'</span><span class="p">,</span>
+<a href="#__codelineno-60-61" id="__codelineno-60-61" name="__codelineno-60-61"></a><span class="w">      </span><span class="nx">client</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<a href="#__codelineno-60-62" id="__codelineno-60-62" name="__codelineno-60-62"></a><span class="w">      </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">'contact@techsolutions.com'</span><span class="p">,</span>
+<a href="#__codelineno-60-63" id="__codelineno-60-63" name="__codelineno-60-63"></a><span class="w">      </span><span class="nx">phone</span><span class="o">:</span><span class="w"> </span><span class="s1">'+1-555-0199'</span>
+<a href="#__codelineno-60-64" id="__codelineno-60-64" name="__codelineno-60-64"></a><span class="w">    </span><span class="p">});</span>
+<a href="#__codelineno-60-65" id="__codelineno-60-65" name="__codelineno-60-65"></a>
+<a href="#__codelineno-60-66" id="__codelineno-60-66" name="__codelineno-60-66"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Created company:'</span><span class="p">,</span><span class="w"> </span><span class="nx">company</span><span class="p">);</span>
+<a href="#__codelineno-60-67" id="__codelineno-60-67" name="__codelineno-60-67"></a>
+<a href="#__codelineno-60-68" id="__codelineno-60-68" name="__codelineno-60-68"></a><span class="w">    </span><span class="c1">// Create an invoice</span>
+<a href="#__codelineno-60-69" id="__codelineno-60-69" name="__codelineno-60-69"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">invoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">createInvoice</span><span class="p">({</span>
+<a href="#__codelineno-60-70" id="__codelineno-60-70" name="__codelineno-60-70"></a><span class="w">      </span><span class="nx">socid</span><span class="o">:</span><span class="w"> </span><span class="nx">company</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+<a href="#__codelineno-60-71" id="__codelineno-60-71" name="__codelineno-60-71"></a><span class="w">      </span><span class="nx">date</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)[</span><span class="mf">0</span><span class="p">],</span>
+<a href="#__codelineno-60-72" id="__codelineno-60-72" name="__codelineno-60-72"></a><span class="w">      </span><span class="nx">lines</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<a href="#__codelineno-60-73" id="__codelineno-60-73" name="__codelineno-60-73"></a><span class="w">        </span><span class="p">{</span>
+<a href="#__codelineno-60-74" id="__codelineno-60-74" name="__codelineno-60-74"></a><span class="w">          </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Consulting Services'</span><span class="p">,</span>
+<a href="#__codelineno-60-75" id="__codelineno-60-75" name="__codelineno-60-75"></a><span class="w">          </span><span class="nx">qty</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
+<a href="#__codelineno-60-76" id="__codelineno-60-76" name="__codelineno-60-76"></a><span class="w">          </span><span class="nx">subprice</span><span class="o">:</span><span class="w"> </span><span class="mf">150.00</span>
+<a href="#__codelineno-60-77" id="__codelineno-60-77" name="__codelineno-60-77"></a><span class="w">        </span><span class="p">}</span>
+<a href="#__codelineno-60-78" id="__codelineno-60-78" name="__codelineno-60-78"></a><span class="w">      </span><span class="p">]</span>
+<a href="#__codelineno-60-79" id="__codelineno-60-79" name="__codelineno-60-79"></a><span class="w">    </span><span class="p">});</span>
+<a href="#__codelineno-60-80" id="__codelineno-60-80" name="__codelineno-60-80"></a>
+<a href="#__codelineno-60-81" id="__codelineno-60-81" name="__codelineno-60-81"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Created invoice:'</span><span class="p">,</span><span class="w"> </span><span class="nx">invoice</span><span class="p">);</span>
+<a href="#__codelineno-60-82" id="__codelineno-60-82" name="__codelineno-60-82"></a>
+<a href="#__codelineno-60-83" id="__codelineno-60-83" name="__codelineno-60-83"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-60-84" id="__codelineno-60-84" name="__codelineno-60-84"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'Error:'</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<a href="#__codelineno-60-85" id="__codelineno-60-85" name="__codelineno-60-85"></a><span class="w">  </span><span class="p">}</span>
+<a href="#__codelineno-60-86" id="__codelineno-60-86" name="__codelineno-60-86"></a><span class="p">}</span>
+<a href="#__codelineno-60-87" id="__codelineno-60-87" name="__codelineno-60-87"></a>
+<a href="#__codelineno-60-88" id="__codelineno-60-88" name="__codelineno-60-88"></a><span class="nx">example</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="python-example">Python Example<a class="headerlink" href="#python-example" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-61-1" id="__codelineno-61-1" name="__codelineno-61-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<a href="#__codelineno-61-2" id="__codelineno-61-2" name="__codelineno-61-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<a href="#__codelineno-61-3" id="__codelineno-61-3" name="__codelineno-61-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<a href="#__codelineno-61-4" id="__codelineno-61-4" name="__codelineno-61-4"></a>
+<a href="#__codelineno-61-5" id="__codelineno-61-5" name="__codelineno-61-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">DolibarrAPI</span><span class="p">:</span>
+<a href="#__codelineno-61-6" id="__codelineno-61-6" name="__codelineno-61-6"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_url</span><span class="p">,</span> <span class="n">api_key</span><span class="p">):</span>
+<a href="#__codelineno-61-7" id="__codelineno-61-7" name="__codelineno-61-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/api/index.php"</span>
+<a href="#__codelineno-61-8" id="__codelineno-61-8" name="__codelineno-61-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+<a href="#__codelineno-61-9" id="__codelineno-61-9" name="__codelineno-61-9"></a>            <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+<a href="#__codelineno-61-10" id="__codelineno-61-10" name="__codelineno-61-10"></a>            <span class="s1">'Accept'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+<a href="#__codelineno-61-11" id="__codelineno-61-11" name="__codelineno-61-11"></a>            <span class="s1">'DOLAPIKEY'</span><span class="p">:</span> <span class="n">api_key</span>
+<a href="#__codelineno-61-12" id="__codelineno-61-12" name="__codelineno-61-12"></a>        <span class="p">}</span>
+<a href="#__codelineno-61-13" id="__codelineno-61-13" name="__codelineno-61-13"></a>
+<a href="#__codelineno-61-14" id="__codelineno-61-14" name="__codelineno-61-14"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a href="#__codelineno-61-15" id="__codelineno-61-15" name="__codelineno-61-15"></a>        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">endpoint</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-61-16" id="__codelineno-61-16" name="__codelineno-61-16"></a>
+<a href="#__codelineno-61-17" id="__codelineno-61-17" name="__codelineno-61-17"></a>        <span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-61-18" id="__codelineno-61-18" name="__codelineno-61-18"></a>            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+<a href="#__codelineno-61-19" id="__codelineno-61-19" name="__codelineno-61-19"></a>                <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+<a href="#__codelineno-61-20" id="__codelineno-61-20" name="__codelineno-61-20"></a>                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+<a href="#__codelineno-61-21" id="__codelineno-61-21" name="__codelineno-61-21"></a>                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+<a href="#__codelineno-61-22" id="__codelineno-61-22" name="__codelineno-61-22"></a>                <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+<a href="#__codelineno-61-23" id="__codelineno-61-23" name="__codelineno-61-23"></a>                <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+<a href="#__codelineno-61-24" id="__codelineno-61-24" name="__codelineno-61-24"></a>            <span class="p">)</span>
+<a href="#__codelineno-61-25" id="__codelineno-61-25" name="__codelineno-61-25"></a>            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<a href="#__codelineno-61-26" id="__codelineno-61-26" name="__codelineno-61-26"></a>            <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span> <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span> <span class="k">else</span> <span class="kc">None</span>
+<a href="#__codelineno-61-27" id="__codelineno-61-27" name="__codelineno-61-27"></a>        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a href="#__codelineno-61-28" id="__codelineno-61-28" name="__codelineno-61-28"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"API Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-61-29" id="__codelineno-61-29" name="__codelineno-61-29"></a>            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="s1">'json'</span><span class="p">):</span>
+<a href="#__codelineno-61-30" id="__codelineno-61-30" name="__codelineno-61-30"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error details: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-61-31" id="__codelineno-61-31" name="__codelineno-61-31"></a>            <span class="k">raise</span>
+<a href="#__codelineno-61-32" id="__codelineno-61-32" name="__codelineno-61-32"></a>
+<a href="#__codelineno-61-33" id="__codelineno-61-33" name="__codelineno-61-33"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_thirdparties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+<a href="#__codelineno-61-34" id="__codelineno-61-34" name="__codelineno-61-34"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/thirdparties'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+<a href="#__codelineno-61-35" id="__codelineno-61-35" name="__codelineno-61-35"></a>
+<a href="#__codelineno-61-36" id="__codelineno-61-36" name="__codelineno-61-36"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_thirdparty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<a href="#__codelineno-61-37" id="__codelineno-61-37" name="__codelineno-61-37"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/thirdparties'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<a href="#__codelineno-61-38" id="__codelineno-61-38" name="__codelineno-61-38"></a>
+<a href="#__codelineno-61-39" id="__codelineno-61-39" name="__codelineno-61-39"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_products</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+<a href="#__codelineno-61-40" id="__codelineno-61-40" name="__codelineno-61-40"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'/products'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+<a href="#__codelineno-61-41" id="__codelineno-61-41" name="__codelineno-61-41"></a>
+<a href="#__codelineno-61-42" id="__codelineno-61-42" name="__codelineno-61-42"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_invoice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<a href="#__codelineno-61-43" id="__codelineno-61-43" name="__codelineno-61-43"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/invoices'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<a href="#__codelineno-61-44" id="__codelineno-61-44" name="__codelineno-61-44"></a>
+<a href="#__codelineno-61-45" id="__codelineno-61-45" name="__codelineno-61-45"></a><span class="c1"># Usage example</span>
+<a href="#__codelineno-61-46" id="__codelineno-61-46" name="__codelineno-61-46"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a href="#__codelineno-61-47" id="__codelineno-61-47" name="__codelineno-61-47"></a>    <span class="n">api</span> <span class="o">=</span> <span class="n">DolibarrAPI</span><span class="p">(</span><span class="s1">'http://localhost:8080'</span><span class="p">,</span> <span class="s1">'your_api_key'</span><span class="p">)</span>
+<a href="#__codelineno-61-48" id="__codelineno-61-48" name="__codelineno-61-48"></a>
+<a href="#__codelineno-61-49" id="__codelineno-61-49" name="__codelineno-61-49"></a>    <span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-61-50" id="__codelineno-61-50" name="__codelineno-61-50"></a>        <span class="c1"># Create a new company</span>
+<a href="#__codelineno-61-51" id="__codelineno-61-51" name="__codelineno-61-51"></a>        <span class="n">company_data</span> <span class="o">=</span> <span class="p">{</span>
+<a href="#__codelineno-61-52" id="__codelineno-61-52" name="__codelineno-61-52"></a>            <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Python Solutions Ltd'</span><span class="p">,</span>
+<a href="#__codelineno-61-53" id="__codelineno-61-53" name="__codelineno-61-53"></a>            <span class="s1">'client'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<a href="#__codelineno-61-54" id="__codelineno-61-54" name="__codelineno-61-54"></a>            <span class="s1">'email'</span><span class="p">:</span> <span class="s1">'info@pythonsolutions.com'</span><span class="p">,</span>
+<a href="#__codelineno-61-55" id="__codelineno-61-55" name="__codelineno-61-55"></a>            <span class="s1">'country_code'</span><span class="p">:</span> <span class="s1">'US'</span>
+<a href="#__codelineno-61-56" id="__codelineno-61-56" name="__codelineno-61-56"></a>        <span class="p">}</span>
+<a href="#__codelineno-61-57" id="__codelineno-61-57" name="__codelineno-61-57"></a>
+<a href="#__codelineno-61-58" id="__codelineno-61-58" name="__codelineno-61-58"></a>        <span class="n">company</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">create_thirdparty</span><span class="p">(</span><span class="n">company_data</span><span class="p">)</span>
+<a href="#__codelineno-61-59" id="__codelineno-61-59" name="__codelineno-61-59"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Created company: </span><span class="si">{</span><span class="n">company</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-61-60" id="__codelineno-61-60" name="__codelineno-61-60"></a>
+<a href="#__codelineno-61-61" id="__codelineno-61-61" name="__codelineno-61-61"></a>        <span class="c1"># Get list of products</span>
+<a href="#__codelineno-61-62" id="__codelineno-61-62" name="__codelineno-61-62"></a>        <span class="n">products</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_products</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<a href="#__codelineno-61-63" id="__codelineno-61-63" name="__codelineno-61-63"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Products: </span><span class="si">{</span><span class="n">products</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-61-64" id="__codelineno-61-64" name="__codelineno-61-64"></a>
+<a href="#__codelineno-61-65" id="__codelineno-61-65" name="__codelineno-61-65"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a href="#__codelineno-61-66" id="__codelineno-61-66" name="__codelineno-61-66"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="php-example">PHP Example<a class="headerlink" href="#php-example" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-62-1" id="__codelineno-62-1" name="__codelineno-62-1"></a><span class="cp">&lt;?php</span>
+<a href="#__codelineno-62-2" id="__codelineno-62-2" name="__codelineno-62-2"></a>
+<a href="#__codelineno-62-3" id="__codelineno-62-3" name="__codelineno-62-3"></a><span class="k">class</span> <span class="nc">DolibarrAPI</span> <span class="p">{</span>
+<a href="#__codelineno-62-4" id="__codelineno-62-4" name="__codelineno-62-4"></a>    <span class="k">private</span> <span class="nv">$baseUrl</span><span class="p">;</span>
+<a href="#__codelineno-62-5" id="__codelineno-62-5" name="__codelineno-62-5"></a>    <span class="k">private</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<a href="#__codelineno-62-6" id="__codelineno-62-6" name="__codelineno-62-6"></a>    <span class="k">private</span> <span class="nv">$httpHeaders</span><span class="p">;</span>
+<a href="#__codelineno-62-7" id="__codelineno-62-7" name="__codelineno-62-7"></a>
+<a href="#__codelineno-62-8" id="__codelineno-62-8" name="__codelineno-62-8"></a>    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$baseUrl</span><span class="p">,</span> <span class="nv">$apiKey</span><span class="p">)</span> <span class="p">{</span>
+<a href="#__codelineno-62-9" id="__codelineno-62-9" name="__codelineno-62-9"></a>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">baseUrl</span> <span class="o">=</span> <span class="nb">rtrim</span><span class="p">(</span><span class="nv">$baseUrl</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">)</span> <span class="o">.</span> <span class="s1">'/api/index.php'</span><span class="p">;</span>
+<a href="#__codelineno-62-10" id="__codelineno-62-10" name="__codelineno-62-10"></a>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">apiKey</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<a href="#__codelineno-62-11" id="__codelineno-62-11" name="__codelineno-62-11"></a>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">httpHeaders</span> <span class="o">=</span> <span class="p">[</span>
+<a href="#__codelineno-62-12" id="__codelineno-62-12" name="__codelineno-62-12"></a>            <span class="s1">'Content-Type: application/json'</span><span class="p">,</span>
+<a href="#__codelineno-62-13" id="__codelineno-62-13" name="__codelineno-62-13"></a>            <span class="s1">'Accept: application/json'</span><span class="p">,</span>
+<a href="#__codelineno-62-14" id="__codelineno-62-14" name="__codelineno-62-14"></a>            <span class="s1">'DOLAPIKEY: '</span> <span class="o">.</span> <span class="nv">$apiKey</span>
+<a href="#__codelineno-62-15" id="__codelineno-62-15" name="__codelineno-62-15"></a>        <span class="p">];</span>
+<a href="#__codelineno-62-16" id="__codelineno-62-16" name="__codelineno-62-16"></a>    <span class="p">}</span>
+<a href="#__codelineno-62-17" id="__codelineno-62-17" name="__codelineno-62-17"></a>
+<a href="#__codelineno-62-18" id="__codelineno-62-18" name="__codelineno-62-18"></a>    <span class="k">private</span> <span class="k">function</span> <span class="nf">request</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="nv">$endpoint</span><span class="p">,</span> <span class="nv">$data</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+<a href="#__codelineno-62-19" id="__codelineno-62-19" name="__codelineno-62-19"></a>        <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">baseUrl</span> <span class="o">.</span> <span class="s1">'/'</span> <span class="o">.</span> <span class="nb">ltrim</span><span class="p">(</span><span class="nv">$endpoint</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">);</span>
+<a href="#__codelineno-62-20" id="__codelineno-62-20" name="__codelineno-62-20"></a>
+<a href="#__codelineno-62-21" id="__codelineno-62-21" name="__codelineno-62-21"></a>        <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+<a href="#__codelineno-62-22" id="__codelineno-62-22" name="__codelineno-62-22"></a>        <span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="p">[</span>
+<a href="#__codelineno-62-23" id="__codelineno-62-23" name="__codelineno-62-23"></a>            <span class="nx">CURLOPT_URL</span> <span class="o">=&gt;</span> <span class="nv">$url</span><span class="p">,</span>
+<a href="#__codelineno-62-24" id="__codelineno-62-24" name="__codelineno-62-24"></a>            <span class="nx">CURLOPT_RETURNTRANSFER</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<a href="#__codelineno-62-25" id="__codelineno-62-25" name="__codelineno-62-25"></a>            <span class="nx">CURLOPT_HTTPHEADER</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">httpHeaders</span><span class="p">,</span>
+<a href="#__codelineno-62-26" id="__codelineno-62-26" name="__codelineno-62-26"></a>            <span class="nx">CURLOPT_CUSTOMREQUEST</span> <span class="o">=&gt;</span> <span class="nv">$method</span>
+<a href="#__codelineno-62-27" id="__codelineno-62-27" name="__codelineno-62-27"></a>        <span class="p">]);</span>
+<a href="#__codelineno-62-28" id="__codelineno-62-28" name="__codelineno-62-28"></a>
+<a href="#__codelineno-62-29" id="__codelineno-62-29" name="__codelineno-62-29"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$data</span> <span class="o">!==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+<a href="#__codelineno-62-30" id="__codelineno-62-30" name="__codelineno-62-30"></a>            <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
+<a href="#__codelineno-62-31" id="__codelineno-62-31" name="__codelineno-62-31"></a>        <span class="p">}</span>
+<a href="#__codelineno-62-32" id="__codelineno-62-32" name="__codelineno-62-32"></a>
+<a href="#__codelineno-62-33" id="__codelineno-62-33" name="__codelineno-62-33"></a>        <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<a href="#__codelineno-62-34" id="__codelineno-62-34" name="__codelineno-62-34"></a>        <span class="nv">$httpCode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+<a href="#__codelineno-62-35" id="__codelineno-62-35" name="__codelineno-62-35"></a>        <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<a href="#__codelineno-62-36" id="__codelineno-62-36" name="__codelineno-62-36"></a>
+<a href="#__codelineno-62-37" id="__codelineno-62-37" name="__codelineno-62-37"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$httpCode</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">)</span> <span class="p">{</span>
+<a href="#__codelineno-62-38" id="__codelineno-62-38" name="__codelineno-62-38"></a>            <span class="k">throw</span> <span class="k">new</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">"HTTP Error </span><span class="si">$httpCode</span><span class="s2">: </span><span class="si">$response</span><span class="s2">"</span><span class="p">);</span>
+<a href="#__codelineno-62-39" id="__codelineno-62-39" name="__codelineno-62-39"></a>        <span class="p">}</span>
+<a href="#__codelineno-62-40" id="__codelineno-62-40" name="__codelineno-62-40"></a>
+<a href="#__codelineno-62-41" id="__codelineno-62-41" name="__codelineno-62-41"></a>        <span class="k">return</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<a href="#__codelineno-62-42" id="__codelineno-62-42" name="__codelineno-62-42"></a>    <span class="p">}</span>
+<a href="#__codelineno-62-43" id="__codelineno-62-43" name="__codelineno-62-43"></a>
+<a href="#__codelineno-62-44" id="__codelineno-62-44" name="__codelineno-62-44"></a>    <span class="k">public</span> <span class="k">function</span> <span class="nf">getThirdParties</span><span class="p">(</span><span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
+<a href="#__codelineno-62-45" id="__codelineno-62-45" name="__codelineno-62-45"></a>        <span class="nv">$query</span> <span class="o">=</span> <span class="nb">http_build_query</span><span class="p">(</span><span class="nv">$params</span><span class="p">);</span>
+<a href="#__codelineno-62-46" id="__codelineno-62-46" name="__codelineno-62-46"></a>        <span class="nv">$endpoint</span> <span class="o">=</span> <span class="s1">'/thirdparties'</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$query</span> <span class="o">?</span> <span class="s2">"?</span><span class="si">$query</span><span class="s2">"</span> <span class="o">:</span> <span class="s1">''</span><span class="p">);</span>
+<a href="#__codelineno-62-47" id="__codelineno-62-47" name="__codelineno-62-47"></a>        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nv">$endpoint</span><span class="p">);</span>
+<a href="#__codelineno-62-48" id="__codelineno-62-48" name="__codelineno-62-48"></a>    <span class="p">}</span>
+<a href="#__codelineno-62-49" id="__codelineno-62-49" name="__codelineno-62-49"></a>
+<a href="#__codelineno-62-50" id="__codelineno-62-50" name="__codelineno-62-50"></a>    <span class="k">public</span> <span class="k">function</span> <span class="nf">createThirdParty</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+<a href="#__codelineno-62-51" id="__codelineno-62-51" name="__codelineno-62-51"></a>        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/thirdparties'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<a href="#__codelineno-62-52" id="__codelineno-62-52" name="__codelineno-62-52"></a>    <span class="p">}</span>
+<a href="#__codelineno-62-53" id="__codelineno-62-53" name="__codelineno-62-53"></a>
+<a href="#__codelineno-62-54" id="__codelineno-62-54" name="__codelineno-62-54"></a>    <span class="k">public</span> <span class="k">function</span> <span class="nf">createInvoice</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+<a href="#__codelineno-62-55" id="__codelineno-62-55" name="__codelineno-62-55"></a>        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/invoices'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<a href="#__codelineno-62-56" id="__codelineno-62-56" name="__codelineno-62-56"></a>    <span class="p">}</span>
+<a href="#__codelineno-62-57" id="__codelineno-62-57" name="__codelineno-62-57"></a><span class="p">}</span>
+<a href="#__codelineno-62-58" id="__codelineno-62-58" name="__codelineno-62-58"></a>
+<a href="#__codelineno-62-59" id="__codelineno-62-59" name="__codelineno-62-59"></a><span class="c1">// Usage</span>
+<a href="#__codelineno-62-60" id="__codelineno-62-60" name="__codelineno-62-60"></a><span class="k">try</span> <span class="p">{</span>
+<a href="#__codelineno-62-61" id="__codelineno-62-61" name="__codelineno-62-61"></a>    <span class="nv">$api</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DolibarrAPI</span><span class="p">(</span><span class="s1">'http://localhost:8080'</span><span class="p">,</span> <span class="s1">'your_api_key'</span><span class="p">);</span>
+<a href="#__codelineno-62-62" id="__codelineno-62-62" name="__codelineno-62-62"></a>
+<a href="#__codelineno-62-63" id="__codelineno-62-63" name="__codelineno-62-63"></a>    <span class="c1">// Create a company</span>
+<a href="#__codelineno-62-64" id="__codelineno-62-64" name="__codelineno-62-64"></a>    <span class="nv">$companyData</span> <span class="o">=</span> <span class="p">[</span>
+<a href="#__codelineno-62-65" id="__codelineno-62-65" name="__codelineno-62-65"></a>        <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'PHP Web Services'</span><span class="p">,</span>
+<a href="#__codelineno-62-66" id="__codelineno-62-66" name="__codelineno-62-66"></a>        <span class="s1">'client'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<a href="#__codelineno-62-67" id="__codelineno-62-67" name="__codelineno-62-67"></a>        <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'contact@phpweb.com'</span>
+<a href="#__codelineno-62-68" id="__codelineno-62-68" name="__codelineno-62-68"></a>    <span class="p">];</span>
+<a href="#__codelineno-62-69" id="__codelineno-62-69" name="__codelineno-62-69"></a>
+<a href="#__codelineno-62-70" id="__codelineno-62-70" name="__codelineno-62-70"></a>    <span class="nv">$company</span> <span class="o">=</span> <span class="nv">$api</span><span class="o">-&gt;</span><span class="na">createThirdParty</span><span class="p">(</span><span class="nv">$companyData</span><span class="p">);</span>
+<a href="#__codelineno-62-71" id="__codelineno-62-71" name="__codelineno-62-71"></a>    <span class="k">echo</span> <span class="s2">"Created company: "</span> <span class="o">.</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$company</span><span class="p">)</span> <span class="o">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<a href="#__codelineno-62-72" id="__codelineno-62-72" name="__codelineno-62-72"></a>
+<a href="#__codelineno-62-73" id="__codelineno-62-73" name="__codelineno-62-73"></a>    <span class="c1">// Get companies</span>
+<a href="#__codelineno-62-74" id="__codelineno-62-74" name="__codelineno-62-74"></a>    <span class="nv">$companies</span> <span class="o">=</span> <span class="nv">$api</span><span class="o">-&gt;</span><span class="na">getThirdParties</span><span class="p">([</span><span class="s1">'limit'</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">]);</span>
+<a href="#__codelineno-62-75" id="__codelineno-62-75" name="__codelineno-62-75"></a>    <span class="k">echo</span> <span class="s2">"Companies: "</span> <span class="o">.</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$companies</span><span class="p">)</span> <span class="o">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<a href="#__codelineno-62-76" id="__codelineno-62-76" name="__codelineno-62-76"></a>
+<a href="#__codelineno-62-77" id="__codelineno-62-77" name="__codelineno-62-77"></a><span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+<a href="#__codelineno-62-78" id="__codelineno-62-78" name="__codelineno-62-78"></a>    <span class="k">echo</span> <span class="s2">"Error: "</span> <span class="o">.</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">()</span> <span class="o">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<a href="#__codelineno-62-79" id="__codelineno-62-79" name="__codelineno-62-79"></a><span class="p">}</span>
+<a href="#__codelineno-62-80" id="__codelineno-62-80" name="__codelineno-62-80"></a><span class="cp">?&gt;</span>
+</code></pre></div>
+<h3 id="bashcurl-example">Bash/cURL Example<a class="headerlink" href="#bashcurl-example" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-63-1" id="__codelineno-63-1" name="__codelineno-63-1"></a><span class="ch">#!/bin/bash</span>
+<a href="#__codelineno-63-2" id="__codelineno-63-2" name="__codelineno-63-2"></a>
+<a href="#__codelineno-63-3" id="__codelineno-63-3" name="__codelineno-63-3"></a><span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"your_api_key_here"</span>
+<a href="#__codelineno-63-4" id="__codelineno-63-4" name="__codelineno-63-4"></a><span class="nv">BASE_URL</span><span class="o">=</span><span class="s2">"http://localhost:8080/api/index.php"</span>
+<a href="#__codelineno-63-5" id="__codelineno-63-5" name="__codelineno-63-5"></a>
+<a href="#__codelineno-63-6" id="__codelineno-63-6" name="__codelineno-63-6"></a><span class="c1"># Function to make API requests</span>
+<a href="#__codelineno-63-7" id="__codelineno-63-7" name="__codelineno-63-7"></a>api_request<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<a href="#__codelineno-63-8" id="__codelineno-63-8" name="__codelineno-63-8"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">method</span><span class="o">=</span><span class="nv">$1</span>
+<a href="#__codelineno-63-9" id="__codelineno-63-9" name="__codelineno-63-9"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">endpoint</span><span class="o">=</span><span class="nv">$2</span>
+<a href="#__codelineno-63-10" id="__codelineno-63-10" name="__codelineno-63-10"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">data</span><span class="o">=</span><span class="nv">$3</span>
+<a href="#__codelineno-63-11" id="__codelineno-63-11" name="__codelineno-63-11"></a>
+<a href="#__codelineno-63-12" id="__codelineno-63-12" name="__codelineno-63-12"></a><span class="w">    </span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span><span class="s2">"</span><span class="nv">$method</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-63-13" id="__codelineno-63-13" name="__codelineno-63-13"></a><span class="w">        </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-63-14" id="__codelineno-63-14" name="__codelineno-63-14"></a><span class="w">        </span>-H<span class="w"> </span><span class="s2">"Accept: application/json"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-63-15" id="__codelineno-63-15" name="__codelineno-63-15"></a><span class="w">        </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: </span><span class="nv">$API_KEY</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-63-16" id="__codelineno-63-16" name="__codelineno-63-16"></a><span class="w">        </span><span class="si">${</span><span class="nv">data</span><span class="p">:+-d </span><span class="s2">"</span><span class="nv">$data</span><span class="s2">"</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-63-17" id="__codelineno-63-17" name="__codelineno-63-17"></a><span class="w">        </span><span class="s2">"</span><span class="nv">$BASE_URL</span><span class="s2">/</span><span class="nv">$endpoint</span><span class="s2">"</span>
+<a href="#__codelineno-63-18" id="__codelineno-63-18" name="__codelineno-63-18"></a><span class="o">}</span>
+<a href="#__codelineno-63-19" id="__codelineno-63-19" name="__codelineno-63-19"></a>
+<a href="#__codelineno-63-20" id="__codelineno-63-20" name="__codelineno-63-20"></a><span class="c1"># Get all third parties</span>
+<a href="#__codelineno-63-21" id="__codelineno-63-21" name="__codelineno-63-21"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Getting Third Parties ==="</span>
+<a href="#__codelineno-63-22" id="__codelineno-63-22" name="__codelineno-63-22"></a>api_request<span class="w"> </span><span class="s2">"GET"</span><span class="w"> </span><span class="s2">"thirdparties?limit=5"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+<a href="#__codelineno-63-23" id="__codelineno-63-23" name="__codelineno-63-23"></a>
+<a href="#__codelineno-63-24" id="__codelineno-63-24" name="__codelineno-63-24"></a><span class="c1"># Create a new third party</span>
+<a href="#__codelineno-63-25" id="__codelineno-63-25" name="__codelineno-63-25"></a><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"\n=== Creating Third Party ==="</span>
+<a href="#__codelineno-63-26" id="__codelineno-63-26" name="__codelineno-63-26"></a><span class="nv">COMPANY_DATA</span><span class="o">=</span><span class="s1">'{</span>
+<a href="#__codelineno-63-27" id="__codelineno-63-27" name="__codelineno-63-27"></a><span class="s1">    "name": "Bash Automation Co",</span>
+<a href="#__codelineno-63-28" id="__codelineno-63-28" name="__codelineno-63-28"></a><span class="s1">    "client": 1,</span>
+<a href="#__codelineno-63-29" id="__codelineno-63-29" name="__codelineno-63-29"></a><span class="s1">    "email": "admin@bashautomation.com",</span>
+<a href="#__codelineno-63-30" id="__codelineno-63-30" name="__codelineno-63-30"></a><span class="s1">    "phone": "+1-555-BASH"</span>
+<a href="#__codelineno-63-31" id="__codelineno-63-31" name="__codelineno-63-31"></a><span class="s1">}'</span>
+<a href="#__codelineno-63-32" id="__codelineno-63-32" name="__codelineno-63-32"></a>
+<a href="#__codelineno-63-33" id="__codelineno-63-33" name="__codelineno-63-33"></a><span class="nv">COMPANY_RESPONSE</span><span class="o">=</span><span class="k">$(</span>api_request<span class="w"> </span><span class="s2">"POST"</span><span class="w"> </span><span class="s2">"thirdparties"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$COMPANY_DATA</span><span class="s2">"</span><span class="k">)</span>
+<a href="#__codelineno-63-34" id="__codelineno-63-34" name="__codelineno-63-34"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$COMPANY_RESPONSE</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+<a href="#__codelineno-63-35" id="__codelineno-63-35" name="__codelineno-63-35"></a>
+<a href="#__codelineno-63-36" id="__codelineno-63-36" name="__codelineno-63-36"></a><span class="c1"># Extract company ID for invoice creation</span>
+<a href="#__codelineno-63-37" id="__codelineno-63-37" name="__codelineno-63-37"></a><span class="nv">COMPANY_ID</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$COMPANY_RESPONSE</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.id // empty'</span><span class="k">)</span>
+<a href="#__codelineno-63-38" id="__codelineno-63-38" name="__codelineno-63-38"></a>
+<a href="#__codelineno-63-39" id="__codelineno-63-39" name="__codelineno-63-39"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$COMPANY_ID</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a href="#__codelineno-63-40" id="__codelineno-63-40" name="__codelineno-63-40"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"\n=== Creating Invoice ==="</span>
+<a href="#__codelineno-63-41" id="__codelineno-63-41" name="__codelineno-63-41"></a><span class="w">    </span><span class="nv">INVOICE_DATA</span><span class="o">=</span><span class="s2">"{</span>
+<a href="#__codelineno-63-42" id="__codelineno-63-42" name="__codelineno-63-42"></a><span class="s2">        \"socid\": </span><span class="nv">$COMPANY_ID</span><span class="s2">,</span>
+<a href="#__codelineno-63-43" id="__codelineno-63-43" name="__codelineno-63-43"></a><span class="s2">        \"date\": \"</span><span class="k">$(</span>date<span class="w"> </span>+%Y-%m-%d<span class="k">)</span><span class="s2">\",</span>
+<a href="#__codelineno-63-44" id="__codelineno-63-44" name="__codelineno-63-44"></a><span class="s2">        \"lines\": [</span>
+<a href="#__codelineno-63-45" id="__codelineno-63-45" name="__codelineno-63-45"></a><span class="s2">            {</span>
+<a href="#__codelineno-63-46" id="__codelineno-63-46" name="__codelineno-63-46"></a><span class="s2">                \"description\": \"Automation Services\",</span>
+<a href="#__codelineno-63-47" id="__codelineno-63-47" name="__codelineno-63-47"></a><span class="s2">                \"qty\": 5,</span>
+<a href="#__codelineno-63-48" id="__codelineno-63-48" name="__codelineno-63-48"></a><span class="s2">                \"subprice\": 200.00</span>
+<a href="#__codelineno-63-49" id="__codelineno-63-49" name="__codelineno-63-49"></a><span class="s2">            }</span>
+<a href="#__codelineno-63-50" id="__codelineno-63-50" name="__codelineno-63-50"></a><span class="s2">        ]</span>
+<a href="#__codelineno-63-51" id="__codelineno-63-51" name="__codelineno-63-51"></a><span class="s2">    }"</span>
+<a href="#__codelineno-63-52" id="__codelineno-63-52" name="__codelineno-63-52"></a>
+<a href="#__codelineno-63-53" id="__codelineno-63-53" name="__codelineno-63-53"></a><span class="w">    </span>api_request<span class="w"> </span><span class="s2">"POST"</span><span class="w"> </span><span class="s2">"invoices"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$INVOICE_DATA</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+<a href="#__codelineno-63-54" id="__codelineno-63-54" name="__codelineno-63-54"></a><span class="k">fi</span>
+</code></pre></div>
+<hr/>
+<h2 id="sdks-and-libraries">SDKs and Libraries<a class="headerlink" href="#sdks-and-libraries" title="Permanent link">¶</a></h2>
+<h3 id="official-libraries">Official Libraries<a class="headerlink" href="#official-libraries" title="Permanent link">¶</a></h3>
+<p>Currently, Dolibarr doesn't provide official SDKs, but the REST API is standard and works with any HTTP client.</p>
+<h3 id="community-libraries">Community Libraries<a class="headerlink" href="#community-libraries" title="Permanent link">¶</a></h3>
+<h4 id="nodejs">Node.js<a class="headerlink" href="#nodejs" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-64-1" id="__codelineno-64-1" name="__codelineno-64-1"></a>npm<span class="w"> </span>install<span class="w"> </span>axios<span class="w">  </span><span class="c1"># HTTP client</span>
+<a href="#__codelineno-64-2" id="__codelineno-64-2" name="__codelineno-64-2"></a>npm<span class="w"> </span>install<span class="w"> </span>dolibarr-api-client<span class="w">  </span><span class="c1"># Community wrapper (if available)</span>
+</code></pre></div>
+<h4 id="python">Python<a class="headerlink" href="#python" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-65-1" id="__codelineno-65-1" name="__codelineno-65-1"></a>pip<span class="w"> </span>install<span class="w"> </span>requests<span class="w">  </span><span class="c1"># HTTP client</span>
+<a href="#__codelineno-65-2" id="__codelineno-65-2" name="__codelineno-65-2"></a>pip<span class="w"> </span>install<span class="w"> </span>dolibarr-python<span class="w">  </span><span class="c1"># Community wrapper (if available)</span>
+</code></pre></div>
+<h4 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-66-1" id="__codelineno-66-1" name="__codelineno-66-1"></a><span class="x">// Use cURL or Guzzle HTTP client</span>
+<a href="#__codelineno-66-2" id="__codelineno-66-2" name="__codelineno-66-2"></a><span class="x">composer require guzzlehttp/guzzle</span>
+</code></pre></div>
+<h3 id="creating-your-own-sdk">Creating Your Own SDK<a class="headerlink" href="#creating-your-own-sdk" title="Permanent link">¶</a></h3>
+<p>When creating an SDK wrapper, consider implementing:</p>
+<ol>
+<li><strong>Authentication handling</strong>: Automatic API key inclusion</li>
+<li><strong>Error handling</strong>: Consistent error response parsing</li>
+<li><strong>Rate limiting</strong>: Built-in request throttling</li>
+<li><strong>Pagination</strong>: Helper methods for paginated results</li>
+<li><strong>Type safety</strong>: Strong typing for request/response objects</li>
+<li><strong>Logging</strong>: Request/response logging for debugging</li>
+</ol>
+<hr/>
+<h2 id="testing-and-development">Testing and Development<a class="headerlink" href="#testing-and-development" title="Permanent link">¶</a></h2>
+<h3 id="enable-api-for-development">Enable API for Development<a class="headerlink" href="#enable-api-for-development" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-67-1" id="__codelineno-67-1" name="__codelineno-67-1"></a><span class="c1"># Start services with tools</span>
+<a href="#__codelineno-67-2" id="__codelineno-67-2" name="__codelineno-67-2"></a>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-67-3" id="__codelineno-67-3" name="__codelineno-67-3"></a>
+<a href="#__codelineno-67-4" id="__codelineno-67-4" name="__codelineno-67-4"></a><span class="c1"># Enable API module</span>
+<a href="#__codelineno-67-5" id="__codelineno-67-5" name="__codelineno-67-5"></a>task<span class="w"> </span>config:enable-api
+<a href="#__codelineno-67-6" id="__codelineno-67-6" name="__codelineno-67-6"></a>
+<a href="#__codelineno-67-7" id="__codelineno-67-7" name="__codelineno-67-7"></a><span class="c1"># Check API status</span>
+<a href="#__codelineno-67-8" id="__codelineno-67-8" name="__codelineno-67-8"></a>curl<span class="w"> </span>-I<span class="w"> </span><span class="s2">"http://localhost:</span><span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span><span class="s2">/api/index.php/users"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-67-9" id="__codelineno-67-9" name="__codelineno-67-9"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+</code></pre></div>
+<h3 id="api-testing-tools">API Testing Tools<a class="headerlink" href="#api-testing-tools" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Built-in Explorer</strong>: <code>http://localhost:8080/api/index.php/explorer</code></li>
+<li><strong>Postman</strong>: Create collections for API testing</li>
+<li><strong>cURL</strong>: Command-line testing</li>
+<li><strong>HTTPie</strong>: User-friendly HTTP client</li>
+</ol>
+<h3 id="development-best-practices">Development Best Practices<a class="headerlink" href="#development-best-practices" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Use Development Environment</strong>: Test against development instances</li>
+<li><strong>Version Control API Keys</strong>: Never commit API keys</li>
+<li><strong>Error Handling</strong>: Always handle API errors gracefully</li>
+<li><strong>Logging</strong>: Log API requests for debugging</li>
+<li><strong>Testing</strong>: Write automated tests for API integrations</li>
+<li><strong>Documentation</strong>: Document your API usage and endpoints used</li>
+</ol>
+<h3 id="debugging-api-issues">Debugging API Issues<a class="headerlink" href="#debugging-api-issues" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-68-1" id="__codelineno-68-1" name="__codelineno-68-1"></a><span class="c1"># Check if API module is enabled</span>
+<a href="#__codelineno-68-2" id="__codelineno-68-2" name="__codelineno-68-2"></a>task<span class="w"> </span>config:list-modules<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>API
+<a href="#__codelineno-68-3" id="__codelineno-68-3" name="__codelineno-68-3"></a>
+<a href="#__codelineno-68-4" id="__codelineno-68-4" name="__codelineno-68-4"></a><span class="c1"># Test API connectivity</span>
+<a href="#__codelineno-68-5" id="__codelineno-68-5" name="__codelineno-68-5"></a>curl<span class="w"> </span>-v<span class="w"> </span><span class="s2">"http://localhost:8080/api/index.php/users"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-68-6" id="__codelineno-68-6" name="__codelineno-68-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">"DOLAPIKEY: your_api_key"</span>
+<a href="#__codelineno-68-7" id="__codelineno-68-7" name="__codelineno-68-7"></a>
+<a href="#__codelineno-68-8" id="__codelineno-68-8" name="__codelineno-68-8"></a><span class="c1"># Check application logs</span>
+<a href="#__codelineno-68-9" id="__codelineno-68-9" name="__codelineno-68-9"></a>task<span class="w"> </span>services:logs-app<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>api
+<a href="#__codelineno-68-10" id="__codelineno-68-10" name="__codelineno-68-10"></a>
+<a href="#__codelineno-68-11" id="__codelineno-68-11" name="__codelineno-68-11"></a><span class="c1"># Verify database permissions</span>
+<a href="#__codelineno-68-12" id="__codelineno-68-12" name="__codelineno-68-12"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-68-13" id="__codelineno-68-13" name="__codelineno-68-13"></a>&gt;<span class="w"> </span>SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span>llx_user_api_keys<span class="w"> </span>WHERE<span class="w"> </span><span class="nv">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'your_api_key'</span><span class="p">;</span>
+</code></pre></div>
+<p>Remember to always test API integrations thoroughly and implement proper error handling in production applications!</p>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,1774 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/reference/environment-variables/" rel="canonical"/>
+<link href="../taskfile-commands/" rel="prev"/>
+<link href="../docker-services/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>Environment Variables - Dolibarr Docker Documentation</title>
+<link href="../../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#environment-variables-reference">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Environment Variables
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../troubleshooting/">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../taskfile-commands/">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-configuration">
+<span class="md-ellipsis">
+      Database Configuration
+    </span>
+</a>
+<nav aria-label="Database Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_type">
+<span class="md-ellipsis">
+      DB_TYPE
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_host">
+<span class="md-ellipsis">
+      DB_HOST
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_port">
+<span class="md-ellipsis">
+      DB_PORT
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_name">
+<span class="md-ellipsis">
+      DB_NAME
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_user">
+<span class="md-ellipsis">
+      DB_USER
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_password">
+<span class="md-ellipsis">
+      DB_PASSWORD
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_root_password">
+<span class="md-ellipsis">
+      DB_ROOT_PASSWORD
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_external_port">
+<span class="md-ellipsis">
+      DB_EXTERNAL_PORT
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr-application-configuration">
+<span class="md-ellipsis">
+      Dolibarr Application Configuration
+    </span>
+</a>
+<nav aria-label="Dolibarr Application Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_admin_login">
+<span class="md-ellipsis">
+      DOLIBARR_ADMIN_LOGIN
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_admin_password">
+<span class="md-ellipsis">
+      DOLIBARR_ADMIN_PASSWORD
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_url_root">
+<span class="md-ellipsis">
+      DOLIBARR_URL_ROOT
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_nocsrfcheck">
+<span class="md-ellipsis">
+      DOLIBARR_NOCSRFCHECK
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_https">
+<span class="md-ellipsis">
+      DOLIBARR_HTTPS
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-and-port-configuration">
+<span class="md-ellipsis">
+      Network and Port Configuration
+    </span>
+</a>
+<nav aria-label="Network and Port Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_port">
+<span class="md-ellipsis">
+      DOLIBARR_PORT
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#php-configuration">
+<span class="md-ellipsis">
+      PHP Configuration
+    </span>
+</a>
+<nav aria-label="PHP Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#timezone">
+<span class="md-ellipsis">
+      TIMEZONE
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#optional-tools-configuration">
+<span class="md-ellipsis">
+      Optional Tools Configuration
+    </span>
+</a>
+<nav aria-label="Optional Tools Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phpmyadmin_port">
+<span class="md-ellipsis">
+      PHPMYADMIN_PORT
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-based-variables">
+<span class="md-ellipsis">
+      Profile-Based Variables
+    </span>
+</a>
+<nav aria-label="Profile-Based Variables" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#internal-database-profile-internal-db">
+<span class="md-ellipsis">
+      Internal Database Profile (internal-db)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#external-database-profile-external-db">
+<span class="md-ellipsis">
+      External Database Profile (external-db)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-configuration">
+<span class="md-ellipsis">
+      Security Configuration
+    </span>
+</a>
+<nav aria-label="Security Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-security-variables">
+<span class="md-ellipsis">
+      Production Security Variables
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-security-variables">
+<span class="md-ellipsis">
+      Development Security Variables
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examples-by-use-case">
+<span class="md-ellipsis">
+      Examples by Use Case
+    </span>
+</a>
+<nav aria-label="Examples by Use Case" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-local-development-setup">
+<span class="md-ellipsis">
+      1. Local Development Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-small-business-production">
+<span class="md-ellipsis">
+      2. Small Business Production
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-enterprise-production-with-external-database">
+<span class="md-ellipsis">
+      3. Enterprise Production with External Database
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-multi-environment-setup">
+<span class="md-ellipsis">
+      4. Multi-Environment Setup
+    </span>
+</a>
+<nav aria-label="4. Multi-Environment Setup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-environment">
+<span class="md-ellipsis">
+      Development Environment:
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#staging-environment">
+<span class="md-ellipsis">
+      Staging Environment:
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-environment">
+<span class="md-ellipsis">
+      Production Environment:
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-cloud-deployment-aws">
+<span class="md-ellipsis">
+      5. Cloud Deployment (AWS)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#variable-validation">
+<span class="md-ellipsis">
+      Variable Validation
+    </span>
+</a>
+<nav aria-label="Variable Validation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#required-variables-check">
+<span class="md-ellipsis">
+      Required Variables Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-commands">
+<span class="md-ellipsis">
+      Validation Commands
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#best-practices">
+<span class="md-ellipsis">
+      Best Practices
+    </span>
+</a>
+<nav aria-label="Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-best-practices">
+<span class="md-ellipsis">
+      Security Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-best-practices">
+<span class="md-ellipsis">
+      Configuration Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-best-practices">
+<span class="md-ellipsis">
+      Development Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../backup-restore/">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modules-status/">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-configuration">
+<span class="md-ellipsis">
+      Database Configuration
+    </span>
+</a>
+<nav aria-label="Database Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_type">
+<span class="md-ellipsis">
+      DB_TYPE
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_host">
+<span class="md-ellipsis">
+      DB_HOST
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_port">
+<span class="md-ellipsis">
+      DB_PORT
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_name">
+<span class="md-ellipsis">
+      DB_NAME
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_user">
+<span class="md-ellipsis">
+      DB_USER
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_password">
+<span class="md-ellipsis">
+      DB_PASSWORD
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_root_password">
+<span class="md-ellipsis">
+      DB_ROOT_PASSWORD
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#db_external_port">
+<span class="md-ellipsis">
+      DB_EXTERNAL_PORT
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr-application-configuration">
+<span class="md-ellipsis">
+      Dolibarr Application Configuration
+    </span>
+</a>
+<nav aria-label="Dolibarr Application Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_admin_login">
+<span class="md-ellipsis">
+      DOLIBARR_ADMIN_LOGIN
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_admin_password">
+<span class="md-ellipsis">
+      DOLIBARR_ADMIN_PASSWORD
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_url_root">
+<span class="md-ellipsis">
+      DOLIBARR_URL_ROOT
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_nocsrfcheck">
+<span class="md-ellipsis">
+      DOLIBARR_NOCSRFCHECK
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_https">
+<span class="md-ellipsis">
+      DOLIBARR_HTTPS
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-and-port-configuration">
+<span class="md-ellipsis">
+      Network and Port Configuration
+    </span>
+</a>
+<nav aria-label="Network and Port Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr_port">
+<span class="md-ellipsis">
+      DOLIBARR_PORT
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#php-configuration">
+<span class="md-ellipsis">
+      PHP Configuration
+    </span>
+</a>
+<nav aria-label="PHP Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#timezone">
+<span class="md-ellipsis">
+      TIMEZONE
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#optional-tools-configuration">
+<span class="md-ellipsis">
+      Optional Tools Configuration
+    </span>
+</a>
+<nav aria-label="Optional Tools Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phpmyadmin_port">
+<span class="md-ellipsis">
+      PHPMYADMIN_PORT
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-based-variables">
+<span class="md-ellipsis">
+      Profile-Based Variables
+    </span>
+</a>
+<nav aria-label="Profile-Based Variables" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#internal-database-profile-internal-db">
+<span class="md-ellipsis">
+      Internal Database Profile (internal-db)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#external-database-profile-external-db">
+<span class="md-ellipsis">
+      External Database Profile (external-db)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-configuration">
+<span class="md-ellipsis">
+      Security Configuration
+    </span>
+</a>
+<nav aria-label="Security Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-security-variables">
+<span class="md-ellipsis">
+      Production Security Variables
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-security-variables">
+<span class="md-ellipsis">
+      Development Security Variables
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examples-by-use-case">
+<span class="md-ellipsis">
+      Examples by Use Case
+    </span>
+</a>
+<nav aria-label="Examples by Use Case" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-local-development-setup">
+<span class="md-ellipsis">
+      1. Local Development Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-small-business-production">
+<span class="md-ellipsis">
+      2. Small Business Production
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-enterprise-production-with-external-database">
+<span class="md-ellipsis">
+      3. Enterprise Production with External Database
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-multi-environment-setup">
+<span class="md-ellipsis">
+      4. Multi-Environment Setup
+    </span>
+</a>
+<nav aria-label="4. Multi-Environment Setup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-environment">
+<span class="md-ellipsis">
+      Development Environment:
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#staging-environment">
+<span class="md-ellipsis">
+      Staging Environment:
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-environment">
+<span class="md-ellipsis">
+      Production Environment:
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-cloud-deployment-aws">
+<span class="md-ellipsis">
+      5. Cloud Deployment (AWS)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#variable-validation">
+<span class="md-ellipsis">
+      Variable Validation
+    </span>
+</a>
+<nav aria-label="Variable Validation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#required-variables-check">
+<span class="md-ellipsis">
+      Required Variables Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-commands">
+<span class="md-ellipsis">
+      Validation Commands
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#best-practices">
+<span class="md-ellipsis">
+      Best Practices
+    </span>
+</a>
+<nav aria-label="Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-best-practices">
+<span class="md-ellipsis">
+      Security Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-best-practices">
+<span class="md-ellipsis">
+      Configuration Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-best-practices">
+<span class="md-ellipsis">
+      Development Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="environment-variables-reference">Environment Variables Reference<a class="headerlink" href="#environment-variables-reference" title="Permanent link">¶</a></h1>
+<p>This document provides a comprehensive reference of all environment variables used in the Dolibarr Docker setup.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="#database-configuration">Database Configuration</a></li>
+<li><a href="#dolibarr-application-configuration">Dolibarr Application Configuration</a></li>
+<li><a href="#network-and-port-configuration">Network and Port Configuration</a></li>
+<li><a href="#php-configuration">PHP Configuration</a></li>
+<li><a href="#optional-tools-configuration">Optional Tools Configuration</a></li>
+<li><a href="#profile-based-variables">Profile-Based Variables</a></li>
+<li><a href="#security-configuration">Security Configuration</a></li>
+<li><a href="#examples-by-use-case">Examples by Use Case</a></li>
+</ul>
+<hr/>
+<h2 id="database-configuration">Database Configuration<a class="headerlink" href="#database-configuration" title="Permanent link">¶</a></h2>
+<h3 id="db_type"><code>DB_TYPE</code><a class="headerlink" href="#db_type" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Database type for Dolibarr
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>mysqli</code>
+<strong>Valid values</strong>: <code>mysqli</code>, <code>pgsql</code></p>
+<p><strong>Description</strong>: Specifies the database driver to use. Currently supports MySQL/MariaDB (<code>mysqli</code>) and PostgreSQL (<code>pgsql</code>).</p>
+<p><strong>Example</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>DB_TYPE=mysqli
+</code></pre></div></p>
+<hr/>
+<h3 id="db_host"><code>DB_HOST</code><a class="headerlink" href="#db_host" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Database server hostname or IP address
+<strong>Required</strong>: Yes (for external database)
+<strong>Default</strong>: <code>dolibarr-db</code></p>
+<p><strong>Description</strong>: The hostname or IP address of the database server. For internal database setups, this should be <code>dolibarr-db</code> (the Docker service name). For external databases, use the actual hostname or IP.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a># Internal database
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>DB_HOST=dolibarr-db
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a># External database
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>DB_HOST=mysql.example.com
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>DB_HOST=192.168.1.100
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a># Cloud database
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a>DB_HOST=mysql-cluster-abc123.us-west-2.rds.amazonaws.com
+</code></pre></div></p>
+<hr/>
+<h3 id="db_port"><code>DB_PORT</code><a class="headerlink" href="#db_port" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Database server port
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>3306</code></p>
+<p><strong>Description</strong>: The port number on which the database server is listening.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a># Standard MySQL/MariaDB port
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>DB_PORT=3306
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a># Custom port
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>DB_PORT=3307
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a># PostgreSQL
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>DB_PORT=5432
+</code></pre></div></p>
+<hr/>
+<h3 id="db_name"><code>DB_NAME</code><a class="headerlink" href="#db_name" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Database name for Dolibarr
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>dolibarr</code></p>
+<p><strong>Description</strong>: The name of the database that Dolibarr will use to store its data.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a># Default database name
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>DB_NAME=dolibarr
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a># Custom database name
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a>DB_NAME=my_company_erp
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a># Environment-specific naming
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a>DB_NAME=dolibarr_production
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a>DB_NAME=dolibarr_staging
+</code></pre></div></p>
+<hr/>
+<h3 id="db_user"><code>DB_USER</code><a class="headerlink" href="#db_user" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Database username for Dolibarr
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>dolibarr</code></p>
+<p><strong>Description</strong>: The username that Dolibarr will use to connect to the database. This user should have full privileges on the specified database.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a># Default username
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>DB_USER=dolibarr
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a># Custom username
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>DB_USER=dolibarr_app
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a># Environment-specific username
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>DB_USER=dolibarr_prod_user
+</code></pre></div></p>
+<hr/>
+<h3 id="db_password"><code>DB_PASSWORD</code><a class="headerlink" href="#db_password" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Database password for Dolibarr user
+<strong>Required</strong>: Yes
+<strong>Default</strong>: None</p>
+<p><strong>Description</strong>: The password for the database user. This should be a strong password for security.</p>
+<p><strong>Security Notes</strong>:
+- Use a strong password (minimum 16 characters)
+- Include uppercase, lowercase, numbers, and special characters
+- Never commit real passwords to version control
+- Consider using Docker secrets in production</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a># Strong password example
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>DB_PASSWORD=MySecureP@ssw0rd2024!
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a># For development (still use strong passwords)
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>DB_PASSWORD=dev-secure-password-123
+</code></pre></div></p>
+<hr/>
+<h3 id="db_root_password"><code>DB_ROOT_PASSWORD</code><a class="headerlink" href="#db_root_password" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Root password for internal database
+<strong>Required</strong>: Yes (for internal database)
+<strong>Default</strong>: None</p>
+<p><strong>Description</strong>: The root password for the internal MariaDB database. Only required when using the internal database profile. Leave empty or undefined for external databases.</p>
+<p><strong>Usage</strong>:
+- <strong>Internal Database</strong>: Required for database initialization and administration
+- <strong>External Database</strong>: Should be empty or undefined</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a># Internal database
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>DB_ROOT_PASSWORD=MySecureRootP@ssw0rd2024!
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a># External database (leave empty)
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>DB_ROOT_PASSWORD=
+</code></pre></div></p>
+<hr/>
+<h3 id="db_external_port"><code>DB_EXTERNAL_PORT</code><a class="headerlink" href="#db_external_port" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: External port for database access
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>3306</code></p>
+<p><strong>Description</strong>: The port on the host machine that will be mapped to the database container. Only applies to internal database setups.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a># Standard port
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>DB_EXTERNAL_PORT=3306
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a># Alternative port to avoid conflicts
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a>DB_EXTERNAL_PORT=13306
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a># Development environment
+<a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a>DB_EXTERNAL_PORT=3307
+</code></pre></div></p>
+<hr/>
+<h2 id="dolibarr-application-configuration">Dolibarr Application Configuration<a class="headerlink" href="#dolibarr-application-configuration" title="Permanent link">¶</a></h2>
+<h3 id="dolibarr_admin_login"><code>DOLIBARR_ADMIN_LOGIN</code><a class="headerlink" href="#dolibarr_admin_login" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Initial admin username for Dolibarr
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>admin</code></p>
+<p><strong>Description</strong>: The username for the initial administrator account that will be created during Dolibarr setup.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a># Default admin username
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>DOLIBARR_ADMIN_LOGIN=admin
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a># Custom admin username
+<a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a>DOLIBARR_ADMIN_LOGIN=administrator
+<a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a>
+<a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a># Company-specific admin
+<a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a>DOLIBARR_ADMIN_LOGIN=company_admin
+</code></pre></div></p>
+<hr/>
+<h3 id="dolibarr_admin_password"><code>DOLIBARR_ADMIN_PASSWORD</code><a class="headerlink" href="#dolibarr_admin_password" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Password for the initial admin account
+<strong>Required</strong>: Yes
+<strong>Default</strong>: None</p>
+<p><strong>Description</strong>: The password for the initial administrator account. This should be changed after first login.</p>
+<p><strong>Security Notes</strong>:
+- Use a strong password
+- Change the password after first login
+- Consider enabling two-factor authentication
+- Never use default passwords in production</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a># Strong password example
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>DOLIBARR_ADMIN_PASSWORD=AdminSecureP@ss2024!
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a># Development password (still secure)
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a>DOLIBARR_ADMIN_PASSWORD=dev-admin-password-123
+</code></pre></div></p>
+<hr/>
+<h3 id="dolibarr_url_root"><code>DOLIBARR_URL_ROOT</code><a class="headerlink" href="#dolibarr_url_root" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Base URL for Dolibarr application
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>http://localhost:8080</code></p>
+<p><strong>Description</strong>: The base URL where Dolibarr will be accessible. This is used for generating links and should match your actual access URL.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a># Local development
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>DOLIBARR_URL_ROOT=http://localhost:8080
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a># Custom port
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a>DOLIBARR_URL_ROOT=http://localhost:18080
+<a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a>
+<a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a># Domain-based
+<a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a>DOLIBARR_URL_ROOT=https://dolibarr.example.com
+<a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a>
+<a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a># Subdirectory
+<a href="#__codelineno-10-11" id="__codelineno-10-11" name="__codelineno-10-11"></a>DOLIBARR_URL_ROOT=https://example.com/dolibarr
+</code></pre></div></p>
+<hr/>
+<h3 id="dolibarr_nocsrfcheck"><code>DOLIBARR_NOCSRFCHECK</code><a class="headerlink" href="#dolibarr_nocsrfcheck" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Disable CSRF protection (not recommended)
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>0</code>
+<strong>Valid values</strong>: <code>0</code> (enabled), <code>1</code> (disabled)</p>
+<p><strong>Description</strong>: Controls CSRF (Cross-Site Request Forgery) protection. Should only be disabled for development or testing purposes.</p>
+<p><strong>Security Warning</strong>: Never disable CSRF protection in production environments.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a># Production - CSRF protection enabled (recommended)
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>DOLIBARR_NOCSRFCHECK=0
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a># Development - CSRF protection disabled (only for testing)
+<a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a>DOLIBARR_NOCSRFCHECK=1
+</code></pre></div></p>
+<hr/>
+<h3 id="dolibarr_https"><code>DOLIBARR_HTTPS</code><a class="headerlink" href="#dolibarr_https" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Enable HTTPS mode
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>0</code>
+<strong>Valid values</strong>: <code>0</code> (HTTP), <code>1</code> (HTTPS)</p>
+<p><strong>Description</strong>: Indicates whether Dolibarr is running behind HTTPS. Set to 1 when using a reverse proxy with SSL termination.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a># HTTP mode
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>DOLIBARR_HTTPS=0
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a># HTTPS mode (with reverse proxy)
+<a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a>DOLIBARR_HTTPS=1
+</code></pre></div></p>
+<hr/>
+<h2 id="network-and-port-configuration">Network and Port Configuration<a class="headerlink" href="#network-and-port-configuration" title="Permanent link">¶</a></h2>
+<h3 id="dolibarr_port"><code>DOLIBARR_PORT</code><a class="headerlink" href="#dolibarr_port" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Host port for Dolibarr web interface
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>8080</code></p>
+<p><strong>Description</strong>: The port on the host machine where Dolibarr will be accessible.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a># Standard port
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a>DOLIBARR_PORT=8080
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a># Alternative port
+<a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a>DOLIBARR_PORT=18080
+<a href="#__codelineno-13-6" id="__codelineno-13-6" name="__codelineno-13-6"></a>
+<a href="#__codelineno-13-7" id="__codelineno-13-7" name="__codelineno-13-7"></a># Production port (with reverse proxy)
+<a href="#__codelineno-13-8" id="__codelineno-13-8" name="__codelineno-13-8"></a>DOLIBARR_PORT=80
+</code></pre></div></p>
+<hr/>
+<h2 id="php-configuration">PHP Configuration<a class="headerlink" href="#php-configuration" title="Permanent link">¶</a></h2>
+<h3 id="timezone"><code>TIMEZONE</code><a class="headerlink" href="#timezone" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: PHP timezone setting
+<strong>Required</strong>: No
+<strong>Default</strong>: <code>Europe/Paris</code></p>
+<p><strong>Description</strong>: Sets the PHP timezone for the Dolibarr application. This affects date/time display and calculations.</p>
+<p><strong>Valid values</strong>: Any valid PHP timezone identifier (see <a href="https://www.php.net/manual/en/timezones.php">PHP Timezones</a>)</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a># European timezones
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>TIMEZONE=Europe/Paris
+<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a>TIMEZONE=Europe/London
+<a href="#__codelineno-14-4" id="__codelineno-14-4" name="__codelineno-14-4"></a>TIMEZONE=Europe/Berlin
+<a href="#__codelineno-14-5" id="__codelineno-14-5" name="__codelineno-14-5"></a>
+<a href="#__codelineno-14-6" id="__codelineno-14-6" name="__codelineno-14-6"></a># American timezones
+<a href="#__codelineno-14-7" id="__codelineno-14-7" name="__codelineno-14-7"></a>TIMEZONE=America/New_York
+<a href="#__codelineno-14-8" id="__codelineno-14-8" name="__codelineno-14-8"></a>TIMEZONE=America/Chicago
+<a href="#__codelineno-14-9" id="__codelineno-14-9" name="__codelineno-14-9"></a>TIMEZONE=America/Los_Angeles
+<a href="#__codelineno-14-10" id="__codelineno-14-10" name="__codelineno-14-10"></a>
+<a href="#__codelineno-14-11" id="__codelineno-14-11" name="__codelineno-14-11"></a># Asian timezones
+<a href="#__codelineno-14-12" id="__codelineno-14-12" name="__codelineno-14-12"></a>TIMEZONE=Asia/Tokyo
+<a href="#__codelineno-14-13" id="__codelineno-14-13" name="__codelineno-14-13"></a>TIMEZONE=Asia/Shanghai
+<a href="#__codelineno-14-14" id="__codelineno-14-14" name="__codelineno-14-14"></a>TIMEZONE=Asia/Dubai
+<a href="#__codelineno-14-15" id="__codelineno-14-15" name="__codelineno-14-15"></a>
+<a href="#__codelineno-14-16" id="__codelineno-14-16" name="__codelineno-14-16"></a># UTC
+<a href="#__codelineno-14-17" id="__codelineno-14-17" name="__codelineno-14-17"></a>TIMEZONE=UTC
+</code></pre></div></p>
+<hr/>
+<h2 id="optional-tools-configuration">Optional Tools Configuration<a class="headerlink" href="#optional-tools-configuration" title="Permanent link">¶</a></h2>
+<h3 id="phpmyadmin_port"><code>PHPMYADMIN_PORT</code><a class="headerlink" href="#phpmyadmin_port" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Host port for phpMyAdmin interface
+<strong>Required</strong>: No (only when using internal-db-tools profile)
+<strong>Default</strong>: <code>8081</code></p>
+<p><strong>Description</strong>: The port on the host machine where phpMyAdmin will be accessible. Only used when the <code>internal-db-tools</code> profile is active.</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a># Standard port
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a>PHPMYADMIN_PORT=8081
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a># Alternative port
+<a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a>PHPMYADMIN_PORT=18081
+<a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a>
+<a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a># Custom port to avoid conflicts
+<a href="#__codelineno-15-8" id="__codelineno-15-8" name="__codelineno-15-8"></a>PHPMYADMIN_PORT=9081
+</code></pre></div></p>
+<hr/>
+<h2 id="profile-based-variables">Profile-Based Variables<a class="headerlink" href="#profile-based-variables" title="Permanent link">¶</a></h2>
+<p>The following variables change behavior based on the Docker Compose profile used:</p>
+<h3 id="internal-database-profile-internal-db">Internal Database Profile (<code>internal-db</code>)<a class="headerlink" href="#internal-database-profile-internal-db" title="Permanent link">¶</a></h3>
+<p>Required variables:
+- <code>DB_PASSWORD</code> - Database user password
+- <code>DB_ROOT_PASSWORD</code> - Database root password
+- <code>DOLIBARR_ADMIN_PASSWORD</code> - Admin password</p>
+<p>Optional variables:
+- <code>DB_NAME</code> - Database name (default: dolibarr)
+- <code>DB_USER</code> - Database username (default: dolibarr)
+- <code>DB_EXTERNAL_PORT</code> - External database port (default: 3306)</p>
+<p><strong>Example configuration</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a># Internal database profile
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a>DB_PASSWORD=secure-db-password-123
+<a href="#__codelineno-16-3" id="__codelineno-16-3" name="__codelineno-16-3"></a>DB_ROOT_PASSWORD=secure-root-password-456
+<a href="#__codelineno-16-4" id="__codelineno-16-4" name="__codelineno-16-4"></a>DOLIBARR_ADMIN_PASSWORD=secure-admin-password-789
+<a href="#__codelineno-16-5" id="__codelineno-16-5" name="__codelineno-16-5"></a>DOLIBARR_PORT=8080
+<a href="#__codelineno-16-6" id="__codelineno-16-6" name="__codelineno-16-6"></a>PHPMYADMIN_PORT=8081
+</code></pre></div></p>
+<hr/>
+<h3 id="external-database-profile-external-db">External Database Profile (<code>external-db</code>)<a class="headerlink" href="#external-database-profile-external-db" title="Permanent link">¶</a></h3>
+<p>Required variables:
+- <code>DB_HOST</code> - External database host
+- <code>DB_PASSWORD</code> - Database user password
+- <code>DOLIBARR_ADMIN_PASSWORD</code> - Admin password</p>
+<p>Optional variables:
+- <code>DB_PORT</code> - Database port (default: 3306)
+- <code>DB_NAME</code> - Database name (default: dolibarr)
+- <code>DB_USER</code> - Database username (default: dolibarr)</p>
+<p><strong>Important</strong>: <code>DB_ROOT_PASSWORD</code> should be empty or undefined for external databases.</p>
+<p><strong>Example configuration</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a># External database profile
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>DB_HOST=mysql.example.com
+<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a>DB_PORT=3306
+<a href="#__codelineno-17-4" id="__codelineno-17-4" name="__codelineno-17-4"></a>DB_NAME=dolibarr
+<a href="#__codelineno-17-5" id="__codelineno-17-5" name="__codelineno-17-5"></a>DB_USER=dolibarr_user
+<a href="#__codelineno-17-6" id="__codelineno-17-6" name="__codelineno-17-6"></a>DB_PASSWORD=secure-db-password-123
+<a href="#__codelineno-17-7" id="__codelineno-17-7" name="__codelineno-17-7"></a>DOLIBARR_ADMIN_PASSWORD=secure-admin-password-789
+<a href="#__codelineno-17-8" id="__codelineno-17-8" name="__codelineno-17-8"></a>DOLIBARR_PORT=8080
+<a href="#__codelineno-17-9" id="__codelineno-17-9" name="__codelineno-17-9"></a># DB_ROOT_PASSWORD should be empty for external database
+</code></pre></div></p>
+<hr/>
+<h2 id="security-configuration">Security Configuration<a class="headerlink" href="#security-configuration" title="Permanent link">¶</a></h2>
+<h3 id="production-security-variables">Production Security Variables<a class="headerlink" href="#production-security-variables" title="Permanent link">¶</a></h3>
+<p>For production environments, ensure these security-focused variables are properly configured:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a># Strong passwords (minimum 16 characters)
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a>DB_PASSWORD=ComplexP@ssw0rd!2024SecureDB
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a>DB_ROOT_PASSWORD=RootP@ssw0rd!2024VerySecure
+<a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a>DOLIBARR_ADMIN_PASSWORD=AdminP@ssw0rd!2024SuperSecure
+<a href="#__codelineno-18-5" id="__codelineno-18-5" name="__codelineno-18-5"></a>
+<a href="#__codelineno-18-6" id="__codelineno-18-6" name="__codelineno-18-6"></a># HTTPS configuration
+<a href="#__codelineno-18-7" id="__codelineno-18-7" name="__codelineno-18-7"></a>DOLIBARR_HTTPS=1
+<a href="#__codelineno-18-8" id="__codelineno-18-8" name="__codelineno-18-8"></a>DOLIBARR_URL_ROOT=https://dolibarr.yourcompany.com
+<a href="#__codelineno-18-9" id="__codelineno-18-9" name="__codelineno-18-9"></a>
+<a href="#__codelineno-18-10" id="__codelineno-18-10" name="__codelineno-18-10"></a># CSRF protection enabled
+<a href="#__codelineno-18-11" id="__codelineno-18-11" name="__codelineno-18-11"></a>DOLIBARR_NOCSRFCHECK=0
+<a href="#__codelineno-18-12" id="__codelineno-18-12" name="__codelineno-18-12"></a>
+<a href="#__codelineno-18-13" id="__codelineno-18-13" name="__codelineno-18-13"></a># Restrict database external access
+<a href="#__codelineno-18-14" id="__codelineno-18-14" name="__codelineno-18-14"></a># Don't expose DB_EXTERNAL_PORT in production
+<a href="#__codelineno-18-15" id="__codelineno-18-15" name="__codelineno-18-15"></a># DB_EXTERNAL_PORT=3306  # Comment out for production
+<a href="#__codelineno-18-16" id="__codelineno-18-16" name="__codelineno-18-16"></a>
+<a href="#__codelineno-18-17" id="__codelineno-18-17" name="__codelineno-18-17"></a># Don't expose phpMyAdmin in production
+<a href="#__codelineno-18-18" id="__codelineno-18-18" name="__codelineno-18-18"></a># PHPMYADMIN_PORT=8081   # Comment out for production
+</code></pre></div>
+<h3 id="development-security-variables">Development Security Variables<a class="headerlink" href="#development-security-variables" title="Permanent link">¶</a></h3>
+<p>For development environments, you can use simpler passwords but should still maintain good security practices:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a># Development passwords (still secure)
+<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>DB_PASSWORD=dev-secure-db-password
+<a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a>DB_ROOT_PASSWORD=dev-secure-root-password
+<a href="#__codelineno-19-4" id="__codelineno-19-4" name="__codelineno-19-4"></a>DOLIBARR_ADMIN_PASSWORD=dev-secure-admin-password
+<a href="#__codelineno-19-5" id="__codelineno-19-5" name="__codelineno-19-5"></a>
+<a href="#__codelineno-19-6" id="__codelineno-19-6" name="__codelineno-19-6"></a># Development URL
+<a href="#__codelineno-19-7" id="__codelineno-19-7" name="__codelineno-19-7"></a>DOLIBARR_URL_ROOT=http://localhost:18080
+<a href="#__codelineno-19-8" id="__codelineno-19-8" name="__codelineno-19-8"></a>
+<a href="#__codelineno-19-9" id="__codelineno-19-9" name="__codelineno-19-9"></a># Development ports
+<a href="#__codelineno-19-10" id="__codelineno-19-10" name="__codelineno-19-10"></a>DOLIBARR_PORT=18080
+<a href="#__codelineno-19-11" id="__codelineno-19-11" name="__codelineno-19-11"></a>PHPMYADMIN_PORT=18081
+<a href="#__codelineno-19-12" id="__codelineno-19-12" name="__codelineno-19-12"></a>DB_EXTERNAL_PORT=13306
+<a href="#__codelineno-19-13" id="__codelineno-19-13" name="__codelineno-19-13"></a>
+<a href="#__codelineno-19-14" id="__codelineno-19-14" name="__codelineno-19-14"></a># CSRF can be disabled for testing (if needed)
+<a href="#__codelineno-19-15" id="__codelineno-19-15" name="__codelineno-19-15"></a>DOLIBARR_NOCSRFCHECK=0  # Keep enabled even in development
+</code></pre></div>
+<hr/>
+<h2 id="examples-by-use-case">Examples by Use Case<a class="headerlink" href="#examples-by-use-case" title="Permanent link">¶</a></h2>
+<h3 id="1-local-development-setup">1. Local Development Setup<a class="headerlink" href="#1-local-development-setup" title="Permanent link">¶</a></h3>
+<p>Perfect for developers working on Dolibarr customizations or learning the system.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a># Database Configuration
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>DB_TYPE=mysqli
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a>DB_HOST=dolibarr-db
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a>DB_PORT=3306
+<a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a>DB_NAME=dolibarr
+<a href="#__codelineno-20-6" id="__codelineno-20-6" name="__codelineno-20-6"></a>DB_USER=dolibarr
+<a href="#__codelineno-20-7" id="__codelineno-20-7" name="__codelineno-20-7"></a>DB_PASSWORD=dev-secure-password-123
+<a href="#__codelineno-20-8" id="__codelineno-20-8" name="__codelineno-20-8"></a>DB_ROOT_PASSWORD=dev-secure-root-password-456
+<a href="#__codelineno-20-9" id="__codelineno-20-9" name="__codelineno-20-9"></a>DB_EXTERNAL_PORT=13306
+<a href="#__codelineno-20-10" id="__codelineno-20-10" name="__codelineno-20-10"></a>
+<a href="#__codelineno-20-11" id="__codelineno-20-11" name="__codelineno-20-11"></a># Dolibarr Configuration
+<a href="#__codelineno-20-12" id="__codelineno-20-12" name="__codelineno-20-12"></a>DOLIBARR_PORT=18080
+<a href="#__codelineno-20-13" id="__codelineno-20-13" name="__codelineno-20-13"></a>DOLIBARR_ADMIN_LOGIN=admin
+<a href="#__codelineno-20-14" id="__codelineno-20-14" name="__codelineno-20-14"></a>DOLIBARR_ADMIN_PASSWORD=dev-admin-password-789
+<a href="#__codelineno-20-15" id="__codelineno-20-15" name="__codelineno-20-15"></a>DOLIBARR_URL_ROOT=http://localhost:18080
+<a href="#__codelineno-20-16" id="__codelineno-20-16" name="__codelineno-20-16"></a>DOLIBARR_NOCSRFCHECK=0
+<a href="#__codelineno-20-17" id="__codelineno-20-17" name="__codelineno-20-17"></a>DOLIBARR_HTTPS=0
+<a href="#__codelineno-20-18" id="__codelineno-20-18" name="__codelineno-20-18"></a>
+<a href="#__codelineno-20-19" id="__codelineno-20-19" name="__codelineno-20-19"></a># PHP Configuration
+<a href="#__codelineno-20-20" id="__codelineno-20-20" name="__codelineno-20-20"></a>TIMEZONE=America/New_York
+<a href="#__codelineno-20-21" id="__codelineno-20-21" name="__codelineno-20-21"></a>
+<a href="#__codelineno-20-22" id="__codelineno-20-22" name="__codelineno-20-22"></a># Optional Tools
+<a href="#__codelineno-20-23" id="__codelineno-20-23" name="__codelineno-20-23"></a>PHPMYADMIN_PORT=18081
+</code></pre></div>
+<p><strong>Usage</strong>: 
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a>task<span class="w"> </span>services:start-with-tools
+</code></pre></div></p>
+<hr/>
+<h3 id="2-small-business-production">2. Small Business Production<a class="headerlink" href="#2-small-business-production" title="Permanent link">¶</a></h3>
+<p>Simple production setup with internal database for small companies.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a># Database Configuration
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>DB_TYPE=mysqli
+<a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a>DB_HOST=dolibarr-db
+<a href="#__codelineno-22-4" id="__codelineno-22-4" name="__codelineno-22-4"></a>DB_PORT=3306
+<a href="#__codelineno-22-5" id="__codelineno-22-5" name="__codelineno-22-5"></a>DB_NAME=dolibarr
+<a href="#__codelineno-22-6" id="__codelineno-22-6" name="__codelineno-22-6"></a>DB_USER=dolibarr
+<a href="#__codelineno-22-7" id="__codelineno-22-7" name="__codelineno-22-7"></a>DB_PASSWORD=MyCompanySecureDBPassword2024!
+<a href="#__codelineno-22-8" id="__codelineno-22-8" name="__codelineno-22-8"></a>DB_ROOT_PASSWORD=MyCompanySecureRootPassword2024!
+<a href="#__codelineno-22-9" id="__codelineno-22-9" name="__codelineno-22-9"></a># DB_EXTERNAL_PORT not set for security
+<a href="#__codelineno-22-10" id="__codelineno-22-10" name="__codelineno-22-10"></a>
+<a href="#__codelineno-22-11" id="__codelineno-22-11" name="__codelineno-22-11"></a># Dolibarr Configuration
+<a href="#__codelineno-22-12" id="__codelineno-22-12" name="__codelineno-22-12"></a>DOLIBARR_PORT=8080
+<a href="#__codelineno-22-13" id="__codelineno-22-13" name="__codelineno-22-13"></a>DOLIBARR_ADMIN_LOGIN=admin
+<a href="#__codelineno-22-14" id="__codelineno-22-14" name="__codelineno-22-14"></a>DOLIBARR_ADMIN_PASSWORD=MyCompanyAdminPassword2024!
+<a href="#__codelineno-22-15" id="__codelineno-22-15" name="__codelineno-22-15"></a>DOLIBARR_URL_ROOT=https://erp.mycompany.com
+<a href="#__codelineno-22-16" id="__codelineno-22-16" name="__codelineno-22-16"></a>DOLIBARR_NOCSRFCHECK=0
+<a href="#__codelineno-22-17" id="__codelineno-22-17" name="__codelineno-22-17"></a>DOLIBARR_HTTPS=1
+<a href="#__codelineno-22-18" id="__codelineno-22-18" name="__codelineno-22-18"></a>
+<a href="#__codelineno-22-19" id="__codelineno-22-19" name="__codelineno-22-19"></a># PHP Configuration
+<a href="#__codelineno-22-20" id="__codelineno-22-20" name="__codelineno-22-20"></a>TIMEZONE=Europe/Paris
+<a href="#__codelineno-22-21" id="__codelineno-22-21" name="__codelineno-22-21"></a>
+<a href="#__codelineno-22-22" id="__codelineno-22-22" name="__codelineno-22-22"></a># Optional Tools - Disabled for production
+<a href="#__codelineno-22-23" id="__codelineno-22-23" name="__codelineno-22-23"></a># PHPMYADMIN_PORT not set for security
+</code></pre></div>
+<p><strong>Usage</strong>: 
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a>task<span class="w"> </span>services:start
+</code></pre></div></p>
+<hr/>
+<h3 id="3-enterprise-production-with-external-database">3. Enterprise Production with External Database<a class="headerlink" href="#3-enterprise-production-with-external-database" title="Permanent link">¶</a></h3>
+<p>High-availability setup using external managed database.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a># External Database Configuration
+<a href="#__codelineno-24-2" id="__codelineno-24-2" name="__codelineno-24-2"></a>DB_TYPE=mysqli
+<a href="#__codelineno-24-3" id="__codelineno-24-3" name="__codelineno-24-3"></a>DB_HOST=dolibarr-prod.cluster-abc123.us-west-2.rds.amazonaws.com
+<a href="#__codelineno-24-4" id="__codelineno-24-4" name="__codelineno-24-4"></a>DB_PORT=3306
+<a href="#__codelineno-24-5" id="__codelineno-24-5" name="__codelineno-24-5"></a>DB_NAME=dolibarr_production
+<a href="#__codelineno-24-6" id="__codelineno-24-6" name="__codelineno-24-6"></a>DB_USER=dolibarr_app_user
+<a href="#__codelineno-24-7" id="__codelineno-24-7" name="__codelineno-24-7"></a>DB_PASSWORD=${SECRET_DB_PASSWORD}  # From secrets management
+<a href="#__codelineno-24-8" id="__codelineno-24-8" name="__codelineno-24-8"></a># DB_ROOT_PASSWORD empty for external database
+<a href="#__codelineno-24-9" id="__codelineno-24-9" name="__codelineno-24-9"></a>
+<a href="#__codelineno-24-10" id="__codelineno-24-10" name="__codelineno-24-10"></a># Dolibarr Configuration
+<a href="#__codelineno-24-11" id="__codelineno-24-11" name="__codelineno-24-11"></a>DOLIBARR_PORT=8080
+<a href="#__codelineno-24-12" id="__codelineno-24-12" name="__codelineno-24-12"></a>DOLIBARR_ADMIN_LOGIN=sysadmin
+<a href="#__codelineno-24-13" id="__codelineno-24-13" name="__codelineno-24-13"></a>DOLIBARR_ADMIN_PASSWORD=${SECRET_ADMIN_PASSWORD}  # From secrets management
+<a href="#__codelineno-24-14" id="__codelineno-24-14" name="__codelineno-24-14"></a>DOLIBARR_URL_ROOT=https://erp.enterprise.com
+<a href="#__codelineno-24-15" id="__codelineno-24-15" name="__codelineno-24-15"></a>DOLIBARR_NOCSRFCHECK=0
+<a href="#__codelineno-24-16" id="__codelineno-24-16" name="__codelineno-24-16"></a>DOLIBARR_HTTPS=1
+<a href="#__codelineno-24-17" id="__codelineno-24-17" name="__codelineno-24-17"></a>
+<a href="#__codelineno-24-18" id="__codelineno-24-18" name="__codelineno-24-18"></a># PHP Configuration
+<a href="#__codelineno-24-19" id="__codelineno-24-19" name="__codelineno-24-19"></a>TIMEZONE=UTC
+<a href="#__codelineno-24-20" id="__codelineno-24-20" name="__codelineno-24-20"></a>
+<a href="#__codelineno-24-21" id="__codelineno-24-21" name="__codelineno-24-21"></a># Optional Tools - Not used in production
+</code></pre></div>
+<p><strong>Usage</strong>: 
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a>task<span class="w"> </span>services:start-external
+</code></pre></div></p>
+<hr/>
+<h3 id="4-multi-environment-setup">4. Multi-Environment Setup<a class="headerlink" href="#4-multi-environment-setup" title="Permanent link">¶</a></h3>
+<p>Development environment configuration for multi-stage deployments.</p>
+<h4 id="development-environment">Development Environment:<a class="headerlink" href="#development-environment" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a># Development Database
+<a href="#__codelineno-26-2" id="__codelineno-26-2" name="__codelineno-26-2"></a>DB_HOST=dolibarr-db
+<a href="#__codelineno-26-3" id="__codelineno-26-3" name="__codelineno-26-3"></a>DB_PASSWORD=dev-secure-password
+<a href="#__codelineno-26-4" id="__codelineno-26-4" name="__codelineno-26-4"></a>DB_ROOT_PASSWORD=dev-secure-root-password
+<a href="#__codelineno-26-5" id="__codelineno-26-5" name="__codelineno-26-5"></a>DOLIBARR_ADMIN_PASSWORD=dev-admin-password
+<a href="#__codelineno-26-6" id="__codelineno-26-6" name="__codelineno-26-6"></a>
+<a href="#__codelineno-26-7" id="__codelineno-26-7" name="__codelineno-26-7"></a># Development Ports
+<a href="#__codelineno-26-8" id="__codelineno-26-8" name="__codelineno-26-8"></a>DOLIBARR_PORT=18080
+<a href="#__codelineno-26-9" id="__codelineno-26-9" name="__codelineno-26-9"></a>PHPMYADMIN_PORT=18081
+<a href="#__codelineno-26-10" id="__codelineno-26-10" name="__codelineno-26-10"></a>DB_EXTERNAL_PORT=13306
+<a href="#__codelineno-26-11" id="__codelineno-26-11" name="__codelineno-26-11"></a>
+<a href="#__codelineno-26-12" id="__codelineno-26-12" name="__codelineno-26-12"></a># Development Settings
+<a href="#__codelineno-26-13" id="__codelineno-26-13" name="__codelineno-26-13"></a>DOLIBARR_URL_ROOT=http://localhost:18080
+<a href="#__codelineno-26-14" id="__codelineno-26-14" name="__codelineno-26-14"></a>TIMEZONE=America/New_York
+</code></pre></div>
+<h4 id="staging-environment">Staging Environment:<a class="headerlink" href="#staging-environment" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a># Staging Database (External)
+<a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a>DB_HOST=dolibarr-staging.company.internal
+<a href="#__codelineno-27-3" id="__codelineno-27-3" name="__codelineno-27-3"></a>DB_PASSWORD=${STAGING_DB_PASSWORD}
+<a href="#__codelineno-27-4" id="__codelineno-27-4" name="__codelineno-27-4"></a>DOLIBARR_ADMIN_PASSWORD=${STAGING_ADMIN_PASSWORD}
+<a href="#__codelineno-27-5" id="__codelineno-27-5" name="__codelineno-27-5"></a>
+<a href="#__codelineno-27-6" id="__codelineno-27-6" name="__codelineno-27-6"></a># Staging Ports
+<a href="#__codelineno-27-7" id="__codelineno-27-7" name="__codelineno-27-7"></a>DOLIBARR_PORT=28080
+<a href="#__codelineno-27-8" id="__codelineno-27-8" name="__codelineno-27-8"></a>
+<a href="#__codelineno-27-9" id="__codelineno-27-9" name="__codelineno-27-9"></a># Staging Settings
+<a href="#__codelineno-27-10" id="__codelineno-27-10" name="__codelineno-27-10"></a>DOLIBARR_URL_ROOT=https://dolibarr-staging.company.internal
+<a href="#__codelineno-27-11" id="__codelineno-27-11" name="__codelineno-27-11"></a>DOLIBARR_HTTPS=1
+<a href="#__codelineno-27-12" id="__codelineno-27-12" name="__codelineno-27-12"></a>TIMEZONE=UTC
+</code></pre></div>
+<h4 id="production-environment">Production Environment:<a class="headerlink" href="#production-environment" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-28-1" id="__codelineno-28-1" name="__codelineno-28-1"></a># Production Database (External)
+<a href="#__codelineno-28-2" id="__codelineno-28-2" name="__codelineno-28-2"></a>DB_HOST=dolibarr-prod.company.internal
+<a href="#__codelineno-28-3" id="__codelineno-28-3" name="__codelineno-28-3"></a>DB_PASSWORD=${PROD_DB_PASSWORD}
+<a href="#__codelineno-28-4" id="__codelineno-28-4" name="__codelineno-28-4"></a>DOLIBARR_ADMIN_PASSWORD=${PROD_ADMIN_PASSWORD}
+<a href="#__codelineno-28-5" id="__codelineno-28-5" name="__codelineno-28-5"></a>
+<a href="#__codelineno-28-6" id="__codelineno-28-6" name="__codelineno-28-6"></a># Production Ports
+<a href="#__codelineno-28-7" id="__codelineno-28-7" name="__codelineno-28-7"></a>DOLIBARR_PORT=8080
+<a href="#__codelineno-28-8" id="__codelineno-28-8" name="__codelineno-28-8"></a>
+<a href="#__codelineno-28-9" id="__codelineno-28-9" name="__codelineno-28-9"></a># Production Settings
+<a href="#__codelineno-28-10" id="__codelineno-28-10" name="__codelineno-28-10"></a>DOLIBARR_URL_ROOT=https://erp.company.com
+<a href="#__codelineno-28-11" id="__codelineno-28-11" name="__codelineno-28-11"></a>DOLIBARR_HTTPS=1
+<a href="#__codelineno-28-12" id="__codelineno-28-12" name="__codelineno-28-12"></a>TIMEZONE=UTC
+</code></pre></div>
+<hr/>
+<h3 id="5-cloud-deployment-aws">5. Cloud Deployment (AWS)<a class="headerlink" href="#5-cloud-deployment-aws" title="Permanent link">¶</a></h3>
+<p>Configuration for cloud deployment with managed database services.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-29-1" id="__codelineno-29-1" name="__codelineno-29-1"></a># AWS RDS Database
+<a href="#__codelineno-29-2" id="__codelineno-29-2" name="__codelineno-29-2"></a>DB_TYPE=mysqli
+<a href="#__codelineno-29-3" id="__codelineno-29-3" name="__codelineno-29-3"></a>DB_HOST=dolibarr-db.cluster-xyz.us-west-2.rds.amazonaws.com
+<a href="#__codelineno-29-4" id="__codelineno-29-4" name="__codelineno-29-4"></a>DB_PORT=3306
+<a href="#__codelineno-29-5" id="__codelineno-29-5" name="__codelineno-29-5"></a>DB_NAME=dolibarr
+<a href="#__codelineno-29-6" id="__codelineno-29-6" name="__codelineno-29-6"></a>DB_USER=dolibarr_app
+<a href="#__codelineno-29-7" id="__codelineno-29-7" name="__codelineno-29-7"></a># DB_PASSWORD loaded from AWS Secrets Manager
+<a href="#__codelineno-29-8" id="__codelineno-29-8" name="__codelineno-29-8"></a># DB_ROOT_PASSWORD not needed for managed database
+<a href="#__codelineno-29-9" id="__codelineno-29-9" name="__codelineno-29-9"></a>
+<a href="#__codelineno-29-10" id="__codelineno-29-10" name="__codelineno-29-10"></a># Application Configuration
+<a href="#__codelineno-29-11" id="__codelineno-29-11" name="__codelineno-29-11"></a>DOLIBARR_PORT=8080
+<a href="#__codelineno-29-12" id="__codelineno-29-12" name="__codelineno-29-12"></a>DOLIBARR_ADMIN_LOGIN=admin
+<a href="#__codelineno-29-13" id="__codelineno-29-13" name="__codelineno-29-13"></a># DOLIBARR_ADMIN_PASSWORD loaded from AWS Secrets Manager
+<a href="#__codelineno-29-14" id="__codelineno-29-14" name="__codelineno-29-14"></a>DOLIBARR_URL_ROOT=https://dolibarr.mycompany.com
+<a href="#__codelineno-29-15" id="__codelineno-29-15" name="__codelineno-29-15"></a>DOLIBARR_HTTPS=1
+<a href="#__codelineno-29-16" id="__codelineno-29-16" name="__codelineno-29-16"></a>DOLIBARR_NOCSRFCHECK=0
+<a href="#__codelineno-29-17" id="__codelineno-29-17" name="__codelineno-29-17"></a>
+<a href="#__codelineno-29-18" id="__codelineno-29-18" name="__codelineno-29-18"></a># Regional Configuration
+<a href="#__codelineno-29-19" id="__codelineno-29-19" name="__codelineno-29-19"></a>TIMEZONE=America/Los_Angeles
+</code></pre></div>
+<hr/>
+<h2 id="variable-validation">Variable Validation<a class="headerlink" href="#variable-validation" title="Permanent link">¶</a></h2>
+<h3 id="required-variables-check">Required Variables Check<a class="headerlink" href="#required-variables-check" title="Permanent link">¶</a></h3>
+<p>Before starting Dolibarr, ensure these variables are set:</p>
+<p><strong>Always Required</strong>:
+- <code>DOLIBARR_ADMIN_PASSWORD</code></p>
+<p><strong>Internal Database Profile</strong>:
+- <code>DB_PASSWORD</code>
+- <code>DB_ROOT_PASSWORD</code></p>
+<p><strong>External Database Profile</strong>:
+- <code>DB_HOST</code>
+- <code>DB_PASSWORD</code></p>
+<h3 id="validation-commands">Validation Commands<a class="headerlink" href="#validation-commands" title="Permanent link">¶</a></h3>
+<p>You can validate your environment variables using these commands:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-30-1" id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="c1"># Check if required variables are set</span>
+<a href="#__codelineno-30-2" id="__codelineno-30-2" name="__codelineno-30-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DB_PASSWORD: </span><span class="si">${</span><span class="nv">DB_PASSWORD</span><span class="p">:+SET</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-3" id="__codelineno-30-3" name="__codelineno-30-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DOLIBARR_ADMIN_PASSWORD: </span><span class="si">${</span><span class="nv">DOLIBARR_ADMIN_PASSWORD</span><span class="p">:+SET</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-4" id="__codelineno-30-4" name="__codelineno-30-4"></a>
+<a href="#__codelineno-30-5" id="__codelineno-30-5" name="__codelineno-30-5"></a><span class="c1"># Display current configuration (without passwords)</span>
+<a href="#__codelineno-30-6" id="__codelineno-30-6" name="__codelineno-30-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DB_HOST: </span><span class="si">${</span><span class="nv">DB_HOST</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-7" id="__codelineno-30-7" name="__codelineno-30-7"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DB_PORT: </span><span class="si">${</span><span class="nv">DB_PORT</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-8" id="__codelineno-30-8" name="__codelineno-30-8"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DB_NAME: </span><span class="si">${</span><span class="nv">DB_NAME</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-9" id="__codelineno-30-9" name="__codelineno-30-9"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DOLIBARR_PORT: </span><span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-10" id="__codelineno-30-10" name="__codelineno-30-10"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"TIMEZONE: </span><span class="si">${</span><span class="nv">TIMEZONE</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-11" id="__codelineno-30-11" name="__codelineno-30-11"></a>
+<a href="#__codelineno-30-12" id="__codelineno-30-12" name="__codelineno-30-12"></a><span class="c1"># Check password strength (length only)</span>
+<a href="#__codelineno-30-13" id="__codelineno-30-13" name="__codelineno-30-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DB_PASSWORD length: </span><span class="si">${#</span><span class="nv">DB_PASSWORD</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-30-14" id="__codelineno-30-14" name="__codelineno-30-14"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DOLIBARR_ADMIN_PASSWORD length: </span><span class="si">${#</span><span class="nv">DOLIBARR_ADMIN_PASSWORD</span><span class="si">}</span><span class="s2">"</span>
+</code></pre></div>
+<hr/>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
+<h3 id="security-best-practices">Security Best Practices<a class="headerlink" href="#security-best-practices" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Strong Passwords</strong>: Use minimum 16 characters with mixed case, numbers, and symbols</li>
+<li><strong>Secrets Management</strong>: Use Docker secrets or external secret management in production</li>
+<li><strong>Environment Separation</strong>: Use different passwords for different environments</li>
+<li><strong>Port Security</strong>: Don't expose database ports in production</li>
+<li><strong>HTTPS</strong>: Always use HTTPS in production environments</li>
+</ol>
+<h3 id="configuration-best-practices">Configuration Best Practices<a class="headerlink" href="#configuration-best-practices" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Environment Files</strong>: Use <code>.env</code> files for environment-specific configurations</li>
+<li><strong>Version Control</strong>: Never commit <code>.env</code> files with real passwords</li>
+<li><strong>Documentation</strong>: Document any custom variables or configurations</li>
+<li><strong>Validation</strong>: Validate configuration before deployment</li>
+<li><strong>Backup</strong>: Include environment configuration in backup procedures</li>
+</ol>
+<h3 id="development-best-practices">Development Best Practices<a class="headerlink" href="#development-best-practices" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Consistent Ports</strong>: Use consistent port schemes across environments</li>
+<li><strong>Clear Naming</strong>: Use descriptive names for custom databases/users</li>
+<li><strong>Tool Access</strong>: Enable development tools only in development environments</li>
+<li><strong>Logging</strong>: Use appropriate timezone settings for log analysis</li>
+<li><strong>Testing</strong>: Test configuration changes in development first</li>
+</ol>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

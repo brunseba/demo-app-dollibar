@@ -1,0 +1,1633 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/modules-status/" rel="canonical"/>
+<link href="../database-model/" rel="prev"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>Modules Status - Dolibarr Docker Documentation</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#dolibarr-modules-status">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Modules Status
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/troubleshooting/">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/taskfile-commands/">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/environment-variables/">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../backup-restore/">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#currently-enabled-core-modules">
+<span class="md-ellipsis">
+      Currently Enabled Core Modules
+    </span>
+</a>
+<nav aria-label="Currently Enabled Core Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adherent-member-management">
+<span class="md-ellipsis">
+      ✅ ADHERENT - Member Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fournisseur-supplier-management">
+<span class="md-ellipsis">
+      ✅ FOURNISSEUR - Supplier Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#societe-third-party-management">
+<span class="md-ellipsis">
+      ✅ SOCIETE - Third Party Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#user-user-management">
+<span class="md-ellipsis">
+      ✅ USER - User Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#available-modules-by-category">
+<span class="md-ellipsis">
+      Available Modules by Category
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#financial-accounting-modules">
+<span class="md-ellipsis">
+      📊 Financial &amp; Accounting Modules
+    </span>
+</a>
+<nav aria-label="📊 Financial &amp; Accounting Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#accounting">
+<span class="md-ellipsis">
+      💰 Accounting
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#banking-payments">
+<span class="md-ellipsis">
+      🏦 Banking &amp; Payments
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invoicing-billing">
+<span class="md-ellipsis">
+      📄 Invoicing &amp; Billing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sales-commerce-modules">
+<span class="md-ellipsis">
+      🛒 Sales &amp; Commerce Modules
+    </span>
+</a>
+<nav aria-label="🛒 Sales &amp; Commerce Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#commercial-proposals">
+<span class="md-ellipsis">
+      💼 Commercial Proposals
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#orders-commands">
+<span class="md-ellipsis">
+      📋 Orders &amp; Commands
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#expeditions-deliveries">
+<span class="md-ellipsis">
+      📦 Expeditions &amp; Deliveries
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inventory-product-modules">
+<span class="md-ellipsis">
+      📦 Inventory &amp; Product Modules
+    </span>
+</a>
+<nav aria-label="📦 Inventory &amp; Product Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#product-management">
+<span class="md-ellipsis">
+      🏭 Product Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stock-warehouse">
+<span class="md-ellipsis">
+      📊 Stock &amp; Warehouse
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stock-transfers">
+<span class="md-ellipsis">
+      🔄 Stock Transfers
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#crm-project-modules">
+<span class="md-ellipsis">
+      👥 CRM &amp; Project Modules
+    </span>
+</a>
+<nav aria-label="👥 CRM &amp; Project Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activities-communications">
+<span class="md-ellipsis">
+      📞 Activities &amp; Communications
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#project-management">
+<span class="md-ellipsis">
+      🎯 Project Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ticket-system">
+<span class="md-ellipsis">
+      🎟️ Ticket System
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hr-employee-modules">
+<span class="md-ellipsis">
+      👨‍💼 HR &amp; Employee Modules
+    </span>
+</a>
+<nav aria-label="👨‍💼 HR &amp; Employee Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#holiday-management">
+<span class="md-ellipsis">
+      🏖️ Holiday Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#human-resources">
+<span class="md-ellipsis">
+      💼 Human Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#salary-expenses">
+<span class="md-ellipsis">
+      💰 Salary &amp; Expenses
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recruitment">
+<span class="md-ellipsis">
+      👔 Recruitment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manufacturing-operations">
+<span class="md-ellipsis">
+      🏭 Manufacturing &amp; Operations
+    </span>
+</a>
+<nav aria-label="🏭 Manufacturing &amp; Operations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manufacturing-mrp">
+<span class="md-ellipsis">
+      🔧 Manufacturing (MRP)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#workstations">
+<span class="md-ellipsis">
+      🏭 Workstations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#assets-management">
+<span class="md-ellipsis">
+      💎 Assets Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#communication-marketing">
+<span class="md-ellipsis">
+      📧 Communication &amp; Marketing
+    </span>
+</a>
+<nav aria-label="📧 Communication &amp; Marketing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#email-marketing">
+<span class="md-ellipsis">
+      📮 Email Marketing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#website-management">
+<span class="md-ellipsis">
+      🌐 Website Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#partnerships-contracts">
+<span class="md-ellipsis">
+      🤝 Partnerships &amp; Contracts
+    </span>
+</a>
+<nav aria-label="🤝 Partnerships &amp; Contracts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#partnerships">
+<span class="md-ellipsis">
+      🤝 Partnerships
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#contracts-services">
+<span class="md-ellipsis">
+      📋 Contracts &amp; Services
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#point-of-sale-retail">
+<span class="md-ellipsis">
+      💳 Point of Sale &amp; Retail
+    </span>
+</a>
+<nav aria-label="💳 Point of Sale &amp; Retail" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#point-of-sale-pos">
+<span class="md-ellipsis">
+      🛒 Point of Sale (POS)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-features">
+<span class="md-ellipsis">
+      📈 Advanced Features
+    </span>
+</a>
+<nav aria-label="📈 Advanced Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-currency">
+<span class="md-ellipsis">
+      💱 Multi-currency
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#categories-classification">
+<span class="md-ellipsis">
+      🏷️ Categories &amp; Classification
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#knowledge-management">
+<span class="md-ellipsis">
+      📊 Knowledge Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#event-organization">
+<span class="md-ellipsis">
+      🎫 Event Organization
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-infrastructure">
+<span class="md-ellipsis">
+      🔧 System &amp; Infrastructure
+    </span>
+</a>
+<nav aria-label="🔧 System &amp; Infrastructure" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-configuration">
+<span class="md-ellipsis">
+      ⚙️ System Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#document-management-ecm">
+<span class="md-ellipsis">
+      📁 Document Management (ECM)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oauth-security">
+<span class="md-ellipsis">
+      🔐 OAuth &amp; Security
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scheduled-jobs">
+<span class="md-ellipsis">
+      ⏰ Scheduled Jobs
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary-statistics">
+<span class="md-ellipsis">
+      Summary Statistics
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#module-activation-status">
+<span class="md-ellipsis">
+      Module Activation Status
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-coverage-by-module-category">
+<span class="md-ellipsis">
+      Database Coverage by Module Category
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+<span class="md-ellipsis">
+      Next Steps
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#currently-enabled-core-modules">
+<span class="md-ellipsis">
+      Currently Enabled Core Modules
+    </span>
+</a>
+<nav aria-label="Currently Enabled Core Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adherent-member-management">
+<span class="md-ellipsis">
+      ✅ ADHERENT - Member Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fournisseur-supplier-management">
+<span class="md-ellipsis">
+      ✅ FOURNISSEUR - Supplier Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#societe-third-party-management">
+<span class="md-ellipsis">
+      ✅ SOCIETE - Third Party Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#user-user-management">
+<span class="md-ellipsis">
+      ✅ USER - User Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#available-modules-by-category">
+<span class="md-ellipsis">
+      Available Modules by Category
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#financial-accounting-modules">
+<span class="md-ellipsis">
+      📊 Financial &amp; Accounting Modules
+    </span>
+</a>
+<nav aria-label="📊 Financial &amp; Accounting Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#accounting">
+<span class="md-ellipsis">
+      💰 Accounting
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#banking-payments">
+<span class="md-ellipsis">
+      🏦 Banking &amp; Payments
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invoicing-billing">
+<span class="md-ellipsis">
+      📄 Invoicing &amp; Billing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sales-commerce-modules">
+<span class="md-ellipsis">
+      🛒 Sales &amp; Commerce Modules
+    </span>
+</a>
+<nav aria-label="🛒 Sales &amp; Commerce Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#commercial-proposals">
+<span class="md-ellipsis">
+      💼 Commercial Proposals
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#orders-commands">
+<span class="md-ellipsis">
+      📋 Orders &amp; Commands
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#expeditions-deliveries">
+<span class="md-ellipsis">
+      📦 Expeditions &amp; Deliveries
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inventory-product-modules">
+<span class="md-ellipsis">
+      📦 Inventory &amp; Product Modules
+    </span>
+</a>
+<nav aria-label="📦 Inventory &amp; Product Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#product-management">
+<span class="md-ellipsis">
+      🏭 Product Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stock-warehouse">
+<span class="md-ellipsis">
+      📊 Stock &amp; Warehouse
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stock-transfers">
+<span class="md-ellipsis">
+      🔄 Stock Transfers
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#crm-project-modules">
+<span class="md-ellipsis">
+      👥 CRM &amp; Project Modules
+    </span>
+</a>
+<nav aria-label="👥 CRM &amp; Project Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activities-communications">
+<span class="md-ellipsis">
+      📞 Activities &amp; Communications
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#project-management">
+<span class="md-ellipsis">
+      🎯 Project Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ticket-system">
+<span class="md-ellipsis">
+      🎟️ Ticket System
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hr-employee-modules">
+<span class="md-ellipsis">
+      👨‍💼 HR &amp; Employee Modules
+    </span>
+</a>
+<nav aria-label="👨‍💼 HR &amp; Employee Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#holiday-management">
+<span class="md-ellipsis">
+      🏖️ Holiday Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#human-resources">
+<span class="md-ellipsis">
+      💼 Human Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#salary-expenses">
+<span class="md-ellipsis">
+      💰 Salary &amp; Expenses
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recruitment">
+<span class="md-ellipsis">
+      👔 Recruitment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manufacturing-operations">
+<span class="md-ellipsis">
+      🏭 Manufacturing &amp; Operations
+    </span>
+</a>
+<nav aria-label="🏭 Manufacturing &amp; Operations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manufacturing-mrp">
+<span class="md-ellipsis">
+      🔧 Manufacturing (MRP)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#workstations">
+<span class="md-ellipsis">
+      🏭 Workstations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#assets-management">
+<span class="md-ellipsis">
+      💎 Assets Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#communication-marketing">
+<span class="md-ellipsis">
+      📧 Communication &amp; Marketing
+    </span>
+</a>
+<nav aria-label="📧 Communication &amp; Marketing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#email-marketing">
+<span class="md-ellipsis">
+      📮 Email Marketing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#website-management">
+<span class="md-ellipsis">
+      🌐 Website Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#partnerships-contracts">
+<span class="md-ellipsis">
+      🤝 Partnerships &amp; Contracts
+    </span>
+</a>
+<nav aria-label="🤝 Partnerships &amp; Contracts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#partnerships">
+<span class="md-ellipsis">
+      🤝 Partnerships
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#contracts-services">
+<span class="md-ellipsis">
+      📋 Contracts &amp; Services
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#point-of-sale-retail">
+<span class="md-ellipsis">
+      💳 Point of Sale &amp; Retail
+    </span>
+</a>
+<nav aria-label="💳 Point of Sale &amp; Retail" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#point-of-sale-pos">
+<span class="md-ellipsis">
+      🛒 Point of Sale (POS)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-features">
+<span class="md-ellipsis">
+      📈 Advanced Features
+    </span>
+</a>
+<nav aria-label="📈 Advanced Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-currency">
+<span class="md-ellipsis">
+      💱 Multi-currency
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#categories-classification">
+<span class="md-ellipsis">
+      🏷️ Categories &amp; Classification
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#knowledge-management">
+<span class="md-ellipsis">
+      📊 Knowledge Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#event-organization">
+<span class="md-ellipsis">
+      🎫 Event Organization
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-infrastructure">
+<span class="md-ellipsis">
+      🔧 System &amp; Infrastructure
+    </span>
+</a>
+<nav aria-label="🔧 System &amp; Infrastructure" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-configuration">
+<span class="md-ellipsis">
+      ⚙️ System Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#document-management-ecm">
+<span class="md-ellipsis">
+      📁 Document Management (ECM)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oauth-security">
+<span class="md-ellipsis">
+      🔐 OAuth &amp; Security
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scheduled-jobs">
+<span class="md-ellipsis">
+      ⏰ Scheduled Jobs
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary-statistics">
+<span class="md-ellipsis">
+      Summary Statistics
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#module-activation-status">
+<span class="md-ellipsis">
+      Module Activation Status
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-coverage-by-module-category">
+<span class="md-ellipsis">
+      Database Coverage by Module Category
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+<span class="md-ellipsis">
+      Next Steps
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="dolibarr-modules-status">Dolibarr Modules Status<a class="headerlink" href="#dolibarr-modules-status" title="Permanent link">¶</a></h1>
+<p>This document provides a comprehensive overview of the Dolibarr modules available in this installation, including their enablement status and associated database tables.</p>
+<h2 id="currently-enabled-core-modules">Currently Enabled Core Modules<a class="headerlink" href="#currently-enabled-core-modules" title="Permanent link">¶</a></h2>
+<p>Based on the database configuration (<code>llx_const</code> table), the following core modules are <strong>currently enabled</strong>:</p>
+<h3 id="adherent-member-management">✅ <strong>ADHERENT</strong> - Member Management<a class="headerlink" href="#adherent-member-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Status</strong>: <code>ENABLED</code></li>
+<li><strong>Purpose</strong>: Manage members, subscriptions, and membership types</li>
+<li><strong>Tables</strong>: </li>
+<li><code>llx_adherent</code> - Member records</li>
+<li><code>llx_adherent_extrafields</code> - Custom member fields</li>
+<li><code>llx_adherent_type</code> - Membership types</li>
+<li><code>llx_adherent_type_extrafields</code> - Custom membership type fields</li>
+<li><code>llx_adherent_type_lang</code> - Multi-language support</li>
+</ul>
+<h3 id="fournisseur-supplier-management">✅ <strong>FOURNISSEUR</strong> - Supplier Management<a class="headerlink" href="#fournisseur-supplier-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Status</strong>: <code>ENABLED</code></li>
+<li><strong>Purpose</strong>: Manage suppliers, supplier orders, and supplier invoices</li>
+<li><strong>Tables</strong>:</li>
+<li><code>llx_commande_fournisseur*</code> - Supplier orders</li>
+<li><code>llx_facture_fourn*</code> - Supplier invoices</li>
+<li><code>llx_supplier_proposal*</code> - Supplier proposals</li>
+</ul>
+<h3 id="societe-third-party-management">✅ <strong>SOCIETE</strong> - Third Party Management<a class="headerlink" href="#societe-third-party-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Status</strong>: <code>ENABLED</code> </li>
+<li><strong>Purpose</strong>: Core module for managing companies, customers, and suppliers</li>
+<li><strong>Tables</strong>:</li>
+<li><code>llx_societe*</code> - Company records</li>
+<li><code>llx_socpeople</code> - Contacts within companies</li>
+</ul>
+<h3 id="user-user-management">✅ <strong>USER</strong> - User Management<a class="headerlink" href="#user-user-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Status</strong>: <code>ENABLED</code></li>
+<li><strong>Purpose</strong>: System user accounts and permissions</li>
+<li><strong>Tables</strong>:</li>
+<li><code>llx_user*</code> - User accounts and profiles</li>
+<li><code>llx_usergroup*</code> - User groups and permissions</li>
+</ul>
+<h2 id="available-modules-by-category">Available Modules by Category<a class="headerlink" href="#available-modules-by-category" title="Permanent link">¶</a></h2>
+<p>Based on the database table structure analysis, the following modules are <strong>available</strong> (tables present) in this Dolibarr installation:</p>
+<h2 id="financial-accounting-modules">📊 <strong>Financial &amp; Accounting Modules</strong><a class="headerlink" href="#financial-accounting-modules" title="Permanent link">¶</a></h2>
+<h3 id="accounting">💰 Accounting<a class="headerlink" href="#accounting" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_accounting_*</code> (8 tables)</li>
+<li><strong>Features</strong>: Chart of accounts, bookkeeping, fiscal years, journals</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="banking-payments">🏦 Banking &amp; Payments<a class="headerlink" href="#banking-payments" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_bank*</code>, <code>llx_payment*</code>, <code>llx_paiement*</code> (15+ tables)  </li>
+<li><strong>Features</strong>: Bank accounts, payment tracking, reconciliation</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="invoicing-billing">📄 Invoicing &amp; Billing<a class="headerlink" href="#invoicing-billing" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_facture*</code>, <code>llx_facturedet*</code> (10+ tables)</li>
+<li><strong>Features</strong>: Customer invoices, recurring invoices, invoice lines</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="sales-commerce-modules">🛒 <strong>Sales &amp; Commerce Modules</strong><a class="headerlink" href="#sales-commerce-modules" title="Permanent link">¶</a></h2>
+<h3 id="commercial-proposals">💼 Commercial Proposals<a class="headerlink" href="#commercial-proposals" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_propal*</code>, <code>llx_propaldet*</code> (5+ tables)</li>
+<li><strong>Features</strong>: Quotations, proposal management, conversion to orders</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="orders-commands">📋 Orders &amp; Commands<a class="headerlink" href="#orders-commands" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_commande*</code>, <code>llx_commandedet*</code> (6+ tables)</li>
+<li><strong>Features</strong>: Customer orders, order lines, order tracking</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="expeditions-deliveries">📦 Expeditions &amp; Deliveries<a class="headerlink" href="#expeditions-deliveries" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_expedition*</code>, <code>llx_delivery*</code> (8+ tables)</li>
+<li><strong>Features</strong>: Shipping management, delivery tracking, packaging</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="inventory-product-modules">📦 <strong>Inventory &amp; Product Modules</strong><a class="headerlink" href="#inventory-product-modules" title="Permanent link">¶</a></h2>
+<h3 id="product-management">🏭 Product Management<a class="headerlink" href="#product-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_product*</code> (25+ tables)</li>
+<li><strong>Features</strong>: Product catalog, variants, pricing, stock management</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="stock-warehouse">📊 Stock &amp; Warehouse<a class="headerlink" href="#stock-warehouse" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_stock_*</code>, <code>llx_entrepot*</code>, <code>llx_inventory*</code> (10+ tables)</li>
+<li><strong>Features</strong>: Inventory tracking, warehouse management, stock movements</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="stock-transfers">🔄 Stock Transfers<a class="headerlink" href="#stock-transfers" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_stocktransfer_*</code> (4+ tables)</li>
+<li><strong>Features</strong>: Inter-warehouse transfers, transfer tracking</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="crm-project-modules">👥 <strong>CRM &amp; Project Modules</strong><a class="headerlink" href="#crm-project-modules" title="Permanent link">¶</a></h2>
+<h3 id="activities-communications">📞 Activities &amp; Communications<a class="headerlink" href="#activities-communications" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_actioncomm*</code> (4+ tables)</li>
+<li><strong>Features</strong>: CRM activities, reminders, communication tracking</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="project-management">🎯 Project Management<a class="headerlink" href="#project-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_projet*</code>, <code>llx_projet_task*</code> (4+ tables)</li>
+<li><strong>Features</strong>: Projects, tasks, time tracking, project billing</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="ticket-system">🎟️ Ticket System<a class="headerlink" href="#ticket-system" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_ticket*</code> (2+ tables)</li>
+<li><strong>Features</strong>: Support tickets, issue tracking, customer service</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="hr-employee-modules">👨‍💼 <strong>HR &amp; Employee Modules</strong><a class="headerlink" href="#hr-employee-modules" title="Permanent link">¶</a></h2>
+<h3 id="holiday-management">🏖️ Holiday Management<a class="headerlink" href="#holiday-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_holiday*</code> (5+ tables)</li>
+<li><strong>Features</strong>: Leave requests, holiday tracking, approval workflows</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="human-resources">💼 Human Resources<a class="headerlink" href="#human-resources" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_hrm_*</code> (8+ tables)</li>
+<li><strong>Features</strong>: Job positions, skills, evaluations, HR management</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="salary-expenses">💰 Salary &amp; Expenses<a class="headerlink" href="#salary-expenses" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_salary*</code>, <code>llx_expensereport*</code> (8+ tables)</li>
+<li><strong>Features</strong>: Payroll, expense reports, reimbursements</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="recruitment">👔 Recruitment<a class="headerlink" href="#recruitment" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_recruitment_*</code> (4+ tables)</li>
+<li><strong>Features</strong>: Job positions, candidate management, recruitment process</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="manufacturing-operations">🏭 <strong>Manufacturing &amp; Operations</strong><a class="headerlink" href="#manufacturing-operations" title="Permanent link">¶</a></h2>
+<h3 id="manufacturing-mrp">🔧 Manufacturing (MRP)<a class="headerlink" href="#manufacturing-mrp" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_mrp_*</code>, <code>llx_bom_*</code> (8+ tables)</li>
+<li><strong>Features</strong>: Manufacturing orders, bill of materials, production planning</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="workstations">🏭 Workstations<a class="headerlink" href="#workstations" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_workstation_*</code> (3+ tables)</li>
+<li><strong>Features</strong>: Production workstations, resource management</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="assets-management">💎 Assets Management<a class="headerlink" href="#assets-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_asset*</code> (8+ tables)</li>
+<li><strong>Features</strong>: Fixed assets, depreciation, asset tracking</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="communication-marketing">📧 <strong>Communication &amp; Marketing</strong><a class="headerlink" href="#communication-marketing" title="Permanent link">¶</a></h2>
+<h3 id="email-marketing">📮 Email Marketing<a class="headerlink" href="#email-marketing" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_mailing*</code>, <code>llx_emailcollector*</code> (7+ tables)</li>
+<li><strong>Features</strong>: Email campaigns, mass mailing, email collection</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="website-management">🌐 Website Management<a class="headerlink" href="#website-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_website*</code> (3+ tables)</li>
+<li><strong>Features</strong>: Website builder, page management, web content</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="partnerships-contracts">🤝 <strong>Partnerships &amp; Contracts</strong><a class="headerlink" href="#partnerships-contracts" title="Permanent link">¶</a></h2>
+<h3 id="partnerships">🤝 Partnerships<a class="headerlink" href="#partnerships" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_partnership*</code> (2+ tables)</li>
+<li><strong>Features</strong>: Partner management, partnership tracking</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="contracts-services">📋 Contracts &amp; Services<a class="headerlink" href="#contracts-services" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_contrat*</code>, <code>llx_fichinter*</code> (8+ tables)</li>
+<li><strong>Features</strong>: Service contracts, interventions, recurring services</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="point-of-sale-retail">💳 <strong>Point of Sale &amp; Retail</strong><a class="headerlink" href="#point-of-sale-retail" title="Permanent link">¶</a></h2>
+<h3 id="point-of-sale-pos">🛒 Point of Sale (POS)<a class="headerlink" href="#point-of-sale-pos" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_pos_*</code>, <code>llx_takepos_*</code> (3+ tables)</li>
+<li><strong>Features</strong>: POS interface, cash management, restaurant orders</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="advanced-features">📈 <strong>Advanced Features</strong><a class="headerlink" href="#advanced-features" title="Permanent link">¶</a></h2>
+<h3 id="multi-currency">💱 Multi-currency<a class="headerlink" href="#multi-currency" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_multicurrency*</code> (2+ tables)</li>
+<li><strong>Features</strong>: Multiple currency support, exchange rates</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="categories-classification">🏷️ Categories &amp; Classification<a class="headerlink" href="#categories-classification" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_categorie*</code>, <code>llx_element_categorie</code> (15+ tables)</li>
+<li><strong>Features</strong>: Hierarchical categorization for all entities</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="knowledge-management">📊 Knowledge Management<a class="headerlink" href="#knowledge-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_knowledgemanagement_*</code> (2+ tables)</li>
+<li><strong>Features</strong>: Knowledge base, documentation management</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="event-organization">🎫 Event Organization<a class="headerlink" href="#event-organization" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_eventorganization_*</code> (2+ tables)</li>
+<li><strong>Features</strong>: Conference/booth management, attendee tracking</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="system-infrastructure">🔧 <strong>System &amp; Infrastructure</strong><a class="headerlink" href="#system-infrastructure" title="Permanent link">¶</a></h2>
+<h3 id="system-configuration">⚙️ System Configuration<a class="headerlink" href="#system-configuration" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_const</code>, <code>llx_menu</code>, <code>llx_boxes*</code> (5+ tables)</li>
+<li><strong>Features</strong>: System configuration, menu management, dashboard widgets</li>
+<li><strong>Status</strong>: Core system tables (always active)</li>
+</ul>
+<h3 id="document-management-ecm">📁 Document Management (ECM)<a class="headerlink" href="#document-management-ecm" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_ecm_*</code> (4+ tables)</li>
+<li><strong>Features</strong>: Document storage, file management, directories</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="oauth-security">🔐 OAuth &amp; Security<a class="headerlink" href="#oauth-security" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_oauth_*</code> (2+ tables)</li>
+<li><strong>Features</strong>: OAuth integration, external authentication</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h3 id="scheduled-jobs">⏰ Scheduled Jobs<a class="headerlink" href="#scheduled-jobs" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Tables</strong>: <code>llx_cronjob</code> (1 table)</li>
+<li><strong>Features</strong>: Automated task scheduling, background jobs</li>
+<li><strong>Status</strong>: Tables present (available for activation)</li>
+</ul>
+<h2 id="summary-statistics">Summary Statistics<a class="headerlink" href="#summary-statistics" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>✅ Enabled Modules</strong>: 4 core modules</li>
+<li><strong>📦 Available Modules</strong>: 35+ module categories</li>
+<li><strong>🗄️ Total Database Tables</strong>: 389 tables</li>
+<li><strong>🏗️ Architecture</strong>: Fully modular with extensible design</li>
+</ul>
+<h2 id="module-activation-status">Module Activation Status<a class="headerlink" href="#module-activation-status" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>pie title Dolibarr Module Status
+    "Enabled (Core)" : 4
+    "Available (Not Activated)" : 35</code></pre>
+<h2 id="database-coverage-by-module-category">Database Coverage by Module Category<a class="headerlink" href="#database-coverage-by-module-category" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>graph LR
+    A[Dolibarr Database - 389 Tables] --&gt; B[Core Business - 45%]
+    A --&gt; C[Financial &amp; Accounting - 15%] 
+    A --&gt; D[HR &amp; Employee - 10%]
+    A --&gt; E[Manufacturing - 8%]
+    A --&gt; F[CRM &amp; Projects - 8%]
+    A --&gt; G[System &amp; Config - 7%]
+    A --&gt; H[Communication - 4%]
+    A --&gt; I[POS &amp; Retail - 3%]
+
+    B --&gt; B1[Companies &amp; Contacts]
+    B --&gt; B2[Products &amp; Inventory]
+    B --&gt; B3[Orders &amp; Invoices]
+
+    C --&gt; C1[Accounting &amp; Bookkeeping]
+    C --&gt; C2[Banking &amp; Payments]
+    C --&gt; C3[Multi-currency]
+
+    D --&gt; D1[User Management ✅]
+    D --&gt; D2[HR &amp; Payroll]
+    D --&gt; D3[Recruitment]
+
+    style B fill:#e1f5fe
+    style D1 fill:#c8e6c9</code></pre>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<p>To activate additional modules:</p>
+<ol>
+<li><strong>Access Dolibarr Admin Interface</strong>:</li>
+<li>URL: http://localhost:18080</li>
+<li>Login: admin</li>
+<li>
+<p>Navigate to: Setup → Modules/Applications</p>
+</li>
+<li>
+<p><strong>Database Impact</strong>: </p>
+</li>
+<li>Enabling modules will populate corresponding tables with configuration data</li>
+<li>
+<p>Some modules may create additional tables dynamically</p>
+</li>
+<li>
+<p><strong>Recommended Activation Order</strong>:</p>
+</li>
+<li><strong>Products &amp; Services</strong> (if needed for inventory)</li>
+<li><strong>Invoicing</strong> (for billing functionality)  </li>
+<li><strong>Projects</strong> (for project management)</li>
+<li><strong>CRM Activities</strong> (for sales tracking)</li>
+</ol>
+<hr/>
+<p><em>This analysis was performed by examining the database structure of a live Dolibarr instance. Module availability is determined by table presence, while activation status is confirmed through configuration settings.</em></p>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 14:03:41 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 14:03:41 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

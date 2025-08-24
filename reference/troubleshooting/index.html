@@ -1,0 +1,3182 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/reference/troubleshooting/" rel="canonical"/>
+<link href="../uri/" rel="prev"/>
+<link href="../../backup-restore/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>Troubleshooting Guide - Dolibarr Docker Documentation</title>
+<link href="../../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#troubleshooting-reference">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Troubleshooting Guide
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="./">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../taskfile-commands/">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../environment-variables/">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-diagnostics">
+<span class="md-ellipsis">
+      Quick Diagnostics
+    </span>
+</a>
+<nav aria-label="Quick Diagnostics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-health-check">
+<span class="md-ellipsis">
+      System Health Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-validation">
+<span class="md-ellipsis">
+      Environment Validation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-status">
+<span class="md-ellipsis">
+      Container Status
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-issues">
+<span class="md-ellipsis">
+      Service Issues
+    </span>
+</a>
+<nav aria-label="Service Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#services-wont-start">
+<span class="md-ellipsis">
+      Services Won't Start
+    </span>
+</a>
+<nav aria-label="Services Won't Start" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-port-conflicts">
+<span class="md-ellipsis">
+      1. Port Conflicts
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-missing-environment-variables">
+<span class="md-ellipsis">
+      2. Missing Environment Variables
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-invalid-docker-compose-profile">
+<span class="md-ellipsis">
+      3. Invalid Docker Compose Profile
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-docker-daemon-issues">
+<span class="md-ellipsis">
+      4. Docker Daemon Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-keeps-restarting">
+<span class="md-ellipsis">
+      Service Keeps Restarting
+    </span>
+</a>
+<nav aria-label="Service Keeps Restarting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-database-connection-issues">
+<span class="md-ellipsis">
+      1. Database Connection Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-insufficient-resources">
+<span class="md-ellipsis">
+      2. Insufficient Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-configuration-errors">
+<span class="md-ellipsis">
+      3. Configuration Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-issues">
+<span class="md-ellipsis">
+      Database Issues
+    </span>
+</a>
+<nav aria-label="Database Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-wont-start">
+<span class="md-ellipsis">
+      Database Won't Start
+    </span>
+</a>
+<nav aria-label="Database Won't Start" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-corrupted-database-volume">
+<span class="md-ellipsis">
+      1. Corrupted Database Volume
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-incorrect-root-password">
+<span class="md-ellipsis">
+      2. Incorrect Root Password
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-port-conflicts">
+<span class="md-ellipsis">
+      3. Port Conflicts
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-connection-errors">
+<span class="md-ellipsis">
+      Database Connection Errors
+    </span>
+</a>
+<nav aria-label="Database Connection Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-database-not-ready">
+<span class="md-ellipsis">
+      1. Database Not Ready
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-network-issues">
+<span class="md-ellipsis">
+      2. Network Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-external-database-issues">
+<span class="md-ellipsis">
+      3. External Database Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-performance-issues">
+<span class="md-ellipsis">
+      Database Performance Issues
+    </span>
+</a>
+<nav aria-label="Database Performance Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-optimize-database">
+<span class="md-ellipsis">
+      1. Optimize Database
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-add-resource-limits">
+<span class="md-ellipsis">
+      2. Add Resource Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-database-maintenance">
+<span class="md-ellipsis">
+      3. Database Maintenance
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-issues">
+<span class="md-ellipsis">
+      Application Issues
+    </span>
+</a>
+<nav aria-label="Application Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr-wont-load">
+<span class="md-ellipsis">
+      Dolibarr Won't Load
+    </span>
+</a>
+<nav aria-label="Dolibarr Won't Load" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-web-server-not-running">
+<span class="md-ellipsis">
+      1. Web Server Not Running
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-php-errors">
+<span class="md-ellipsis">
+      2. PHP Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-configuration-issues">
+<span class="md-ellipsis">
+      3. Configuration Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#login-issues">
+<span class="md-ellipsis">
+      Login Issues
+    </span>
+</a>
+<nav aria-label="Login Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-wrong-admin-credentials">
+<span class="md-ellipsis">
+      1. Wrong Admin Credentials
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-account-locked">
+<span class="md-ellipsis">
+      2. Account Locked
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-database-issues">
+<span class="md-ellipsis">
+      3. Database Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#module-issues">
+<span class="md-ellipsis">
+      Module Issues
+    </span>
+</a>
+<nav aria-label="Module Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-modules-not-enabled">
+<span class="md-ellipsis">
+      1. Modules Not Enabled
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-custom-module-issues">
+<span class="md-ellipsis">
+      2. Custom Module Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-module-configuration">
+<span class="md-ellipsis">
+      3. Module Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-and-connectivity-issues">
+<span class="md-ellipsis">
+      Network and Connectivity Issues
+    </span>
+</a>
+<nav aria-label="Network and Connectivity Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cant-access-web-interface">
+<span class="md-ellipsis">
+      Can't Access Web Interface
+    </span>
+</a>
+<nav aria-label="Can't Access Web Interface" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-port-not-accessible">
+<span class="md-ellipsis">
+      1. Port Not Accessible
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-wrong-url">
+<span class="md-ellipsis">
+      2. Wrong URL
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-reverse-proxy-issues">
+<span class="md-ellipsis">
+      3. Reverse Proxy Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-connection-issues">
+<span class="md-ellipsis">
+      API Connection Issues
+    </span>
+</a>
+<nav aria-label="API Connection Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-api-not-enabled">
+<span class="md-ellipsis">
+      1. API Not Enabled
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-api-key-issues">
+<span class="md-ellipsis">
+      2. API Key Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-issues">
+<span class="md-ellipsis">
+      Performance Issues
+    </span>
+</a>
+<nav aria-label="Performance Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slow-performance">
+<span class="md-ellipsis">
+      Slow Performance
+    </span>
+</a>
+<nav aria-label="Slow Performance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-resource-limits">
+<span class="md-ellipsis">
+      1. Resource Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-database-optimization">
+<span class="md-ellipsis">
+      2. Database Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-php-configuration">
+<span class="md-ellipsis">
+      3. PHP Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#memory-issues">
+<span class="md-ellipsis">
+      Memory Issues
+    </span>
+</a>
+<nav aria-label="Memory Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-increase-memory-limits">
+<span class="md-ellipsis">
+      1. Increase Memory Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-optimize-php-memory">
+<span class="md-ellipsis">
+      2. Optimize PHP Memory
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-issues">
+<span class="md-ellipsis">
+      Configuration Issues
+    </span>
+</a>
+<nav aria-label="Configuration Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-variable-issues">
+<span class="md-ellipsis">
+      Environment Variable Issues
+    </span>
+</a>
+<nav aria-label="Environment Variable Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-missing-env-file">
+<span class="md-ellipsis">
+      1. Missing .env File
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-invalid-variable-format">
+<span class="md-ellipsis">
+      2. Invalid Variable Format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-profile-specific-variables">
+<span class="md-ellipsis">
+      3. Profile-Specific Variables
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#docker-compose-issues">
+<span class="md-ellipsis">
+      Docker Compose Issues
+    </span>
+</a>
+<nav aria-label="Docker Compose Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-docker-compose-not-installed">
+<span class="md-ellipsis">
+      1. Docker Compose Not Installed
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-yaml-syntax-errors">
+<span class="md-ellipsis">
+      2. YAML Syntax Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#file-and-permission-issues">
+<span class="md-ellipsis">
+      File and Permission Issues
+    </span>
+</a>
+<nav aria-label="File and Permission Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#permission-denied-errors">
+<span class="md-ellipsis">
+      Permission Denied Errors
+    </span>
+</a>
+<nav aria-label="Permission Denied Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-fix-application-permissions">
+<span class="md-ellipsis">
+      1. Fix Application Permissions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-host-directory-permissions">
+<span class="md-ellipsis">
+      2. Host Directory Permissions
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#file-upload-issues">
+<span class="md-ellipsis">
+      File Upload Issues
+    </span>
+</a>
+<nav aria-label="File Upload Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-php-upload-limits">
+<span class="md-ellipsis">
+      1. PHP Upload Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-disk-space-issues">
+<span class="md-ellipsis">
+      2. Disk Space Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-and-recovery-issues">
+<span class="md-ellipsis">
+      Backup and Recovery Issues
+    </span>
+</a>
+<nav aria-label="Backup and Recovery Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-failures">
+<span class="md-ellipsis">
+      Backup Failures
+    </span>
+</a>
+<nav aria-label="Backup Failures" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-permission-issues">
+<span class="md-ellipsis">
+      1. Permission Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-database-backup-issues">
+<span class="md-ellipsis">
+      2. Database Backup Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recovery-issues">
+<span class="md-ellipsis">
+      Recovery Issues
+    </span>
+</a>
+<nav aria-label="Recovery Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-verify-backup-integrity">
+<span class="md-ellipsis">
+      1. Verify Backup Integrity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-complete-recovery-process">
+<span class="md-ellipsis">
+      2. Complete Recovery Process
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-and-custom-module-issues">
+<span class="md-ellipsis">
+      Development and Custom Module Issues
+    </span>
+</a>
+<nav aria-label="Development and Custom Module Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-module-problems">
+<span class="md-ellipsis">
+      Custom Module Problems
+    </span>
+</a>
+<nav aria-label="Custom Module Problems" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-module-structure-issues">
+<span class="md-ellipsis">
+      1. Module Structure Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-php-syntax-errors">
+<span class="md-ellipsis">
+      2. PHP Syntax Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-environment-issues">
+<span class="md-ellipsis">
+      Development Environment Issues
+    </span>
+</a>
+<nav aria-label="Development Environment Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-phpmyadmin-issues">
+<span class="md-ellipsis">
+      1. phpMyAdmin Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-debug-mode">
+<span class="md-ellipsis">
+      2. Debug Mode
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-message-reference">
+<span class="md-ellipsis">
+      Error Message Reference
+    </span>
+</a>
+<nav aria-label="Error Message Reference" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-error-messages-and-solutions">
+<span class="md-ellipsis">
+      Common Error Messages and Solutions
+    </span>
+</a>
+<nav aria-label="Common Error Messages and Solutions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-errors">
+<span class="md-ellipsis">
+      Database Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-errors">
+<span class="md-ellipsis">
+      Application Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#docker-errors">
+<span class="md-ellipsis">
+      Docker Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-analysis">
+<span class="md-ellipsis">
+      Log Analysis
+    </span>
+</a>
+<nav aria-label="Log Analysis" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-locations-and-commands">
+<span class="md-ellipsis">
+      Log Locations and Commands
+    </span>
+</a>
+<nav aria-label="Log Locations and Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-logs">
+<span class="md-ellipsis">
+      Application Logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-logs">
+<span class="md-ellipsis">
+      Database Logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-logs">
+<span class="md-ellipsis">
+      System Logs
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-analysis-techniques">
+<span class="md-ellipsis">
+      Log Analysis Techniques
+    </span>
+</a>
+<nav aria-label="Log Analysis Techniques" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#finding-errors">
+<span class="md-ellipsis">
+      Finding Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-analysis">
+<span class="md-ellipsis">
+      Performance Analysis
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-additional-help">
+<span class="md-ellipsis">
+      Getting Additional Help
+    </span>
+</a>
+<nav aria-label="Getting Additional Help" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#diagnostic-information-collection">
+<span class="md-ellipsis">
+      Diagnostic Information Collection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-resources">
+<span class="md-ellipsis">
+      Support Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#before-reporting-issues">
+<span class="md-ellipsis">
+      Before Reporting Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../backup-restore/">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modules-status/">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-diagnostics">
+<span class="md-ellipsis">
+      Quick Diagnostics
+    </span>
+</a>
+<nav aria-label="Quick Diagnostics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-health-check">
+<span class="md-ellipsis">
+      System Health Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-validation">
+<span class="md-ellipsis">
+      Environment Validation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-status">
+<span class="md-ellipsis">
+      Container Status
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-issues">
+<span class="md-ellipsis">
+      Service Issues
+    </span>
+</a>
+<nav aria-label="Service Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#services-wont-start">
+<span class="md-ellipsis">
+      Services Won't Start
+    </span>
+</a>
+<nav aria-label="Services Won't Start" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-port-conflicts">
+<span class="md-ellipsis">
+      1. Port Conflicts
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-missing-environment-variables">
+<span class="md-ellipsis">
+      2. Missing Environment Variables
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-invalid-docker-compose-profile">
+<span class="md-ellipsis">
+      3. Invalid Docker Compose Profile
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-docker-daemon-issues">
+<span class="md-ellipsis">
+      4. Docker Daemon Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-keeps-restarting">
+<span class="md-ellipsis">
+      Service Keeps Restarting
+    </span>
+</a>
+<nav aria-label="Service Keeps Restarting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-database-connection-issues">
+<span class="md-ellipsis">
+      1. Database Connection Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-insufficient-resources">
+<span class="md-ellipsis">
+      2. Insufficient Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-configuration-errors">
+<span class="md-ellipsis">
+      3. Configuration Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-issues">
+<span class="md-ellipsis">
+      Database Issues
+    </span>
+</a>
+<nav aria-label="Database Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-wont-start">
+<span class="md-ellipsis">
+      Database Won't Start
+    </span>
+</a>
+<nav aria-label="Database Won't Start" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-corrupted-database-volume">
+<span class="md-ellipsis">
+      1. Corrupted Database Volume
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-incorrect-root-password">
+<span class="md-ellipsis">
+      2. Incorrect Root Password
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-port-conflicts">
+<span class="md-ellipsis">
+      3. Port Conflicts
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-connection-errors">
+<span class="md-ellipsis">
+      Database Connection Errors
+    </span>
+</a>
+<nav aria-label="Database Connection Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-database-not-ready">
+<span class="md-ellipsis">
+      1. Database Not Ready
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-network-issues">
+<span class="md-ellipsis">
+      2. Network Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-external-database-issues">
+<span class="md-ellipsis">
+      3. External Database Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-performance-issues">
+<span class="md-ellipsis">
+      Database Performance Issues
+    </span>
+</a>
+<nav aria-label="Database Performance Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-optimize-database">
+<span class="md-ellipsis">
+      1. Optimize Database
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-add-resource-limits">
+<span class="md-ellipsis">
+      2. Add Resource Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-database-maintenance">
+<span class="md-ellipsis">
+      3. Database Maintenance
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-issues">
+<span class="md-ellipsis">
+      Application Issues
+    </span>
+</a>
+<nav aria-label="Application Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dolibarr-wont-load">
+<span class="md-ellipsis">
+      Dolibarr Won't Load
+    </span>
+</a>
+<nav aria-label="Dolibarr Won't Load" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-web-server-not-running">
+<span class="md-ellipsis">
+      1. Web Server Not Running
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-php-errors">
+<span class="md-ellipsis">
+      2. PHP Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-configuration-issues">
+<span class="md-ellipsis">
+      3. Configuration Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#login-issues">
+<span class="md-ellipsis">
+      Login Issues
+    </span>
+</a>
+<nav aria-label="Login Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-wrong-admin-credentials">
+<span class="md-ellipsis">
+      1. Wrong Admin Credentials
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-account-locked">
+<span class="md-ellipsis">
+      2. Account Locked
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-database-issues">
+<span class="md-ellipsis">
+      3. Database Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#module-issues">
+<span class="md-ellipsis">
+      Module Issues
+    </span>
+</a>
+<nav aria-label="Module Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-modules-not-enabled">
+<span class="md-ellipsis">
+      1. Modules Not Enabled
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-custom-module-issues">
+<span class="md-ellipsis">
+      2. Custom Module Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-module-configuration">
+<span class="md-ellipsis">
+      3. Module Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-and-connectivity-issues">
+<span class="md-ellipsis">
+      Network and Connectivity Issues
+    </span>
+</a>
+<nav aria-label="Network and Connectivity Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cant-access-web-interface">
+<span class="md-ellipsis">
+      Can't Access Web Interface
+    </span>
+</a>
+<nav aria-label="Can't Access Web Interface" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-port-not-accessible">
+<span class="md-ellipsis">
+      1. Port Not Accessible
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-wrong-url">
+<span class="md-ellipsis">
+      2. Wrong URL
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-reverse-proxy-issues">
+<span class="md-ellipsis">
+      3. Reverse Proxy Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-connection-issues">
+<span class="md-ellipsis">
+      API Connection Issues
+    </span>
+</a>
+<nav aria-label="API Connection Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-api-not-enabled">
+<span class="md-ellipsis">
+      1. API Not Enabled
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-api-key-issues">
+<span class="md-ellipsis">
+      2. API Key Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-issues">
+<span class="md-ellipsis">
+      Performance Issues
+    </span>
+</a>
+<nav aria-label="Performance Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slow-performance">
+<span class="md-ellipsis">
+      Slow Performance
+    </span>
+</a>
+<nav aria-label="Slow Performance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-resource-limits">
+<span class="md-ellipsis">
+      1. Resource Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-database-optimization">
+<span class="md-ellipsis">
+      2. Database Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-php-configuration">
+<span class="md-ellipsis">
+      3. PHP Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#memory-issues">
+<span class="md-ellipsis">
+      Memory Issues
+    </span>
+</a>
+<nav aria-label="Memory Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-increase-memory-limits">
+<span class="md-ellipsis">
+      1. Increase Memory Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-optimize-php-memory">
+<span class="md-ellipsis">
+      2. Optimize PHP Memory
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-issues">
+<span class="md-ellipsis">
+      Configuration Issues
+    </span>
+</a>
+<nav aria-label="Configuration Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-variable-issues">
+<span class="md-ellipsis">
+      Environment Variable Issues
+    </span>
+</a>
+<nav aria-label="Environment Variable Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-missing-env-file">
+<span class="md-ellipsis">
+      1. Missing .env File
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-invalid-variable-format">
+<span class="md-ellipsis">
+      2. Invalid Variable Format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-profile-specific-variables">
+<span class="md-ellipsis">
+      3. Profile-Specific Variables
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#docker-compose-issues">
+<span class="md-ellipsis">
+      Docker Compose Issues
+    </span>
+</a>
+<nav aria-label="Docker Compose Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-docker-compose-not-installed">
+<span class="md-ellipsis">
+      1. Docker Compose Not Installed
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-yaml-syntax-errors">
+<span class="md-ellipsis">
+      2. YAML Syntax Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#file-and-permission-issues">
+<span class="md-ellipsis">
+      File and Permission Issues
+    </span>
+</a>
+<nav aria-label="File and Permission Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#permission-denied-errors">
+<span class="md-ellipsis">
+      Permission Denied Errors
+    </span>
+</a>
+<nav aria-label="Permission Denied Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-fix-application-permissions">
+<span class="md-ellipsis">
+      1. Fix Application Permissions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-host-directory-permissions">
+<span class="md-ellipsis">
+      2. Host Directory Permissions
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#file-upload-issues">
+<span class="md-ellipsis">
+      File Upload Issues
+    </span>
+</a>
+<nav aria-label="File Upload Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-php-upload-limits">
+<span class="md-ellipsis">
+      1. PHP Upload Limits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-disk-space-issues">
+<span class="md-ellipsis">
+      2. Disk Space Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-and-recovery-issues">
+<span class="md-ellipsis">
+      Backup and Recovery Issues
+    </span>
+</a>
+<nav aria-label="Backup and Recovery Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-failures">
+<span class="md-ellipsis">
+      Backup Failures
+    </span>
+</a>
+<nav aria-label="Backup Failures" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-permission-issues">
+<span class="md-ellipsis">
+      1. Permission Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-database-backup-issues">
+<span class="md-ellipsis">
+      2. Database Backup Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recovery-issues">
+<span class="md-ellipsis">
+      Recovery Issues
+    </span>
+</a>
+<nav aria-label="Recovery Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-verify-backup-integrity">
+<span class="md-ellipsis">
+      1. Verify Backup Integrity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-complete-recovery-process">
+<span class="md-ellipsis">
+      2. Complete Recovery Process
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-and-custom-module-issues">
+<span class="md-ellipsis">
+      Development and Custom Module Issues
+    </span>
+</a>
+<nav aria-label="Development and Custom Module Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-module-problems">
+<span class="md-ellipsis">
+      Custom Module Problems
+    </span>
+</a>
+<nav aria-label="Custom Module Problems" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-module-structure-issues">
+<span class="md-ellipsis">
+      1. Module Structure Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-php-syntax-errors">
+<span class="md-ellipsis">
+      2. PHP Syntax Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-environment-issues">
+<span class="md-ellipsis">
+      Development Environment Issues
+    </span>
+</a>
+<nav aria-label="Development Environment Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-phpmyadmin-issues">
+<span class="md-ellipsis">
+      1. phpMyAdmin Issues
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-debug-mode">
+<span class="md-ellipsis">
+      2. Debug Mode
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-message-reference">
+<span class="md-ellipsis">
+      Error Message Reference
+    </span>
+</a>
+<nav aria-label="Error Message Reference" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-error-messages-and-solutions">
+<span class="md-ellipsis">
+      Common Error Messages and Solutions
+    </span>
+</a>
+<nav aria-label="Common Error Messages and Solutions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-errors">
+<span class="md-ellipsis">
+      Database Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-errors">
+<span class="md-ellipsis">
+      Application Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#docker-errors">
+<span class="md-ellipsis">
+      Docker Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-analysis">
+<span class="md-ellipsis">
+      Log Analysis
+    </span>
+</a>
+<nav aria-label="Log Analysis" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-locations-and-commands">
+<span class="md-ellipsis">
+      Log Locations and Commands
+    </span>
+</a>
+<nav aria-label="Log Locations and Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-logs">
+<span class="md-ellipsis">
+      Application Logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-logs">
+<span class="md-ellipsis">
+      Database Logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-logs">
+<span class="md-ellipsis">
+      System Logs
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-analysis-techniques">
+<span class="md-ellipsis">
+      Log Analysis Techniques
+    </span>
+</a>
+<nav aria-label="Log Analysis Techniques" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#finding-errors">
+<span class="md-ellipsis">
+      Finding Errors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-analysis">
+<span class="md-ellipsis">
+      Performance Analysis
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-additional-help">
+<span class="md-ellipsis">
+      Getting Additional Help
+    </span>
+</a>
+<nav aria-label="Getting Additional Help" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#diagnostic-information-collection">
+<span class="md-ellipsis">
+      Diagnostic Information Collection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-resources">
+<span class="md-ellipsis">
+      Support Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#before-reporting-issues">
+<span class="md-ellipsis">
+      Before Reporting Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="troubleshooting-reference">Troubleshooting Reference<a class="headerlink" href="#troubleshooting-reference" title="Permanent link">¶</a></h1>
+<p>This document provides comprehensive troubleshooting guidance for common issues encountered with the Dolibarr Docker setup.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="#quick-diagnostics">Quick Diagnostics</a></li>
+<li><a href="#service-issues">Service Issues</a></li>
+<li><a href="#database-issues">Database Issues</a></li>
+<li><a href="#application-issues">Application Issues</a></li>
+<li><a href="#network-and-connectivity-issues">Network and Connectivity Issues</a></li>
+<li><a href="#performance-issues">Performance Issues</a></li>
+<li><a href="#configuration-issues">Configuration Issues</a></li>
+<li><a href="#file-and-permission-issues">File and Permission Issues</a></li>
+<li><a href="#backup-and-recovery-issues">Backup and Recovery Issues</a></li>
+<li><a href="#development-and-custom-module-issues">Development and Custom Module Issues</a></li>
+<li><a href="#error-message-reference">Error Message Reference</a></li>
+<li><a href="#log-analysis">Log Analysis</a></li>
+</ul>
+<hr/>
+<h2 id="quick-diagnostics">Quick Diagnostics<a class="headerlink" href="#quick-diagnostics" title="Permanent link">¶</a></h2>
+<p>When encountering any issue, start with these quick diagnostic commands:</p>
+<h3 id="system-health-check">System Health Check<a class="headerlink" href="#system-health-check" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Overall health check</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>task<span class="w"> </span>utilities:health
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Service status</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>task<span class="w"> </span>services:status
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="c1"># Check logs for errors</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>task<span class="w"> </span>services:logs<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-50
+</code></pre></div>
+<h3 id="environment-validation">Environment Validation<a class="headerlink" href="#environment-validation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Check required environment variables</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DB_PASSWORD: </span><span class="si">${</span><span class="nv">DB_PASSWORD</span><span class="p">:+SET</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"DOLIBARR_ADMIN_PASSWORD: </span><span class="si">${</span><span class="nv">DOLIBARR_ADMIN_PASSWORD</span><span class="p">:+SET</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="c1"># Verify .env file exists and is readable</span>
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>ls<span class="w"> </span>-la<span class="w"> </span>.env
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>cat<span class="w"> </span>.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>PASSWORD
+</code></pre></div>
+<h3 id="container-status">Container Status<a class="headerlink" href="#container-status" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Check container states</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>docker-compose<span class="w"> </span>ps
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># Check resource usage</span>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>docker<span class="w"> </span>stats<span class="w"> </span>--no-stream
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="c1"># Check Docker daemon</span>
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>docker<span class="w"> </span>version
+<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a>docker<span class="w"> </span>info
+</code></pre></div>
+<hr/>
+<h2 id="service-issues">Service Issues<a class="headerlink" href="#service-issues" title="Permanent link">¶</a></h2>
+<h3 id="services-wont-start">Services Won't Start<a class="headerlink" href="#services-wont-start" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- <code>docker-compose up</code> fails
+- Services exit immediately
+- "Service is unhealthy" messages</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># Check detailed service logs</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>task<span class="w"> </span>services:logs
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="c1"># Check specific service</span>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>dolibarr
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>dolibarr-db
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="c1"># Check container exit codes</span>
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a>docker-compose<span class="w"> </span>ps<span class="w"> </span>-a
+</code></pre></div></p>
+<p><strong>Common Causes and Solutions</strong>:</p>
+<h4 id="1-port-conflicts">1. Port Conflicts<a class="headerlink" href="#1-port-conflicts" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>Port already in use</code> or <code>bind: address already in use</code></p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Check what's using the port</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>lsof<span class="w"> </span>-i<span class="w"> </span>:8080
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>netstat<span class="w"> </span>-tlnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>:8080
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="c1"># Change ports in .env</span>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="nv">DOLIBARR_PORT</span><span class="o">=</span><span class="m">18080</span>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="nv">PHPMYADMIN_PORT</span><span class="o">=</span><span class="m">18081</span>
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="nv">DB_EXTERNAL_PORT</span><span class="o">=</span><span class="m">13306</span>
+</code></pre></div></p>
+<h4 id="2-missing-environment-variables">2. Missing Environment Variables<a class="headerlink" href="#2-missing-environment-variables" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>Error: DOLIBARR_ADMIN_PASSWORD is not set</code></p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Check .env file</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>cat<span class="w"> </span>.env
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="c1"># Copy from example if missing</span>
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="c1"># Edit .env with your values</span>
+</code></pre></div></p>
+<h4 id="3-invalid-docker-compose-profile">3. Invalid Docker Compose Profile<a class="headerlink" href="#3-invalid-docker-compose-profile" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: No services start despite running <code>docker-compose up</code></p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># Use correct profile</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>task<span class="w"> </span>services:start<span class="w">                </span><span class="c1"># Internal DB</span>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>task<span class="w"> </span>services:start-with-tools<span class="w">     </span><span class="c1"># Internal DB + tools</span>
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>task<span class="w"> </span>services:start-external<span class="w">       </span><span class="c1"># External DB</span>
+</code></pre></div></p>
+<h4 id="4-docker-daemon-issues">4. Docker Daemon Issues<a class="headerlink" href="#4-docker-daemon-issues" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>Cannot connect to Docker daemon</code></p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Check Docker service</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>docker
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="c1"># Start Docker service</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>docker
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1"># Check user permissions (Linux)</span>
+<a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="nv">$USER</span>
+<a href="#__codelineno-7-9" id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="c1"># Logout and login again</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="service-keeps-restarting">Service Keeps Restarting<a class="headerlink" href="#service-keeps-restarting" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Service status shows "Restarting"
+- Container exits with non-zero code
+- Service becomes unhealthy</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># Check restart count</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>docker-compose<span class="w"> </span>ps
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="c1"># Check service logs</span>
+<a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>--tail<span class="o">=</span><span class="m">100</span><span class="w"> </span>dolibarr
+<a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a>
+<a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="c1"># Check container resource limits</span>
+<a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a>docker<span class="w"> </span>stats<span class="w"> </span>dolibarr-app
+</code></pre></div></p>
+<p><strong>Common Causes and Solutions</strong>:</p>
+<h4 id="1-database-connection-issues">1. Database Connection Issues<a class="headerlink" href="#1-database-connection-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>: See <a href="#database-issues">Database Issues</a> section</p>
+<h4 id="2-insufficient-resources">2. Insufficient Resources<a class="headerlink" href="#2-insufficient-resources" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>OOMKilled</code> or high memory usage</p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># Check available resources</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>free<span class="w"> </span>-h
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>df<span class="w"> </span>-h
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="c1"># Add resource limits</span>
+<a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="c1"># docker-compose.override.yml</span>
+<a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a>services:
+<a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">  </span>dolibarr:
+<a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">    </span>deploy:
+<a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="w">      </span>resources:
+<a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="w">        </span>limits:
+<a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="w">          </span>memory:<span class="w"> </span>1G
+</code></pre></div></p>
+<h4 id="3-configuration-errors">3. Configuration Errors<a class="headerlink" href="#3-configuration-errors" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1"># Check configuration syntax</span>
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>docker-compose<span class="w"> </span>config
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="c1"># Validate environment variables</span>
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a>task<span class="w"> </span>config:show-config
+</code></pre></div></p>
+<hr/>
+<h2 id="database-issues">Database Issues<a class="headerlink" href="#database-issues" title="Permanent link">¶</a></h2>
+<h3 id="database-wont-start">Database Won't Start<a class="headerlink" href="#database-wont-start" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Database container exits immediately
+- Health check fails
+- Connection refused errors</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># Check database logs</span>
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>task<span class="w"> </span>services:logs-db
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="c1"># Check database health</span>
+<a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr-db<span class="w"> </span>mysqladmin<span class="w"> </span>ping
+<a href="#__codelineno-11-6" id="__codelineno-11-6" name="__codelineno-11-6"></a>
+<a href="#__codelineno-11-7" id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="c1"># Check data directory</span>
+<a href="#__codelineno-11-8" id="__codelineno-11-8" name="__codelineno-11-8"></a>docker<span class="w"> </span>volume<span class="w"> </span>inspect<span class="w"> </span>dolibarr_dolibarr-db-data
+</code></pre></div></p>
+<p><strong>Common Causes and Solutions</strong>:</p>
+<h4 id="1-corrupted-database-volume">1. Corrupted Database Volume<a class="headerlink" href="#1-corrupted-database-volume" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>InnoDB: Database page corruption</code> or similar</p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c1"># Stop services</span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>task<span class="w"> </span>services:stop
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="c1"># Remove corrupted volume (DANGEROUS - data loss)</span>
+<a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>dolibarr_dolibarr-db-data
+<a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a>
+<a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="c1"># Restore from backup</span>
+<a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a>task<span class="w"> </span>backup:list-backups
+<a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a><span class="c1"># Restore specific backup</span>
+</code></pre></div></p>
+<h4 id="2-incorrect-root-password">2. Incorrect Root Password<a class="headerlink" href="#2-incorrect-root-password" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>Access denied for user 'root'@'localhost'</code></p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1"># Check DB_ROOT_PASSWORD in .env</span>
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a>grep<span class="w"> </span>DB_ROOT_PASSWORD<span class="w"> </span>.env
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="c1"># Reset database (DANGEROUS - data loss)</span>
+<a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a>task<span class="w"> </span>maintenance:reset-data
+<a href="#__codelineno-13-6" id="__codelineno-13-6" name="__codelineno-13-6"></a>task<span class="w"> </span>services:start
+</code></pre></div></p>
+<h4 id="3-port-conflicts">3. Port Conflicts<a class="headerlink" href="#3-port-conflicts" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>bind: address already in use</code></p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="c1"># Change database port</span>
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="nv">DB_EXTERNAL_PORT</span><span class="o">=</span><span class="m">13306</span>
+<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a href="#__codelineno-14-4" id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="c1"># Or don't expose database port</span>
+<a href="#__codelineno-14-5" id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="c1"># Comment out DB_EXTERNAL_PORT in .env</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="database-connection-errors">Database Connection Errors<a class="headerlink" href="#database-connection-errors" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- "Connection refused" errors
+- Dolibarr shows database error pages
+- Application can't connect to database</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># Test database connectivity from application</span>
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>nc<span class="w"> </span>-zv<span class="w"> </span>dolibarr-db<span class="w"> </span><span class="m">3306</span>
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="c1"># Test from host (if port is exposed)</span>
+<a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a>nc<span class="w"> </span>-zv<span class="w"> </span>localhost<span class="w"> </span><span class="si">${</span><span class="nv">DB_EXTERNAL_PORT</span><span class="k">:-</span><span class="nv">3306</span><span class="si">}</span>
+<a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a>
+<a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="c1"># Check database process</span>
+<a href="#__codelineno-15-8" id="__codelineno-15-8" name="__codelineno-15-8"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr-db<span class="w"> </span>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>mysql
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-database-not-ready">1. Database Not Ready<a class="headerlink" href="#1-database-not-ready" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="c1"># Wait for database health check</span>
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>dolibarr-db<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"ready for connections"</span>
+<a href="#__codelineno-16-3" id="__codelineno-16-3" name="__codelineno-16-3"></a>
+<a href="#__codelineno-16-4" id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="c1"># Restart application after database is ready</span>
+<a href="#__codelineno-16-5" id="__codelineno-16-5" name="__codelineno-16-5"></a>docker-compose<span class="w"> </span>restart<span class="w"> </span>dolibarr
+</code></pre></div></p>
+<h4 id="2-network-issues">2. Network Issues<a class="headerlink" href="#2-network-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="c1"># Check network connectivity</span>
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>docker<span class="w"> </span>network<span class="w"> </span>ls<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>dolibarr
+<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>ping<span class="w"> </span>dolibarr-db
+<a href="#__codelineno-17-4" id="__codelineno-17-4" name="__codelineno-17-4"></a>
+<a href="#__codelineno-17-5" id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="c1"># Recreate network</span>
+<a href="#__codelineno-17-6" id="__codelineno-17-6" name="__codelineno-17-6"></a>task<span class="w"> </span>services:stop
+<a href="#__codelineno-17-7" id="__codelineno-17-7" name="__codelineno-17-7"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div></p>
+<h4 id="3-external-database-issues">3. External Database Issues<a class="headerlink" href="#3-external-database-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="c1"># Check external database configuration</span>
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a>grep<span class="w"> </span>DB_HOST<span class="w"> </span>.env
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a>grep<span class="w"> </span>DB_PORT<span class="w"> </span>.env
+<a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a>
+<a href="#__codelineno-18-5" id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="c1"># Test external database connection</span>
+<a href="#__codelineno-18-6" id="__codelineno-18-6" name="__codelineno-18-6"></a>mysql<span class="w"> </span>-h<span class="w"> </span><span class="si">${</span><span class="nv">DB_HOST</span><span class="si">}</span><span class="w"> </span>-P<span class="w"> </span><span class="si">${</span><span class="nv">DB_PORT</span><span class="si">}</span><span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">DB_USER</span><span class="si">}</span><span class="w"> </span>-p<span class="si">${</span><span class="nv">DB_PASSWORD</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">DB_NAME</span><span class="si">}</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="database-performance-issues">Database Performance Issues<a class="headerlink" href="#database-performance-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Slow queries
+- High CPU/memory usage on database
+- Application timeouts</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="c1"># Check database performance</span>
+<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>docker<span class="w"> </span>stats<span class="w"> </span>dolibarr-db
+<a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a>
+<a href="#__codelineno-19-4" id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="c1"># Check slow queries</span>
+<a href="#__codelineno-19-5" id="__codelineno-19-5" name="__codelineno-19-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr-db<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="si">${</span><span class="nv">DB_ROOT_PASSWORD</span><span class="si">}</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"SHOW PROCESSLIST;"</span>
+<a href="#__codelineno-19-6" id="__codelineno-19-6" name="__codelineno-19-6"></a>
+<a href="#__codelineno-19-7" id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="c1"># Check database size</span>
+<a href="#__codelineno-19-8" id="__codelineno-19-8" name="__codelineno-19-8"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-19-9" id="__codelineno-19-9" name="__codelineno-19-9"></a>&gt;<span class="w"> </span>SELECT<span class="w"> </span>table_schema,<span class="w"> </span>sum<span class="o">((</span>data_length+index_length<span class="o">)</span>/1024/1024<span class="o">)</span><span class="w"> </span>AS<span class="w"> </span>MB<span class="w"> </span>FROM<span class="w"> </span>information_schema.TABLES<span class="w"> </span>GROUP<span class="w"> </span>BY<span class="w"> </span>table_schema<span class="p">;</span>
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-optimize-database">1. Optimize Database<a class="headerlink" href="#1-optimize-database" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="c1"># Run database optimization</span>
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a>&gt;<span class="w"> </span>OPTIMIZE<span class="w"> </span>TABLE<span class="w"> </span>llx_actioncomm<span class="p">;</span>
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a>&gt;<span class="w"> </span>OPTIMIZE<span class="w"> </span>TABLE<span class="w"> </span>llx_societe<span class="p">;</span>
+<a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a>&gt;<span class="w"> </span>ANALYZE<span class="w"> </span>TABLE<span class="w"> </span>llx_facture<span class="p">;</span>
+</code></pre></div>
+<h4 id="2-add-resource-limits">2. Add Resource Limits<a class="headerlink" href="#2-add-resource-limits" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="c1"># docker-compose.override.yml</span>
+<a href="#__codelineno-21-2" id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="nt">services</span><span class="p">:</span>
+<a href="#__codelineno-21-3" id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="w">  </span><span class="nt">dolibarr-db</span><span class="p">:</span>
+<a href="#__codelineno-21-4" id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a href="#__codelineno-21-5" id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a href="#__codelineno-21-6" id="__codelineno-21-6" name="__codelineno-21-6"></a><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<a href="#__codelineno-21-7" id="__codelineno-21-7" name="__codelineno-21-7"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2G</span>
+<a href="#__codelineno-21-8" id="__codelineno-21-8" name="__codelineno-21-8"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+</code></pre></div>
+<h4 id="3-database-maintenance">3. Database Maintenance<a class="headerlink" href="#3-database-maintenance" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="c1"># Regular backups</span>
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>task<span class="w"> </span>backup:backup
+<a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a>
+<a href="#__codelineno-22-4" id="__codelineno-22-4" name="__codelineno-22-4"></a><span class="c1"># Clean old data (be careful)</span>
+<a href="#__codelineno-22-5" id="__codelineno-22-5" name="__codelineno-22-5"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-22-6" id="__codelineno-22-6" name="__codelineno-22-6"></a>&gt;<span class="w"> </span>DELETE<span class="w"> </span>FROM<span class="w"> </span>llx_actioncomm<span class="w"> </span>WHERE<span class="w"> </span>datep<span class="w"> </span>&lt;<span class="w"> </span>DATE_SUB<span class="o">(</span>NOW<span class="o">()</span>,<span class="w"> </span>INTERVAL<span class="w"> </span><span class="m">1</span><span class="w"> </span>YEAR<span class="o">)</span><span class="p">;</span>
+</code></pre></div>
+<hr/>
+<h2 id="application-issues">Application Issues<a class="headerlink" href="#application-issues" title="Permanent link">¶</a></h2>
+<h3 id="dolibarr-wont-load">Dolibarr Won't Load<a class="headerlink" href="#dolibarr-wont-load" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Web page won't load
+- HTTP 500 errors
+- Blank pages</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="c1"># Check web server status</span>
+<a href="#__codelineno-23-2" id="__codelineno-23-2" name="__codelineno-23-2"></a>curl<span class="w"> </span>-I<span class="w"> </span>http://localhost:<span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span>
+<a href="#__codelineno-23-3" id="__codelineno-23-3" name="__codelineno-23-3"></a>
+<a href="#__codelineno-23-4" id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="c1"># Check application logs</span>
+<a href="#__codelineno-23-5" id="__codelineno-23-5" name="__codelineno-23-5"></a>task<span class="w"> </span>services:logs-app
+<a href="#__codelineno-23-6" id="__codelineno-23-6" name="__codelineno-23-6"></a>
+<a href="#__codelineno-23-7" id="__codelineno-23-7" name="__codelineno-23-7"></a><span class="c1"># Check web server process</span>
+<a href="#__codelineno-23-8" id="__codelineno-23-8" name="__codelineno-23-8"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>apache
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-web-server-not-running">1. Web Server Not Running<a class="headerlink" href="#1-web-server-not-running" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="c1"># Restart application</span>
+<a href="#__codelineno-24-2" id="__codelineno-24-2" name="__codelineno-24-2"></a>docker-compose<span class="w"> </span>restart<span class="w"> </span>dolibarr
+<a href="#__codelineno-24-3" id="__codelineno-24-3" name="__codelineno-24-3"></a>
+<a href="#__codelineno-24-4" id="__codelineno-24-4" name="__codelineno-24-4"></a><span class="c1"># Check container health</span>
+<a href="#__codelineno-24-5" id="__codelineno-24-5" name="__codelineno-24-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>service<span class="w"> </span>apache2<span class="w"> </span>status
+</code></pre></div></p>
+<h4 id="2-php-errors">2. PHP Errors<a class="headerlink" href="#2-php-errors" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>Fatal error</code> or <code>Parse error</code> in logs</p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="c1"># Check PHP configuration</span>
+<a href="#__codelineno-25-2" id="__codelineno-25-2" name="__codelineno-25-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>php<span class="w"> </span>-v
+<a href="#__codelineno-25-3" id="__codelineno-25-3" name="__codelineno-25-3"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>php<span class="w"> </span>-m
+<a href="#__codelineno-25-4" id="__codelineno-25-4" name="__codelineno-25-4"></a>
+<a href="#__codelineno-25-5" id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="c1"># Check file permissions</span>
+<a href="#__codelineno-25-6" id="__codelineno-25-6" name="__codelineno-25-6"></a>task<span class="w"> </span>utilities:permissions
+<a href="#__codelineno-25-7" id="__codelineno-25-7" name="__codelineno-25-7"></a>
+<a href="#__codelineno-25-8" id="__codelineno-25-8" name="__codelineno-25-8"></a><span class="c1"># Check custom modules</span>
+<a href="#__codelineno-25-9" id="__codelineno-25-9" name="__codelineno-25-9"></a>ls<span class="w"> </span>-la<span class="w"> </span>custom/
+</code></pre></div></p>
+<h4 id="3-configuration-issues">3. Configuration Issues<a class="headerlink" href="#3-configuration-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="c1"># Check Dolibarr configuration</span>
+<a href="#__codelineno-26-2" id="__codelineno-26-2" name="__codelineno-26-2"></a>task<span class="w"> </span>config:show-config
+<a href="#__codelineno-26-3" id="__codelineno-26-3" name="__codelineno-26-3"></a>
+<a href="#__codelineno-26-4" id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="c1"># Reset configuration</span>
+<a href="#__codelineno-26-5" id="__codelineno-26-5" name="__codelineno-26-5"></a>task<span class="w"> </span>config:configure-company
+<a href="#__codelineno-26-6" id="__codelineno-26-6" name="__codelineno-26-6"></a>task<span class="w"> </span>config:enable-modules
+</code></pre></div></p>
+<hr/>
+<h3 id="login-issues">Login Issues<a class="headerlink" href="#login-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Can't log in with admin credentials
+- "Invalid login" errors
+- Locked out of admin account</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="c1"># Check admin user in database</span>
+<a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-27-3" id="__codelineno-27-3" name="__codelineno-27-3"></a>&gt;<span class="w"> </span>SELECT<span class="w"> </span>login,<span class="w"> </span>pass_crypted<span class="w"> </span>FROM<span class="w"> </span>llx_user<span class="w"> </span>WHERE<span class="w"> </span><span class="nv">admin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<a href="#__codelineno-27-4" id="__codelineno-27-4" name="__codelineno-27-4"></a>
+<a href="#__codelineno-27-5" id="__codelineno-27-5" name="__codelineno-27-5"></a><span class="c1"># Check configuration</span>
+<a href="#__codelineno-27-6" id="__codelineno-27-6" name="__codelineno-27-6"></a>task<span class="w"> </span>config:show-config
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-wrong-admin-credentials">1. Wrong Admin Credentials<a class="headerlink" href="#1-wrong-admin-credentials" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-28-1" id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="c1"># Check DOLIBARR_ADMIN_PASSWORD in .env</span>
+<a href="#__codelineno-28-2" id="__codelineno-28-2" name="__codelineno-28-2"></a>grep<span class="w"> </span>DOLIBARR_ADMIN_PASSWORD<span class="w"> </span>.env
+<a href="#__codelineno-28-3" id="__codelineno-28-3" name="__codelineno-28-3"></a>
+<a href="#__codelineno-28-4" id="__codelineno-28-4" name="__codelineno-28-4"></a><span class="c1"># Reset admin password via database</span>
+<a href="#__codelineno-28-5" id="__codelineno-28-5" name="__codelineno-28-5"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-28-6" id="__codelineno-28-6" name="__codelineno-28-6"></a>&gt;<span class="w"> </span>UPDATE<span class="w"> </span>llx_user<span class="w"> </span>SET<span class="w"> </span><span class="nv">pass_crypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>MD5<span class="o">(</span><span class="s1">'newpassword'</span><span class="o">)</span><span class="w"> </span>WHERE<span class="w"> </span><span class="nv">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'admin'</span><span class="p">;</span>
+</code></pre></div></p>
+<h4 id="2-account-locked">2. Account Locked<a class="headerlink" href="#2-account-locked" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-29-1" id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="c1"># Unlock admin account</span>
+<a href="#__codelineno-29-2" id="__codelineno-29-2" name="__codelineno-29-2"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-29-3" id="__codelineno-29-3" name="__codelineno-29-3"></a>&gt;<span class="w"> </span>UPDATE<span class="w"> </span>llx_user<span class="w"> </span>SET<span class="w"> </span><span class="nv">statut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>WHERE<span class="w"> </span><span class="nv">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'admin'</span><span class="p">;</span>
+</code></pre></div></p>
+<h4 id="3-database-issues">3. Database Issues<a class="headerlink" href="#3-database-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>: See <a href="#database-issues">Database Issues</a> section</p>
+<hr/>
+<h3 id="module-issues">Module Issues<a class="headerlink" href="#module-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Modules not working
+- Features missing
+- Module activation errors</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-30-1" id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="c1"># List enabled modules</span>
+<a href="#__codelineno-30-2" id="__codelineno-30-2" name="__codelineno-30-2"></a>task<span class="w"> </span>config:list-modules
+<a href="#__codelineno-30-3" id="__codelineno-30-3" name="__codelineno-30-3"></a>
+<a href="#__codelineno-30-4" id="__codelineno-30-4" name="__codelineno-30-4"></a><span class="c1"># Check module files</span>
+<a href="#__codelineno-30-5" id="__codelineno-30-5" name="__codelineno-30-5"></a>ls<span class="w"> </span>-la<span class="w"> </span>/var/www/html/htdocs/
+<a href="#__codelineno-30-6" id="__codelineno-30-6" name="__codelineno-30-6"></a>
+<a href="#__codelineno-30-7" id="__codelineno-30-7" name="__codelineno-30-7"></a><span class="c1"># Check custom modules</span>
+<a href="#__codelineno-30-8" id="__codelineno-30-8" name="__codelineno-30-8"></a>ls<span class="w"> </span>-la<span class="w"> </span>custom/
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-modules-not-enabled">1. Modules Not Enabled<a class="headerlink" href="#1-modules-not-enabled" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-31-1" id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="c1"># Enable essential modules</span>
+<a href="#__codelineno-31-2" id="__codelineno-31-2" name="__codelineno-31-2"></a>task<span class="w"> </span>config:enable-modules
+<a href="#__codelineno-31-3" id="__codelineno-31-3" name="__codelineno-31-3"></a>
+<a href="#__codelineno-31-4" id="__codelineno-31-4" name="__codelineno-31-4"></a><span class="c1"># Enable API</span>
+<a href="#__codelineno-31-5" id="__codelineno-31-5" name="__codelineno-31-5"></a>task<span class="w"> </span>config:enable-api
+</code></pre></div></p>
+<h4 id="2-custom-module-issues">2. Custom Module Issues<a class="headerlink" href="#2-custom-module-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-32-1" id="__codelineno-32-1" name="__codelineno-32-1"></a><span class="c1"># Check custom module permissions</span>
+<a href="#__codelineno-32-2" id="__codelineno-32-2" name="__codelineno-32-2"></a>task<span class="w"> </span>utilities:permissions
+<a href="#__codelineno-32-3" id="__codelineno-32-3" name="__codelineno-32-3"></a>
+<a href="#__codelineno-32-4" id="__codelineno-32-4" name="__codelineno-32-4"></a><span class="c1"># Check custom module structure</span>
+<a href="#__codelineno-32-5" id="__codelineno-32-5" name="__codelineno-32-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>find<span class="w"> </span>/var/www/html/custom<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.php"</span>
+</code></pre></div></p>
+<h4 id="3-module-configuration">3. Module Configuration<a class="headerlink" href="#3-module-configuration" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-33-1" id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="c1"># Reset module configuration</span>
+<a href="#__codelineno-33-2" id="__codelineno-33-2" name="__codelineno-33-2"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-33-3" id="__codelineno-33-3" name="__codelineno-33-3"></a>&gt;<span class="w"> </span>DELETE<span class="w"> </span>FROM<span class="w"> </span>llx_const<span class="w"> </span>WHERE<span class="w"> </span>name<span class="w"> </span>LIKE<span class="w"> </span><span class="s1">'MAIN_MODULE_%'</span><span class="p">;</span>
+<a href="#__codelineno-33-4" id="__codelineno-33-4" name="__codelineno-33-4"></a>
+<a href="#__codelineno-33-5" id="__codelineno-33-5" name="__codelineno-33-5"></a><span class="c1"># Re-enable modules</span>
+<a href="#__codelineno-33-6" id="__codelineno-33-6" name="__codelineno-33-6"></a>task<span class="w"> </span>config:enable-modules
+</code></pre></div></p>
+<hr/>
+<h2 id="network-and-connectivity-issues">Network and Connectivity Issues<a class="headerlink" href="#network-and-connectivity-issues" title="Permanent link">¶</a></h2>
+<h3 id="cant-access-web-interface">Can't Access Web Interface<a class="headerlink" href="#cant-access-web-interface" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Browser shows "Connection refused"
+- Timeout errors
+- Page not found</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-34-1" id="__codelineno-34-1" name="__codelineno-34-1"></a><span class="c1"># Check if service is listening</span>
+<a href="#__codelineno-34-2" id="__codelineno-34-2" name="__codelineno-34-2"></a>netstat<span class="w"> </span>-tlnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span>
+<a href="#__codelineno-34-3" id="__codelineno-34-3" name="__codelineno-34-3"></a>
+<a href="#__codelineno-34-4" id="__codelineno-34-4" name="__codelineno-34-4"></a><span class="c1"># Test local connection</span>
+<a href="#__codelineno-34-5" id="__codelineno-34-5" name="__codelineno-34-5"></a>curl<span class="w"> </span>http://localhost:<span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span>
+<a href="#__codelineno-34-6" id="__codelineno-34-6" name="__codelineno-34-6"></a>
+<a href="#__codelineno-34-7" id="__codelineno-34-7" name="__codelineno-34-7"></a><span class="c1"># Check firewall</span>
+<a href="#__codelineno-34-8" id="__codelineno-34-8" name="__codelineno-34-8"></a>sudo<span class="w"> </span>ufw<span class="w"> </span>status
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-port-not-accessible">1. Port Not Accessible<a class="headerlink" href="#1-port-not-accessible" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-35-1" id="__codelineno-35-1" name="__codelineno-35-1"></a><span class="c1"># Check Docker port mapping</span>
+<a href="#__codelineno-35-2" id="__codelineno-35-2" name="__codelineno-35-2"></a>docker-compose<span class="w"> </span>ps
+<a href="#__codelineno-35-3" id="__codelineno-35-3" name="__codelineno-35-3"></a>
+<a href="#__codelineno-35-4" id="__codelineno-35-4" name="__codelineno-35-4"></a><span class="c1"># Check firewall rules</span>
+<a href="#__codelineno-35-5" id="__codelineno-35-5" name="__codelineno-35-5"></a>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span>
+<a href="#__codelineno-35-6" id="__codelineno-35-6" name="__codelineno-35-6"></a>
+<a href="#__codelineno-35-7" id="__codelineno-35-7" name="__codelineno-35-7"></a><span class="c1"># Check if binding to localhost only</span>
+<a href="#__codelineno-35-8" id="__codelineno-35-8" name="__codelineno-35-8"></a><span class="c1"># Change in docker-compose.yml: "0.0.0.0:8080:80"</span>
+</code></pre></div></p>
+<h4 id="2-wrong-url">2. Wrong URL<a class="headerlink" href="#2-wrong-url" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-36-1" id="__codelineno-36-1" name="__codelineno-36-1"></a><span class="c1"># Check correct URL</span>
+<a href="#__codelineno-36-2" id="__codelineno-36-2" name="__codelineno-36-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Dolibarr URL: http://localhost:</span><span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-36-3" id="__codelineno-36-3" name="__codelineno-36-3"></a>
+<a href="#__codelineno-36-4" id="__codelineno-36-4" name="__codelineno-36-4"></a><span class="c1"># Update DOLIBARR_URL_ROOT if needed</span>
+<a href="#__codelineno-36-5" id="__codelineno-36-5" name="__codelineno-36-5"></a><span class="nv">DOLIBARR_URL_ROOT</span><span class="o">=</span>http://your-domain.com:<span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="si">}</span>
+</code></pre></div></p>
+<h4 id="3-reverse-proxy-issues">3. Reverse Proxy Issues<a class="headerlink" href="#3-reverse-proxy-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-37-1" id="__codelineno-37-1" name="__codelineno-37-1"></a><span class="c1"># Check reverse proxy configuration</span>
+<a href="#__codelineno-37-2" id="__codelineno-37-2" name="__codelineno-37-2"></a><span class="c1"># Nginx example:</span>
+<a href="#__codelineno-37-3" id="__codelineno-37-3" name="__codelineno-37-3"></a>proxy_pass<span class="w"> </span>http://localhost:8080<span class="p">;</span>
+<a href="#__codelineno-37-4" id="__codelineno-37-4" name="__codelineno-37-4"></a>proxy_set_header<span class="w"> </span>Host<span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<a href="#__codelineno-37-5" id="__codelineno-37-5" name="__codelineno-37-5"></a>proxy_set_header<span class="w"> </span>X-Real-IP<span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="api-connection-issues">API Connection Issues<a class="headerlink" href="#api-connection-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- API calls fail
+- "API not enabled" errors
+- Authentication failures</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-38-1" id="__codelineno-38-1" name="__codelineno-38-1"></a><span class="c1"># Check API module</span>
+<a href="#__codelineno-38-2" id="__codelineno-38-2" name="__codelineno-38-2"></a>task<span class="w"> </span>config:list-modules<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>API
+<a href="#__codelineno-38-3" id="__codelineno-38-3" name="__codelineno-38-3"></a>
+<a href="#__codelineno-38-4" id="__codelineno-38-4" name="__codelineno-38-4"></a><span class="c1"># Test API endpoint</span>
+<a href="#__codelineno-38-5" id="__codelineno-38-5" name="__codelineno-38-5"></a>curl<span class="w"> </span>http://localhost:<span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span>/api/index.php/explorer
+<a href="#__codelineno-38-6" id="__codelineno-38-6" name="__codelineno-38-6"></a>
+<a href="#__codelineno-38-7" id="__codelineno-38-7" name="__codelineno-38-7"></a><span class="c1"># Check API configuration</span>
+<a href="#__codelineno-38-8" id="__codelineno-38-8" name="__codelineno-38-8"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-38-9" id="__codelineno-38-9" name="__codelineno-38-9"></a>&gt;<span class="w"> </span>SELECT<span class="w"> </span>name,<span class="w"> </span>value<span class="w"> </span>FROM<span class="w"> </span>llx_const<span class="w"> </span>WHERE<span class="w"> </span>name<span class="w"> </span>LIKE<span class="w"> </span><span class="s1">'%API%'</span><span class="p">;</span>
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-api-not-enabled">1. API Not Enabled<a class="headerlink" href="#1-api-not-enabled" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-39-1" id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="c1"># Enable API module</span>
+<a href="#__codelineno-39-2" id="__codelineno-39-2" name="__codelineno-39-2"></a>task<span class="w"> </span>config:enable-api
+<a href="#__codelineno-39-3" id="__codelineno-39-3" name="__codelineno-39-3"></a>
+<a href="#__codelineno-39-4" id="__codelineno-39-4" name="__codelineno-39-4"></a><span class="c1"># Verify API is enabled</span>
+<a href="#__codelineno-39-5" id="__codelineno-39-5" name="__codelineno-39-5"></a>curl<span class="w"> </span>http://localhost:<span class="si">${</span><span class="nv">DOLIBARR_PORT</span><span class="k">:-</span><span class="nv">8080</span><span class="si">}</span>/api/index.php/explorer
+</code></pre></div></p>
+<h4 id="2-api-key-issues">2. API Key Issues<a class="headerlink" href="#2-api-key-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-40-1" id="__codelineno-40-1" name="__codelineno-40-1"></a><span class="c1"># Generate API key via web interface:</span>
+<a href="#__codelineno-40-2" id="__codelineno-40-2" name="__codelineno-40-2"></a><span class="c1"># Users &amp; Groups &gt; Users &gt; Edit User &gt; API Keys</span>
+<a href="#__codelineno-40-3" id="__codelineno-40-3" name="__codelineno-40-3"></a>
+<a href="#__codelineno-40-4" id="__codelineno-40-4" name="__codelineno-40-4"></a><span class="c1"># Or via database (not recommended):</span>
+<a href="#__codelineno-40-5" id="__codelineno-40-5" name="__codelineno-40-5"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-40-6" id="__codelineno-40-6" name="__codelineno-40-6"></a>&gt;<span class="w"> </span>INSERT<span class="w"> </span>INTO<span class="w"> </span>llx_user_api_keys<span class="w"> </span><span class="o">(</span>fk_user,<span class="w"> </span>api_key,<span class="w"> </span>datec<span class="o">)</span><span class="w"> </span>VALUES<span class="w"> </span><span class="o">(</span><span class="m">1</span>,<span class="w"> </span><span class="s1">'your-api-key'</span>,<span class="w"> </span>NOW<span class="o">())</span><span class="p">;</span>
+</code></pre></div></p>
+<hr/>
+<h2 id="performance-issues">Performance Issues<a class="headerlink" href="#performance-issues" title="Permanent link">¶</a></h2>
+<h3 id="slow-performance">Slow Performance<a class="headerlink" href="#slow-performance" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Pages load slowly
+- Database queries timeout
+- High resource usage</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-41-1" id="__codelineno-41-1" name="__codelineno-41-1"></a><span class="c1"># Check resource usage</span>
+<a href="#__codelineno-41-2" id="__codelineno-41-2" name="__codelineno-41-2"></a>docker<span class="w"> </span>stats
+<a href="#__codelineno-41-3" id="__codelineno-41-3" name="__codelineno-41-3"></a>
+<a href="#__codelineno-41-4" id="__codelineno-41-4" name="__codelineno-41-4"></a><span class="c1"># Check system resources</span>
+<a href="#__codelineno-41-5" id="__codelineno-41-5" name="__codelineno-41-5"></a>top
+<a href="#__codelineno-41-6" id="__codelineno-41-6" name="__codelineno-41-6"></a>htop
+<a href="#__codelineno-41-7" id="__codelineno-41-7" name="__codelineno-41-7"></a>free<span class="w"> </span>-h
+<a href="#__codelineno-41-8" id="__codelineno-41-8" name="__codelineno-41-8"></a>df<span class="w"> </span>-h
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-resource-limits">1. Resource Limits<a class="headerlink" href="#1-resource-limits" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-42-1" id="__codelineno-42-1" name="__codelineno-42-1"></a><span class="c1"># Add resource limits</span>
+<a href="#__codelineno-42-2" id="__codelineno-42-2" name="__codelineno-42-2"></a><span class="c1"># docker-compose.override.yml</span>
+<a href="#__codelineno-42-3" id="__codelineno-42-3" name="__codelineno-42-3"></a>services:
+<a href="#__codelineno-42-4" id="__codelineno-42-4" name="__codelineno-42-4"></a><span class="w">  </span>dolibarr:
+<a href="#__codelineno-42-5" id="__codelineno-42-5" name="__codelineno-42-5"></a><span class="w">    </span>deploy:
+<a href="#__codelineno-42-6" id="__codelineno-42-6" name="__codelineno-42-6"></a><span class="w">      </span>resources:
+<a href="#__codelineno-42-7" id="__codelineno-42-7" name="__codelineno-42-7"></a><span class="w">        </span>limits:
+<a href="#__codelineno-42-8" id="__codelineno-42-8" name="__codelineno-42-8"></a><span class="w">          </span>memory:<span class="w"> </span>1G
+<a href="#__codelineno-42-9" id="__codelineno-42-9" name="__codelineno-42-9"></a><span class="w">          </span>cpus:<span class="w"> </span><span class="s1">'1'</span>
+</code></pre></div></p>
+<h4 id="2-database-optimization">2. Database Optimization<a class="headerlink" href="#2-database-optimization" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>: See <a href="#database-performance-issues">Database Performance Issues</a> section</p>
+<h4 id="3-php-configuration">3. PHP Configuration<a class="headerlink" href="#3-php-configuration" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-43-1" id="__codelineno-43-1" name="__codelineno-43-1"></a><span class="c1"># docker-compose.override.yml</span>
+<a href="#__codelineno-43-2" id="__codelineno-43-2" name="__codelineno-43-2"></a><span class="nt">services</span><span class="p">:</span>
+<a href="#__codelineno-43-3" id="__codelineno-43-3" name="__codelineno-43-3"></a><span class="w">  </span><span class="nt">dolibarr</span><span class="p">:</span>
+<a href="#__codelineno-43-4" id="__codelineno-43-4" name="__codelineno-43-4"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a href="#__codelineno-43-5" id="__codelineno-43-5" name="__codelineno-43-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PHP_MEMORY_LIMIT=512M</span>
+<a href="#__codelineno-43-6" id="__codelineno-43-6" name="__codelineno-43-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PHP_MAX_EXECUTION_TIME=300</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="memory-issues">Memory Issues<a class="headerlink" href="#memory-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- "Out of memory" errors
+- Container killed (OOMKilled)
+- System becomes unresponsive</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-44-1" id="__codelineno-44-1" name="__codelineno-44-1"></a><span class="c1"># Check memory usage</span>
+<a href="#__codelineno-44-2" id="__codelineno-44-2" name="__codelineno-44-2"></a>free<span class="w"> </span>-h
+<a href="#__codelineno-44-3" id="__codelineno-44-3" name="__codelineno-44-3"></a>docker<span class="w"> </span>stats<span class="w"> </span>--no-stream
+<a href="#__codelineno-44-4" id="__codelineno-44-4" name="__codelineno-44-4"></a>
+<a href="#__codelineno-44-5" id="__codelineno-44-5" name="__codelineno-44-5"></a><span class="c1"># Check container memory limits</span>
+<a href="#__codelineno-44-6" id="__codelineno-44-6" name="__codelineno-44-6"></a>docker<span class="w"> </span>inspect<span class="w"> </span>dolibarr-app<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>memory
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-increase-memory-limits">1. Increase Memory Limits<a class="headerlink" href="#1-increase-memory-limits" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-45-1" id="__codelineno-45-1" name="__codelineno-45-1"></a><span class="c1"># docker-compose.override.yml</span>
+<a href="#__codelineno-45-2" id="__codelineno-45-2" name="__codelineno-45-2"></a><span class="nt">services</span><span class="p">:</span>
+<a href="#__codelineno-45-3" id="__codelineno-45-3" name="__codelineno-45-3"></a><span class="w">  </span><span class="nt">dolibarr</span><span class="p">:</span>
+<a href="#__codelineno-45-4" id="__codelineno-45-4" name="__codelineno-45-4"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a href="#__codelineno-45-5" id="__codelineno-45-5" name="__codelineno-45-5"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a href="#__codelineno-45-6" id="__codelineno-45-6" name="__codelineno-45-6"></a><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<a href="#__codelineno-45-7" id="__codelineno-45-7" name="__codelineno-45-7"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2G</span>
+<a href="#__codelineno-45-8" id="__codelineno-45-8" name="__codelineno-45-8"></a><span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
+<a href="#__codelineno-45-9" id="__codelineno-45-9" name="__codelineno-45-9"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
+</code></pre></div></p>
+<h4 id="2-optimize-php-memory">2. Optimize PHP Memory<a class="headerlink" href="#2-optimize-php-memory" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-46-1" id="__codelineno-46-1" name="__codelineno-46-1"></a><span class="nt">services</span><span class="p">:</span>
+<a href="#__codelineno-46-2" id="__codelineno-46-2" name="__codelineno-46-2"></a><span class="w">  </span><span class="nt">dolibarr</span><span class="p">:</span>
+<a href="#__codelineno-46-3" id="__codelineno-46-3" name="__codelineno-46-3"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a href="#__codelineno-46-4" id="__codelineno-46-4" name="__codelineno-46-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PHP_MEMORY_LIMIT=1024M</span>
+</code></pre></div></p>
+<hr/>
+<h2 id="configuration-issues">Configuration Issues<a class="headerlink" href="#configuration-issues" title="Permanent link">¶</a></h2>
+<h3 id="environment-variable-issues">Environment Variable Issues<a class="headerlink" href="#environment-variable-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Configuration not taking effect
+- Default values being used
+- Service configuration errors</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-47-1" id="__codelineno-47-1" name="__codelineno-47-1"></a><span class="c1"># Check environment variables</span>
+<a href="#__codelineno-47-2" id="__codelineno-47-2" name="__codelineno-47-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>DOLI
+<a href="#__codelineno-47-3" id="__codelineno-47-3" name="__codelineno-47-3"></a>
+<a href="#__codelineno-47-4" id="__codelineno-47-4" name="__codelineno-47-4"></a><span class="c1"># Check .env file</span>
+<a href="#__codelineno-47-5" id="__codelineno-47-5" name="__codelineno-47-5"></a>cat<span class="w"> </span>.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>PASSWORD
+<a href="#__codelineno-47-6" id="__codelineno-47-6" name="__codelineno-47-6"></a>
+<a href="#__codelineno-47-7" id="__codelineno-47-7" name="__codelineno-47-7"></a><span class="c1"># Validate configuration</span>
+<a href="#__codelineno-47-8" id="__codelineno-47-8" name="__codelineno-47-8"></a>docker-compose<span class="w"> </span>config
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-missing-env-file">1. Missing .env File<a class="headerlink" href="#1-missing-env-file" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-48-1" id="__codelineno-48-1" name="__codelineno-48-1"></a><span class="c1"># Copy example file</span>
+<a href="#__codelineno-48-2" id="__codelineno-48-2" name="__codelineno-48-2"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<a href="#__codelineno-48-3" id="__codelineno-48-3" name="__codelineno-48-3"></a>
+<a href="#__codelineno-48-4" id="__codelineno-48-4" name="__codelineno-48-4"></a><span class="c1"># Edit with your values</span>
+<a href="#__codelineno-48-5" id="__codelineno-48-5" name="__codelineno-48-5"></a>nano<span class="w"> </span>.env
+</code></pre></div></p>
+<h4 id="2-invalid-variable-format">2. Invalid Variable Format<a class="headerlink" href="#2-invalid-variable-format" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-49-1" id="__codelineno-49-1" name="__codelineno-49-1"></a><span class="c1"># Check for spaces around = sign (invalid)</span>
+<a href="#__codelineno-49-2" id="__codelineno-49-2" name="__codelineno-49-2"></a><span class="nv">DB_PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mypassword<span class="w">  </span><span class="c1"># Wrong</span>
+<a href="#__codelineno-49-3" id="__codelineno-49-3" name="__codelineno-49-3"></a>
+<a href="#__codelineno-49-4" id="__codelineno-49-4" name="__codelineno-49-4"></a><span class="c1"># Correct format</span>
+<a href="#__codelineno-49-5" id="__codelineno-49-5" name="__codelineno-49-5"></a><span class="nv">DB_PASSWORD</span><span class="o">=</span>mypassword<span class="w">    </span><span class="c1"># Correct</span>
+<a href="#__codelineno-49-6" id="__codelineno-49-6" name="__codelineno-49-6"></a>
+<a href="#__codelineno-49-7" id="__codelineno-49-7" name="__codelineno-49-7"></a><span class="c1"># Check for special characters</span>
+<a href="#__codelineno-49-8" id="__codelineno-49-8" name="__codelineno-49-8"></a><span class="nv">DB_PASSWORD</span><span class="o">=</span><span class="s2">"pass with spaces"</span><span class="w">  </span><span class="c1"># Use quotes if needed</span>
+</code></pre></div></p>
+<h4 id="3-profile-specific-variables">3. Profile-Specific Variables<a class="headerlink" href="#3-profile-specific-variables" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-50-1" id="__codelineno-50-1" name="__codelineno-50-1"></a><span class="c1"># Check which profile you're using</span>
+<a href="#__codelineno-50-2" id="__codelineno-50-2" name="__codelineno-50-2"></a>docker-compose<span class="w"> </span>--profile<span class="w"> </span>internal-db<span class="w"> </span>config
+<a href="#__codelineno-50-3" id="__codelineno-50-3" name="__codelineno-50-3"></a>
+<a href="#__codelineno-50-4" id="__codelineno-50-4" name="__codelineno-50-4"></a><span class="c1"># Ensure variables match profile</span>
+<a href="#__codelineno-50-5" id="__codelineno-50-5" name="__codelineno-50-5"></a><span class="c1"># Internal DB: need DB_ROOT_PASSWORD</span>
+<a href="#__codelineno-50-6" id="__codelineno-50-6" name="__codelineno-50-6"></a><span class="c1"># External DB: need DB_HOST</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="docker-compose-issues">Docker Compose Issues<a class="headerlink" href="#docker-compose-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- <code>docker-compose</code> command not found
+- Version compatibility errors
+- YAML syntax errors</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-51-1" id="__codelineno-51-1" name="__codelineno-51-1"></a><span class="c1"># Check Docker Compose version</span>
+<a href="#__codelineno-51-2" id="__codelineno-51-2" name="__codelineno-51-2"></a>docker-compose<span class="w"> </span>version
+<a href="#__codelineno-51-3" id="__codelineno-51-3" name="__codelineno-51-3"></a>
+<a href="#__codelineno-51-4" id="__codelineno-51-4" name="__codelineno-51-4"></a><span class="c1"># Validate YAML syntax</span>
+<a href="#__codelineno-51-5" id="__codelineno-51-5" name="__codelineno-51-5"></a>docker-compose<span class="w"> </span>config
+<a href="#__codelineno-51-6" id="__codelineno-51-6" name="__codelineno-51-6"></a>
+<a href="#__codelineno-51-7" id="__codelineno-51-7" name="__codelineno-51-7"></a><span class="c1"># Check file permissions</span>
+<a href="#__codelineno-51-8" id="__codelineno-51-8" name="__codelineno-51-8"></a>ls<span class="w"> </span>-la<span class="w"> </span>docker-compose.yml
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-docker-compose-not-installed">1. Docker Compose Not Installed<a class="headerlink" href="#1-docker-compose-not-installed" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-52-1" id="__codelineno-52-1" name="__codelineno-52-1"></a><span class="c1"># Install Docker Compose</span>
+<a href="#__codelineno-52-2" id="__codelineno-52-2" name="__codelineno-52-2"></a>sudo<span class="w"> </span>curl<span class="w"> </span>-L<span class="w"> </span><span class="s2">"https://github.com/docker/compose/releases/latest/download/docker-compose-</span><span class="k">$(</span>uname<span class="w"> </span>-s<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span><span class="s2">"</span><span class="w"> </span>-o<span class="w"> </span>/usr/local/bin/docker-compose
+<a href="#__codelineno-52-3" id="__codelineno-52-3" name="__codelineno-52-3"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/local/bin/docker-compose
+<a href="#__codelineno-52-4" id="__codelineno-52-4" name="__codelineno-52-4"></a>
+<a href="#__codelineno-52-5" id="__codelineno-52-5" name="__codelineno-52-5"></a><span class="c1"># Or use Docker Compose V2</span>
+<a href="#__codelineno-52-6" id="__codelineno-52-6" name="__codelineno-52-6"></a>docker<span class="w"> </span>compose<span class="w"> </span>version
+</code></pre></div></p>
+<h4 id="2-yaml-syntax-errors">2. YAML Syntax Errors<a class="headerlink" href="#2-yaml-syntax-errors" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-53-1" id="__codelineno-53-1" name="__codelineno-53-1"></a><span class="c1"># Validate YAML</span>
+<a href="#__codelineno-53-2" id="__codelineno-53-2" name="__codelineno-53-2"></a>docker-compose<span class="w"> </span>config
+<a href="#__codelineno-53-3" id="__codelineno-53-3" name="__codelineno-53-3"></a>
+<a href="#__codelineno-53-4" id="__codelineno-53-4" name="__codelineno-53-4"></a><span class="c1"># Check indentation (use spaces, not tabs)</span>
+<a href="#__codelineno-53-5" id="__codelineno-53-5" name="__codelineno-53-5"></a><span class="c1"># Check for trailing spaces</span>
+</code></pre></div></p>
+<hr/>
+<h2 id="file-and-permission-issues">File and Permission Issues<a class="headerlink" href="#file-and-permission-issues" title="Permanent link">¶</a></h2>
+<h3 id="permission-denied-errors">Permission Denied Errors<a class="headerlink" href="#permission-denied-errors" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- "Permission denied" errors
+- Cannot write files
+- Upload failures</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-54-1" id="__codelineno-54-1" name="__codelineno-54-1"></a><span class="c1"># Check file permissions</span>
+<a href="#__codelineno-54-2" id="__codelineno-54-2" name="__codelineno-54-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span>/var/www/html
+<a href="#__codelineno-54-3" id="__codelineno-54-3" name="__codelineno-54-3"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span>/var/www/documents
+<a href="#__codelineno-54-4" id="__codelineno-54-4" name="__codelineno-54-4"></a>
+<a href="#__codelineno-54-5" id="__codelineno-54-5" name="__codelineno-54-5"></a><span class="c1"># Check process user</span>
+<a href="#__codelineno-54-6" id="__codelineno-54-6" name="__codelineno-54-6"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>whoami
+<a href="#__codelineno-54-7" id="__codelineno-54-7" name="__codelineno-54-7"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>id
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-fix-application-permissions">1. Fix Application Permissions<a class="headerlink" href="#1-fix-application-permissions" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-55-1" id="__codelineno-55-1" name="__codelineno-55-1"></a><span class="c1"># Fix permissions using task</span>
+<a href="#__codelineno-55-2" id="__codelineno-55-2" name="__codelineno-55-2"></a>task<span class="w"> </span>utilities:permissions
+<a href="#__codelineno-55-3" id="__codelineno-55-3" name="__codelineno-55-3"></a>
+<a href="#__codelineno-55-4" id="__codelineno-55-4" name="__codelineno-55-4"></a><span class="c1"># Or manually</span>
+<a href="#__codelineno-55-5" id="__codelineno-55-5" name="__codelineno-55-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>www-data:www-data<span class="w"> </span>/var/www/html
+<a href="#__codelineno-55-6" id="__codelineno-55-6" name="__codelineno-55-6"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>www-data:www-data<span class="w"> </span>/var/www/documents
+</code></pre></div></p>
+<h4 id="2-host-directory-permissions">2. Host Directory Permissions<a class="headerlink" href="#2-host-directory-permissions" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-56-1" id="__codelineno-56-1" name="__codelineno-56-1"></a><span class="c1"># Fix host directory permissions</span>
+<a href="#__codelineno-56-2" id="__codelineno-56-2" name="__codelineno-56-2"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span>:<span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span>custom/
+<a href="#__codelineno-56-3" id="__codelineno-56-3" name="__codelineno-56-3"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span>:<span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span>logs/
+<a href="#__codelineno-56-4" id="__codelineno-56-4" name="__codelineno-56-4"></a>
+<a href="#__codelineno-56-5" id="__codelineno-56-5" name="__codelineno-56-5"></a><span class="c1"># Or set proper permissions</span>
+<a href="#__codelineno-56-6" id="__codelineno-56-6" name="__codelineno-56-6"></a>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span>custom/
+<a href="#__codelineno-56-7" id="__codelineno-56-7" name="__codelineno-56-7"></a>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span>logs/
+</code></pre></div></p>
+<hr/>
+<h3 id="file-upload-issues">File Upload Issues<a class="headerlink" href="#file-upload-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Files won't upload
+- Upload size limits exceeded
+- Temporary directory errors</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-57-1" id="__codelineno-57-1" name="__codelineno-57-1"></a><span class="c1"># Check PHP upload settings</span>
+<a href="#__codelineno-57-2" id="__codelineno-57-2" name="__codelineno-57-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>php<span class="w"> </span>-i<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>upload
+<a href="#__codelineno-57-3" id="__codelineno-57-3" name="__codelineno-57-3"></a>
+<a href="#__codelineno-57-4" id="__codelineno-57-4" name="__codelineno-57-4"></a><span class="c1"># Check disk space</span>
+<a href="#__codelineno-57-5" id="__codelineno-57-5" name="__codelineno-57-5"></a>df<span class="w"> </span>-h
+<a href="#__codelineno-57-6" id="__codelineno-57-6" name="__codelineno-57-6"></a>docker<span class="w"> </span>system<span class="w"> </span>df<span class="w"> </span>-v
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-php-upload-limits">1. PHP Upload Limits<a class="headerlink" href="#1-php-upload-limits" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-58-1" id="__codelineno-58-1" name="__codelineno-58-1"></a><span class="c1"># docker-compose.override.yml</span>
+<a href="#__codelineno-58-2" id="__codelineno-58-2" name="__codelineno-58-2"></a><span class="nt">services</span><span class="p">:</span>
+<a href="#__codelineno-58-3" id="__codelineno-58-3" name="__codelineno-58-3"></a><span class="w">  </span><span class="nt">dolibarr</span><span class="p">:</span>
+<a href="#__codelineno-58-4" id="__codelineno-58-4" name="__codelineno-58-4"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a href="#__codelineno-58-5" id="__codelineno-58-5" name="__codelineno-58-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PHP_UPLOAD_MAX_FILESIZE=100M</span>
+<a href="#__codelineno-58-6" id="__codelineno-58-6" name="__codelineno-58-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PHP_POST_MAX_SIZE=100M</span>
+<a href="#__codelineno-58-7" id="__codelineno-58-7" name="__codelineno-58-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PHP_MAX_FILE_UPLOADS=20</span>
+</code></pre></div></p>
+<h4 id="2-disk-space-issues">2. Disk Space Issues<a class="headerlink" href="#2-disk-space-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-59-1" id="__codelineno-59-1" name="__codelineno-59-1"></a><span class="c1"># Check available space</span>
+<a href="#__codelineno-59-2" id="__codelineno-59-2" name="__codelineno-59-2"></a>df<span class="w"> </span>-h
+<a href="#__codelineno-59-3" id="__codelineno-59-3" name="__codelineno-59-3"></a>
+<a href="#__codelineno-59-4" id="__codelineno-59-4" name="__codelineno-59-4"></a><span class="c1"># Clean up Docker resources</span>
+<a href="#__codelineno-59-5" id="__codelineno-59-5" name="__codelineno-59-5"></a>task<span class="w"> </span>maintenance:cleanup
+<a href="#__codelineno-59-6" id="__codelineno-59-6" name="__codelineno-59-6"></a>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a
+</code></pre></div></p>
+<hr/>
+<h2 id="backup-and-recovery-issues">Backup and Recovery Issues<a class="headerlink" href="#backup-and-recovery-issues" title="Permanent link">¶</a></h2>
+<h3 id="backup-failures">Backup Failures<a class="headerlink" href="#backup-failures" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Backup command fails
+- Empty backup files
+- Permission errors during backup</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-60-1" id="__codelineno-60-1" name="__codelineno-60-1"></a><span class="c1"># Check backup directory</span>
+<a href="#__codelineno-60-2" id="__codelineno-60-2" name="__codelineno-60-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>backups/
+<a href="#__codelineno-60-3" id="__codelineno-60-3" name="__codelineno-60-3"></a>
+<a href="#__codelineno-60-4" id="__codelineno-60-4" name="__codelineno-60-4"></a><span class="c1"># Check backup process</span>
+<a href="#__codelineno-60-5" id="__codelineno-60-5" name="__codelineno-60-5"></a>task<span class="w"> </span>backup:backup
+<a href="#__codelineno-60-6" id="__codelineno-60-6" name="__codelineno-60-6"></a>
+<a href="#__codelineno-60-7" id="__codelineno-60-7" name="__codelineno-60-7"></a><span class="c1"># Check disk space</span>
+<a href="#__codelineno-60-8" id="__codelineno-60-8" name="__codelineno-60-8"></a>df<span class="w"> </span>-h
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-permission-issues">1. Permission Issues<a class="headerlink" href="#1-permission-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-61-1" id="__codelineno-61-1" name="__codelineno-61-1"></a><span class="c1"># Fix backup directory permissions</span>
+<a href="#__codelineno-61-2" id="__codelineno-61-2" name="__codelineno-61-2"></a>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span>backups/
+<a href="#__codelineno-61-3" id="__codelineno-61-3" name="__codelineno-61-3"></a>
+<a href="#__codelineno-61-4" id="__codelineno-61-4" name="__codelineno-61-4"></a><span class="c1"># Check if backup directory exists</span>
+<a href="#__codelineno-61-5" id="__codelineno-61-5" name="__codelineno-61-5"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>backups/
+</code></pre></div></p>
+<h4 id="2-database-backup-issues">2. Database Backup Issues<a class="headerlink" href="#2-database-backup-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-62-1" id="__codelineno-62-1" name="__codelineno-62-1"></a><span class="c1"># Test database connectivity</span>
+<a href="#__codelineno-62-2" id="__codelineno-62-2" name="__codelineno-62-2"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-62-3" id="__codelineno-62-3" name="__codelineno-62-3"></a>
+<a href="#__codelineno-62-4" id="__codelineno-62-4" name="__codelineno-62-4"></a><span class="c1"># Check database size</span>
+<a href="#__codelineno-62-5" id="__codelineno-62-5" name="__codelineno-62-5"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-62-6" id="__codelineno-62-6" name="__codelineno-62-6"></a>&gt;<span class="w"> </span>SELECT<span class="w"> </span>SUM<span class="o">(</span>data_length<span class="w"> </span>+<span class="w"> </span>index_length<span class="o">)</span><span class="w"> </span>/<span class="w"> </span><span class="m">1024</span><span class="w"> </span>/<span class="w"> </span><span class="m">1024</span><span class="w"> </span>AS<span class="w"> </span><span class="s1">'DB Size in MB'</span><span class="w"> </span>FROM<span class="w"> </span>information_schema.tables<span class="w"> </span>WHERE<span class="w"> </span><span class="nv">table_schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'dolibarr'</span><span class="p">;</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="recovery-issues">Recovery Issues<a class="headerlink" href="#recovery-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Cannot restore from backup
+- Restore process hangs
+- Data corruption after restore</p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-verify-backup-integrity">1. Verify Backup Integrity<a class="headerlink" href="#1-verify-backup-integrity" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-63-1" id="__codelineno-63-1" name="__codelineno-63-1"></a><span class="c1"># Check backup file</span>
+<a href="#__codelineno-63-2" id="__codelineno-63-2" name="__codelineno-63-2"></a>file<span class="w"> </span>backups/*/database_*.sql.gz
+<a href="#__codelineno-63-3" id="__codelineno-63-3" name="__codelineno-63-3"></a>gunzip<span class="w"> </span>-t<span class="w"> </span>backups/*/database_*.sql.gz
+<a href="#__codelineno-63-4" id="__codelineno-63-4" name="__codelineno-63-4"></a>
+<a href="#__codelineno-63-5" id="__codelineno-63-5" name="__codelineno-63-5"></a><span class="c1"># Check backup content</span>
+<a href="#__codelineno-63-6" id="__codelineno-63-6" name="__codelineno-63-6"></a>gunzip<span class="w"> </span>-c<span class="w"> </span>backups/*/database_*.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-20
+</code></pre></div></p>
+<h4 id="2-complete-recovery-process">2. Complete Recovery Process<a class="headerlink" href="#2-complete-recovery-process" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-64-1" id="__codelineno-64-1" name="__codelineno-64-1"></a><span class="c1"># Stop services</span>
+<a href="#__codelineno-64-2" id="__codelineno-64-2" name="__codelineno-64-2"></a>task<span class="w"> </span>services:stop
+<a href="#__codelineno-64-3" id="__codelineno-64-3" name="__codelineno-64-3"></a>
+<a href="#__codelineno-64-4" id="__codelineno-64-4" name="__codelineno-64-4"></a><span class="c1"># Reset data (CAREFUL!)</span>
+<a href="#__codelineno-64-5" id="__codelineno-64-5" name="__codelineno-64-5"></a>task<span class="w"> </span>maintenance:reset-data
+<a href="#__codelineno-64-6" id="__codelineno-64-6" name="__codelineno-64-6"></a>
+<a href="#__codelineno-64-7" id="__codelineno-64-7" name="__codelineno-64-7"></a><span class="c1"># Start fresh</span>
+<a href="#__codelineno-64-8" id="__codelineno-64-8" name="__codelineno-64-8"></a>task<span class="w"> </span>services:start
+<a href="#__codelineno-64-9" id="__codelineno-64-9" name="__codelineno-64-9"></a>
+<a href="#__codelineno-64-10" id="__codelineno-64-10" name="__codelineno-64-10"></a><span class="c1"># Restore from backup</span>
+<a href="#__codelineno-64-11" id="__codelineno-64-11" name="__codelineno-64-11"></a><span class="c1"># (Implement restore task if needed)</span>
+</code></pre></div></p>
+<hr/>
+<h2 id="development-and-custom-module-issues">Development and Custom Module Issues<a class="headerlink" href="#development-and-custom-module-issues" title="Permanent link">¶</a></h2>
+<h3 id="custom-module-problems">Custom Module Problems<a class="headerlink" href="#custom-module-problems" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- Custom modules not loading
+- Module activation errors
+- PHP errors in custom code</p>
+<p><strong>Diagnostic Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-65-1" id="__codelineno-65-1" name="__codelineno-65-1"></a><span class="c1"># Check custom directory structure</span>
+<a href="#__codelineno-65-2" id="__codelineno-65-2" name="__codelineno-65-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>custom/
+<a href="#__codelineno-65-3" id="__codelineno-65-3" name="__codelineno-65-3"></a>find<span class="w"> </span>custom/<span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.php"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-10
+<a href="#__codelineno-65-4" id="__codelineno-65-4" name="__codelineno-65-4"></a>
+<a href="#__codelineno-65-5" id="__codelineno-65-5" name="__codelineno-65-5"></a><span class="c1"># Check PHP syntax</span>
+<a href="#__codelineno-65-6" id="__codelineno-65-6" name="__codelineno-65-6"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>php<span class="w"> </span>-l<span class="w"> </span>/var/www/html/custom/mymodule/mymodule.php
+</code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-module-structure-issues">1. Module Structure Issues<a class="headerlink" href="#1-module-structure-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-66-1" id="__codelineno-66-1" name="__codelineno-66-1"></a><span class="c1"># Verify correct module structure</span>
+<a href="#__codelineno-66-2" id="__codelineno-66-2" name="__codelineno-66-2"></a>custom/mymodule/
+<a href="#__codelineno-66-3" id="__codelineno-66-3" name="__codelineno-66-3"></a>├──<span class="w"> </span>core/
+<a href="#__codelineno-66-4" id="__codelineno-66-4" name="__codelineno-66-4"></a>├──<span class="w"> </span>admin/
+<a href="#__codelineno-66-5" id="__codelineno-66-5" name="__codelineno-66-5"></a>├──<span class="w"> </span>class/
+<a href="#__codelineno-66-6" id="__codelineno-66-6" name="__codelineno-66-6"></a>├──<span class="w"> </span>mymodule.php
+<a href="#__codelineno-66-7" id="__codelineno-66-7" name="__codelineno-66-7"></a>└──<span class="w"> </span>README.md
+<a href="#__codelineno-66-8" id="__codelineno-66-8" name="__codelineno-66-8"></a>
+<a href="#__codelineno-66-9" id="__codelineno-66-9" name="__codelineno-66-9"></a><span class="c1"># Check file permissions</span>
+<a href="#__codelineno-66-10" id="__codelineno-66-10" name="__codelineno-66-10"></a>task<span class="w"> </span>utilities:permissions
+</code></pre></div></p>
+<h4 id="2-php-syntax-errors">2. PHP Syntax Errors<a class="headerlink" href="#2-php-syntax-errors" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-67-1" id="__codelineno-67-1" name="__codelineno-67-1"></a><span class="c1"># Check all PHP files</span>
+<a href="#__codelineno-67-2" id="__codelineno-67-2" name="__codelineno-67-2"></a>find<span class="w"> </span>custom/<span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.php"</span><span class="w"> </span>-exec<span class="w"> </span>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>dolibarr<span class="w"> </span>php<span class="w"> </span>-l<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+<a href="#__codelineno-67-3" id="__codelineno-67-3" name="__codelineno-67-3"></a>
+<a href="#__codelineno-67-4" id="__codelineno-67-4" name="__codelineno-67-4"></a><span class="c1"># Fix syntax errors in custom code</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="development-environment-issues">Development Environment Issues<a class="headerlink" href="#development-environment-issues" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms</strong>:
+- phpMyAdmin not accessible
+- Development tools not working
+- Debug mode not enabled</p>
+<p><strong>Solutions</strong>:</p>
+<h4 id="1-phpmyadmin-issues">1. phpMyAdmin Issues<a class="headerlink" href="#1-phpmyadmin-issues" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-68-1" id="__codelineno-68-1" name="__codelineno-68-1"></a><span class="c1"># Ensure tools profile is active</span>
+<a href="#__codelineno-68-2" id="__codelineno-68-2" name="__codelineno-68-2"></a>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-68-3" id="__codelineno-68-3" name="__codelineno-68-3"></a>
+<a href="#__codelineno-68-4" id="__codelineno-68-4" name="__codelineno-68-4"></a><span class="c1"># Check phpMyAdmin URL</span>
+<a href="#__codelineno-68-5" id="__codelineno-68-5" name="__codelineno-68-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"phpMyAdmin: http://localhost:</span><span class="si">${</span><span class="nv">PHPMYADMIN_PORT</span><span class="k">:-</span><span class="nv">8081</span><span class="si">}</span><span class="s2">"</span>
+<a href="#__codelineno-68-6" id="__codelineno-68-6" name="__codelineno-68-6"></a>
+<a href="#__codelineno-68-7" id="__codelineno-68-7" name="__codelineno-68-7"></a><span class="c1"># Check phpMyAdmin logs</span>
+<a href="#__codelineno-68-8" id="__codelineno-68-8" name="__codelineno-68-8"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>phpmyadmin
+</code></pre></div></p>
+<h4 id="2-debug-mode">2. Debug Mode<a class="headerlink" href="#2-debug-mode" title="Permanent link">¶</a></h4>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-69-1" id="__codelineno-69-1" name="__codelineno-69-1"></a><span class="c1"># Enable debug mode</span>
+<a href="#__codelineno-69-2" id="__codelineno-69-2" name="__codelineno-69-2"></a>task<span class="w"> </span>utilities:shell-app
+<a href="#__codelineno-69-3" id="__codelineno-69-3" name="__codelineno-69-3"></a><span class="c1"># Edit configuration to enable debug</span>
+</code></pre></div></p>
+<hr/>
+<h2 id="error-message-reference">Error Message Reference<a class="headerlink" href="#error-message-reference" title="Permanent link">¶</a></h2>
+<h3 id="common-error-messages-and-solutions">Common Error Messages and Solutions<a class="headerlink" href="#common-error-messages-and-solutions" title="Permanent link">¶</a></h3>
+<h4 id="database-errors">Database Errors<a class="headerlink" href="#database-errors" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>Connection refused</code>
+<strong>Cause</strong>: Database not running or network issues
+<strong>Solution</strong>: 
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-70-1" id="__codelineno-70-1" name="__codelineno-70-1"></a>task<span class="w"> </span>services:start
+<a href="#__codelineno-70-2" id="__codelineno-70-2" name="__codelineno-70-2"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>dolibarr-db
+</code></pre></div></p>
+<p><strong>Error</strong>: <code>Access denied for user</code>
+<strong>Cause</strong>: Wrong database credentials
+<strong>Solution</strong>: Check <code>DB_PASSWORD</code> and <code>DB_ROOT_PASSWORD</code> in <code>.env</code></p>
+<p><strong>Error</strong>: <code>Table 'dolibarr.llx_const' doesn't exist</code>
+<strong>Cause</strong>: Database not initialized
+<strong>Solution</strong>: 
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-71-1" id="__codelineno-71-1" name="__codelineno-71-1"></a>task<span class="w"> </span>maintenance:reset-data
+<a href="#__codelineno-71-2" id="__codelineno-71-2" name="__codelineno-71-2"></a>task<span class="w"> </span>services:start
+<a href="#__codelineno-71-3" id="__codelineno-71-3" name="__codelineno-71-3"></a>task<span class="w"> </span>config:setup-dev-environment
+</code></pre></div></p>
+<h4 id="application-errors">Application Errors<a class="headerlink" href="#application-errors" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>Fatal error: Maximum execution time exceeded</code>
+<strong>Cause</strong>: PHP timeout
+<strong>Solution</strong>: Increase <code>PHP_MAX_EXECUTION_TIME</code></p>
+<p><strong>Error</strong>: <code>Call to undefined function</code>
+<strong>Cause</strong>: Missing PHP extension
+<strong>Solution</strong>: Check container image or custom Dockerfile</p>
+<h4 id="docker-errors">Docker Errors<a class="headerlink" href="#docker-errors" title="Permanent link">¶</a></h4>
+<p><strong>Error</strong>: <code>port is already allocated</code>
+<strong>Cause</strong>: Port conflict
+<strong>Solution</strong>: Change port in <code>.env</code> file</p>
+<p><strong>Error</strong>: <code>no such file or directory</code>
+<strong>Cause</strong>: Missing file or incorrect path
+<strong>Solution</strong>: Check file paths and permissions</p>
+<hr/>
+<h2 id="log-analysis">Log Analysis<a class="headerlink" href="#log-analysis" title="Permanent link">¶</a></h2>
+<h3 id="log-locations-and-commands">Log Locations and Commands<a class="headerlink" href="#log-locations-and-commands" title="Permanent link">¶</a></h3>
+<h4 id="application-logs">Application Logs<a class="headerlink" href="#application-logs" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-72-1" id="__codelineno-72-1" name="__codelineno-72-1"></a><span class="c1"># Real-time application logs</span>
+<a href="#__codelineno-72-2" id="__codelineno-72-2" name="__codelineno-72-2"></a>task<span class="w"> </span>services:logs-app
+<a href="#__codelineno-72-3" id="__codelineno-72-3" name="__codelineno-72-3"></a>
+<a href="#__codelineno-72-4" id="__codelineno-72-4" name="__codelineno-72-4"></a><span class="c1"># Search for specific errors</span>
+<a href="#__codelineno-72-5" id="__codelineno-72-5" name="__codelineno-72-5"></a>task<span class="w"> </span>services:logs-app<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ERROR
+<a href="#__codelineno-72-6" id="__codelineno-72-6" name="__codelineno-72-6"></a>
+<a href="#__codelineno-72-7" id="__codelineno-72-7" name="__codelineno-72-7"></a><span class="c1"># Check log files on host</span>
+<a href="#__codelineno-72-8" id="__codelineno-72-8" name="__codelineno-72-8"></a>ls<span class="w"> </span>-la<span class="w"> </span>logs/
+<a href="#__codelineno-72-9" id="__codelineno-72-9" name="__codelineno-72-9"></a>tail<span class="w"> </span>-f<span class="w"> </span>logs/dolibarr.log
+</code></pre></div>
+<h4 id="database-logs">Database Logs<a class="headerlink" href="#database-logs" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-73-1" id="__codelineno-73-1" name="__codelineno-73-1"></a><span class="c1"># Database logs</span>
+<a href="#__codelineno-73-2" id="__codelineno-73-2" name="__codelineno-73-2"></a>task<span class="w"> </span>services:logs-db
+<a href="#__codelineno-73-3" id="__codelineno-73-3" name="__codelineno-73-3"></a>
+<a href="#__codelineno-73-4" id="__codelineno-73-4" name="__codelineno-73-4"></a><span class="c1"># Query logs (if enabled)</span>
+<a href="#__codelineno-73-5" id="__codelineno-73-5" name="__codelineno-73-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr-db<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/lib/mysql/general.log
+</code></pre></div>
+<h4 id="system-logs">System Logs<a class="headerlink" href="#system-logs" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-74-1" id="__codelineno-74-1" name="__codelineno-74-1"></a><span class="c1"># Docker daemon logs</span>
+<a href="#__codelineno-74-2" id="__codelineno-74-2" name="__codelineno-74-2"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>docker.service
+<a href="#__codelineno-74-3" id="__codelineno-74-3" name="__codelineno-74-3"></a>
+<a href="#__codelineno-74-4" id="__codelineno-74-4" name="__codelineno-74-4"></a><span class="c1"># Container logs</span>
+<a href="#__codelineno-74-5" id="__codelineno-74-5" name="__codelineno-74-5"></a>docker<span class="w"> </span>logs<span class="w"> </span>dolibarr-app
+<a href="#__codelineno-74-6" id="__codelineno-74-6" name="__codelineno-74-6"></a>docker<span class="w"> </span>logs<span class="w"> </span>dolibarr-db
+</code></pre></div>
+<h3 id="log-analysis-techniques">Log Analysis Techniques<a class="headerlink" href="#log-analysis-techniques" title="Permanent link">¶</a></h3>
+<h4 id="finding-errors">Finding Errors<a class="headerlink" href="#finding-errors" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-75-1" id="__codelineno-75-1" name="__codelineno-75-1"></a><span class="c1"># Search for error patterns</span>
+<a href="#__codelineno-75-2" id="__codelineno-75-2" name="__codelineno-75-2"></a>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"error\|exception\|fatal\|warning"</span><span class="w"> </span>logs/*
+<a href="#__codelineno-75-3" id="__codelineno-75-3" name="__codelineno-75-3"></a>
+<a href="#__codelineno-75-4" id="__codelineno-75-4" name="__codelineno-75-4"></a><span class="c1"># Check for specific time period</span>
+<a href="#__codelineno-75-5" id="__codelineno-75-5" name="__codelineno-75-5"></a>grep<span class="w"> </span><span class="s2">"2024-01-15"</span><span class="w"> </span>logs/dolibarr.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ERROR
+</code></pre></div>
+<h4 id="performance-analysis">Performance Analysis<a class="headerlink" href="#performance-analysis" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-76-1" id="__codelineno-76-1" name="__codelineno-76-1"></a><span class="c1"># Find slow queries</span>
+<a href="#__codelineno-76-2" id="__codelineno-76-2" name="__codelineno-76-2"></a>grep<span class="w"> </span><span class="s2">"slow query"</span><span class="w"> </span>logs/*
+<a href="#__codelineno-76-3" id="__codelineno-76-3" name="__codelineno-76-3"></a>
+<a href="#__codelineno-76-4" id="__codelineno-76-4" name="__codelineno-76-4"></a><span class="c1"># Check memory usage patterns</span>
+<a href="#__codelineno-76-5" id="__codelineno-76-5" name="__codelineno-76-5"></a>grep<span class="w"> </span><span class="s2">"memory"</span><span class="w"> </span>logs/*<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-20
+</code></pre></div>
+<hr/>
+<h2 id="getting-additional-help">Getting Additional Help<a class="headerlink" href="#getting-additional-help" title="Permanent link">¶</a></h2>
+<h3 id="diagnostic-information-collection">Diagnostic Information Collection<a class="headerlink" href="#diagnostic-information-collection" title="Permanent link">¶</a></h3>
+<p>When reporting issues, collect this diagnostic information:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-77-1" id="__codelineno-77-1" name="__codelineno-77-1"></a><span class="c1"># System information</span>
+<a href="#__codelineno-77-2" id="__codelineno-77-2" name="__codelineno-77-2"></a>uname<span class="w"> </span>-a
+<a href="#__codelineno-77-3" id="__codelineno-77-3" name="__codelineno-77-3"></a>docker<span class="w"> </span>version
+<a href="#__codelineno-77-4" id="__codelineno-77-4" name="__codelineno-77-4"></a>docker-compose<span class="w"> </span>version
+<a href="#__codelineno-77-5" id="__codelineno-77-5" name="__codelineno-77-5"></a>
+<a href="#__codelineno-77-6" id="__codelineno-77-6" name="__codelineno-77-6"></a><span class="c1"># Service status</span>
+<a href="#__codelineno-77-7" id="__codelineno-77-7" name="__codelineno-77-7"></a>task<span class="w"> </span>services:status
+<a href="#__codelineno-77-8" id="__codelineno-77-8" name="__codelineno-77-8"></a>task<span class="w"> </span>utilities:health
+<a href="#__codelineno-77-9" id="__codelineno-77-9" name="__codelineno-77-9"></a>
+<a href="#__codelineno-77-10" id="__codelineno-77-10" name="__codelineno-77-10"></a><span class="c1"># Configuration (without passwords)</span>
+<a href="#__codelineno-77-11" id="__codelineno-77-11" name="__codelineno-77-11"></a>cat<span class="w"> </span>.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>PASSWORD
+<a href="#__codelineno-77-12" id="__codelineno-77-12" name="__codelineno-77-12"></a>docker-compose<span class="w"> </span>config
+<a href="#__codelineno-77-13" id="__codelineno-77-13" name="__codelineno-77-13"></a>
+<a href="#__codelineno-77-14" id="__codelineno-77-14" name="__codelineno-77-14"></a><span class="c1"># Recent logs</span>
+<a href="#__codelineno-77-15" id="__codelineno-77-15" name="__codelineno-77-15"></a>task<span class="w"> </span>services:logs<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-100
+<a href="#__codelineno-77-16" id="__codelineno-77-16" name="__codelineno-77-16"></a>
+<a href="#__codelineno-77-17" id="__codelineno-77-17" name="__codelineno-77-17"></a><span class="c1"># Resource usage</span>
+<a href="#__codelineno-77-18" id="__codelineno-77-18" name="__codelineno-77-18"></a>docker<span class="w"> </span>stats<span class="w"> </span>--no-stream
+<a href="#__codelineno-77-19" id="__codelineno-77-19" name="__codelineno-77-19"></a>free<span class="w"> </span>-h
+<a href="#__codelineno-77-20" id="__codelineno-77-20" name="__codelineno-77-20"></a>df<span class="w"> </span>-h
+</code></pre></div>
+<h3 id="support-resources">Support Resources<a class="headerlink" href="#support-resources" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Dolibarr Documentation</strong>: <a href="https://wiki.dolibarr.org">Official Dolibarr Wiki</a></li>
+<li><strong>Docker Documentation</strong>: <a href="https://docs.docker.com/compose/">Docker Compose Guide</a></li>
+<li><strong>Community Forums</strong>: <a href="https://www.dolibarr.org/forum">Dolibarr Forum</a></li>
+<li><strong>GitHub Issues</strong>: Project repository issues section</li>
+</ol>
+<h3 id="before-reporting-issues">Before Reporting Issues<a class="headerlink" href="#before-reporting-issues" title="Permanent link">¶</a></h3>
+<ol>
+<li>✅ Check this troubleshooting guide</li>
+<li>✅ Search existing issues in the repository</li>
+<li>✅ Collect diagnostic information</li>
+<li>✅ Try basic troubleshooting steps</li>
+<li>✅ Document steps to reproduce the issue</li>
+</ol>
+<p>Remember to never include passwords or sensitive information when reporting issues!</p>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

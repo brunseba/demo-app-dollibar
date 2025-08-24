@@ -1,0 +1,1736 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/reference/taskfile-commands/" rel="canonical"/>
+<link href="../" rel="prev"/>
+<link href="../environment-variables/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>Taskfile Commands - Dolibarr Docker Documentation</title>
+<link href="../../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#taskfile-commands-reference">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Taskfile Commands
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../troubleshooting/">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup-commands">
+<span class="md-ellipsis">
+      Setup Commands
+    </span>
+</a>
+<nav aria-label="Setup Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-setupinit">
+<span class="md-ellipsis">
+      task setup:init
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-management">
+<span class="md-ellipsis">
+      Service Management
+    </span>
+</a>
+<nav aria-label="Service Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstart">
+<span class="md-ellipsis">
+      task services:start
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstart-with-tools">
+<span class="md-ellipsis">
+      task services:start-with-tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstart-external">
+<span class="md-ellipsis">
+      task services:start-external
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstop">
+<span class="md-ellipsis">
+      task services:stop
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstatus">
+<span class="md-ellipsis">
+      task services:status
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-serviceslogs">
+<span class="md-ellipsis">
+      task services:logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-serviceslogs-app">
+<span class="md-ellipsis">
+      task services:logs-app
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-serviceslogs-db">
+<span class="md-ellipsis">
+      task services:logs-db
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-commands">
+<span class="md-ellipsis">
+      Configuration Commands
+    </span>
+</a>
+<nav aria-label="Configuration Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configenable-modules">
+<span class="md-ellipsis">
+      task config:enable-modules
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configenable-api">
+<span class="md-ellipsis">
+      task config:enable-api
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configlist-modules">
+<span class="md-ellipsis">
+      task config:list-modules
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configconfigure-company">
+<span class="md-ellipsis">
+      task config:configure-company
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configsetup-dev-environment">
+<span class="md-ellipsis">
+      task config:setup-dev-environment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configshow-config">
+<span class="md-ellipsis">
+      task config:show-config
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-commands">
+<span class="md-ellipsis">
+      Backup Commands
+    </span>
+</a>
+<nav aria-label="Backup Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backupbackup">
+<span class="md-ellipsis">
+      task backup:backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backupbackup-db">
+<span class="md-ellipsis">
+      task backup:backup-db
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backupbackup-app">
+<span class="md-ellipsis">
+      task backup:backup-app
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backuplist-backups">
+<span class="md-ellipsis">
+      task backup:list-backups
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maintenance-commands">
+<span class="md-ellipsis">
+      Maintenance Commands
+    </span>
+</a>
+<nav aria-label="Maintenance Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancereset-data">
+<span class="md-ellipsis">
+      task maintenance:reset-data
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancereset-logs">
+<span class="md-ellipsis">
+      task maintenance:reset-logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancereset-custom">
+<span class="md-ellipsis">
+      task maintenance:reset-custom
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancecleanup">
+<span class="md-ellipsis">
+      task maintenance:cleanup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenanceupdate">
+<span class="md-ellipsis">
+      task maintenance:update
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#utility-commands">
+<span class="md-ellipsis">
+      Utility Commands
+    </span>
+</a>
+<nav aria-label="Utility Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitiesshell-app">
+<span class="md-ellipsis">
+      task utilities:shell-app
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitiesshell-db">
+<span class="md-ellipsis">
+      task utilities:shell-db
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitiespermissions">
+<span class="md-ellipsis">
+      task utilities:permissions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitieshealth">
+<span class="md-ellipsis">
+      task utilities:health
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#global-command-task">
+<span class="md-ellipsis">
+      Global Command: task
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-workflows">
+<span class="md-ellipsis">
+      Common Workflows
+    </span>
+</a>
+<nav aria-label="Common Workflows" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#first-time-setup">
+<span class="md-ellipsis">
+      First Time Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#daily-development">
+<span class="md-ellipsis">
+      Daily Development
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-deployment">
+<span class="md-ellipsis">
+      Production Deployment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maintenance-tasks">
+<span class="md-ellipsis">
+      Maintenance Tasks
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../environment-variables/">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../backup-restore/">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modules-status/">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#table-of-contents">
+<span class="md-ellipsis">
+      Table of Contents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup-commands">
+<span class="md-ellipsis">
+      Setup Commands
+    </span>
+</a>
+<nav aria-label="Setup Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-setupinit">
+<span class="md-ellipsis">
+      task setup:init
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-management">
+<span class="md-ellipsis">
+      Service Management
+    </span>
+</a>
+<nav aria-label="Service Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstart">
+<span class="md-ellipsis">
+      task services:start
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstart-with-tools">
+<span class="md-ellipsis">
+      task services:start-with-tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstart-external">
+<span class="md-ellipsis">
+      task services:start-external
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstop">
+<span class="md-ellipsis">
+      task services:stop
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-servicesstatus">
+<span class="md-ellipsis">
+      task services:status
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-serviceslogs">
+<span class="md-ellipsis">
+      task services:logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-serviceslogs-app">
+<span class="md-ellipsis">
+      task services:logs-app
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-serviceslogs-db">
+<span class="md-ellipsis">
+      task services:logs-db
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-commands">
+<span class="md-ellipsis">
+      Configuration Commands
+    </span>
+</a>
+<nav aria-label="Configuration Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configenable-modules">
+<span class="md-ellipsis">
+      task config:enable-modules
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configenable-api">
+<span class="md-ellipsis">
+      task config:enable-api
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configlist-modules">
+<span class="md-ellipsis">
+      task config:list-modules
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configconfigure-company">
+<span class="md-ellipsis">
+      task config:configure-company
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configsetup-dev-environment">
+<span class="md-ellipsis">
+      task config:setup-dev-environment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-configshow-config">
+<span class="md-ellipsis">
+      task config:show-config
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-commands">
+<span class="md-ellipsis">
+      Backup Commands
+    </span>
+</a>
+<nav aria-label="Backup Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backupbackup">
+<span class="md-ellipsis">
+      task backup:backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backupbackup-db">
+<span class="md-ellipsis">
+      task backup:backup-db
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backupbackup-app">
+<span class="md-ellipsis">
+      task backup:backup-app
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-backuplist-backups">
+<span class="md-ellipsis">
+      task backup:list-backups
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maintenance-commands">
+<span class="md-ellipsis">
+      Maintenance Commands
+    </span>
+</a>
+<nav aria-label="Maintenance Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancereset-data">
+<span class="md-ellipsis">
+      task maintenance:reset-data
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancereset-logs">
+<span class="md-ellipsis">
+      task maintenance:reset-logs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancereset-custom">
+<span class="md-ellipsis">
+      task maintenance:reset-custom
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenancecleanup">
+<span class="md-ellipsis">
+      task maintenance:cleanup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-maintenanceupdate">
+<span class="md-ellipsis">
+      task maintenance:update
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#utility-commands">
+<span class="md-ellipsis">
+      Utility Commands
+    </span>
+</a>
+<nav aria-label="Utility Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitiesshell-app">
+<span class="md-ellipsis">
+      task utilities:shell-app
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitiesshell-db">
+<span class="md-ellipsis">
+      task utilities:shell-db
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitiespermissions">
+<span class="md-ellipsis">
+      task utilities:permissions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task-utilitieshealth">
+<span class="md-ellipsis">
+      task utilities:health
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#global-command-task">
+<span class="md-ellipsis">
+      Global Command: task
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-workflows">
+<span class="md-ellipsis">
+      Common Workflows
+    </span>
+</a>
+<nav aria-label="Common Workflows" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#first-time-setup">
+<span class="md-ellipsis">
+      First Time Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#daily-development">
+<span class="md-ellipsis">
+      Daily Development
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-deployment">
+<span class="md-ellipsis">
+      Production Deployment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maintenance-tasks">
+<span class="md-ellipsis">
+      Maintenance Tasks
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="taskfile-commands-reference">Taskfile Commands Reference<a class="headerlink" href="#taskfile-commands-reference" title="Permanent link">¶</a></h1>
+<p>This document provides a comprehensive reference of all available Task commands for managing your Dolibarr Docker installation.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="#setup-commands">Setup Commands</a></li>
+<li><a href="#service-management">Service Management</a></li>
+<li><a href="#configuration-commands">Configuration Commands</a></li>
+<li><a href="#backup-commands">Backup Commands</a></li>
+<li><a href="#maintenance-commands">Maintenance Commands</a></li>
+<li><a href="#utility-commands">Utility Commands</a></li>
+</ul>
+<hr/>
+<h2 id="setup-commands">Setup Commands<a class="headerlink" href="#setup-commands" title="Permanent link">¶</a></h2>
+<h3 id="task-setupinit"><code>task setup:init</code><a class="headerlink" href="#task-setupinit" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Initialize Dolibarr setup by creating required directories and setting permissions</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>task<span class="w"> </span>setup:init
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Creates required directories: <code>custom/</code>, <code>logs/</code>, <code>db-init/</code>, <code>backups/</code>
+- Sets proper permissions (755) on all directories
+- Prepares the environment for first-time setup</p>
+<p><strong>When to use</strong>: Run this command after cloning the repository and before starting services for the first time</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>✅ Dolibarr directories initialized
+</code></pre></div></p>
+<hr/>
+<h2 id="service-management">Service Management<a class="headerlink" href="#service-management" title="Permanent link">¶</a></h2>
+<h3 id="task-servicesstart"><code>task services:start</code><a class="headerlink" href="#task-servicesstart" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Start Dolibarr with internal database</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>task<span class="w"> </span>services:start
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Starts Dolibarr application container
+- Starts internal MariaDB database container
+- Uses <code>internal-db</code> profile</p>
+<p><strong>Ports opened</strong>:
+- Dolibarr: <code>${DOLIBARR_PORT}</code> (default: 8080)
+- Database: <code>${DB_EXTERNAL_PORT}</code> (default: 3306)</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>✅ Dolibarr started with internal database
+</code></pre></div></p>
+<hr/>
+<h3 id="task-servicesstart-with-tools"><code>task services:start-with-tools</code><a class="headerlink" href="#task-servicesstart-with-tools" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Start Dolibarr with internal database and phpMyAdmin for development</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>task<span class="w"> </span>services:start-with-tools
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Starts Dolibarr application container
+- Starts internal MariaDB database container
+- Starts phpMyAdmin container for database management
+- Uses <code>internal-db</code> and <code>internal-db-tools</code> profiles</p>
+<p><strong>Ports opened</strong>:
+- Dolibarr: <code>${DOLIBARR_PORT}</code> (default: 8080)
+- phpMyAdmin: <code>${PHPMYADMIN_PORT}</code> (default: 8081)
+- Database: <code>${DB_EXTERNAL_PORT}</code> (default: 3306)</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a>✅ Dolibarr started with internal database and phpMyAdmin
+</code></pre></div></p>
+<hr/>
+<h3 id="task-servicesstart-external"><code>task services:start-external</code><a class="headerlink" href="#task-servicesstart-external" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Start Dolibarr with external database connection</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>task<span class="w"> </span>services:start-external
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Starts only Dolibarr application container
+- Connects to external database specified in environment variables
+- Uses <code>external-db</code> profile</p>
+<p><strong>Prerequisites</strong>: 
+- External database must be accessible
+- Configure <code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code> in <code>.env</code></p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a>✅ Dolibarr started with external database
+</code></pre></div></p>
+<hr/>
+<h3 id="task-servicesstop"><code>task services:stop</code><a class="headerlink" href="#task-servicesstop" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Stop all Dolibarr services</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>task<span class="w"> </span>services:stop
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Stops all running containers
+- Removes containers but preserves volumes and data</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a>✅ Dolibarr services stopped
+</code></pre></div></p>
+<hr/>
+<h3 id="task-servicesstatus"><code>task services:status</code><a class="headerlink" href="#task-servicesstatus" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Show status of all services</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a>task<span class="w"> </span>services:status
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Displays current status of all Docker Compose services
+- Shows container names, states, and port mappings</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a>NAME                  IMAGE                          COMMAND                  SERVICE         STATUS          PORTS
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>dolibarr-app         dolibarr/dolibarr:latest       "docker-php-entrypoi…"   dolibarr        running         0.0.0.0:8080-&gt;80/tcp
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>dolibarr-db          mariadb:10.11                  "docker-entrypoint.s…"   dolibarr-db     running         0.0.0.0:3306-&gt;3306/tcp
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a>dolibarr-phpmyadmin  phpmyadmin/phpmyadmin:latest   "/docker-entrypoint.…"   phpmyadmin      running         0.0.0.0:8081-&gt;80/tcp
+</code></pre></div></p>
+<hr/>
+<h3 id="task-serviceslogs"><code>task services:logs</code><a class="headerlink" href="#task-serviceslogs" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Show logs from all services with real-time following</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a>task<span class="w"> </span>services:logs
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Displays logs from all running containers
+- Follows logs in real-time (similar to <code>tail -f</code>)
+- Press <code>Ctrl+C</code> to stop following</p>
+<p><strong>Use cases</strong>:
+- Monitor application startup
+- Debug service issues
+- Monitor real-time activity</p>
+<hr/>
+<h3 id="task-serviceslogs-app"><code>task services:logs-app</code><a class="headerlink" href="#task-serviceslogs-app" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Show Dolibarr application logs only</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a>task<span class="w"> </span>services:logs-app
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Displays logs only from the Dolibarr application container
+- Follows logs in real-time
+- Useful for application-specific debugging</p>
+<hr/>
+<h3 id="task-serviceslogs-db"><code>task services:logs-db</code><a class="headerlink" href="#task-serviceslogs-db" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Show database logs only</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a>task<span class="w"> </span>services:logs-db
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Displays logs only from the database container
+- Follows logs in real-time
+- Useful for database-specific debugging</p>
+<hr/>
+<h2 id="configuration-commands">Configuration Commands<a class="headerlink" href="#configuration-commands" title="Permanent link">¶</a></h2>
+<h3 id="task-configenable-modules"><code>task config:enable-modules</code><a class="headerlink" href="#task-configenable-modules" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Enable essential Dolibarr modules for full functionality</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a>task<span class="w"> </span>config:enable-modules
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr must be running (<code>task services:start</code>)</p>
+<p><strong>Modules enabled</strong>:
+- Third parties (<code>MAIN_MODULE_SOCIETE</code>)
+- Invoices (<code>MAIN_MODULE_FACTURE</code>)
+- Orders (<code>MAIN_MODULE_COMMANDE</code>)
+- Proposals (<code>MAIN_MODULE_PROPAL</code>)
+- Products/Services (<code>MAIN_MODULE_PRODUCT</code>)
+- Stock (<code>MAIN_MODULE_STOCK</code>)
+- Projects (<code>MAIN_MODULE_PROJET</code>)
+- Events/Agenda (<code>MAIN_MODULE_ACTIONCOMM</code>)
+- Categories (<code>MAIN_MODULE_CATEGORIE</code>)</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>Enabling essential Dolibarr modules...
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a>Essential modules enabled successfully
+</code></pre></div></p>
+<hr/>
+<h3 id="task-configenable-api"><code>task config:enable-api</code><a class="headerlink" href="#task-configenable-api" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Enable REST API module and configure API access</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>task<span class="w"> </span>config:enable-api
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr must be running</p>
+<p><strong>What it does</strong>:
+- Enables the REST API module (<code>MAIN_MODULE_API</code>)
+- Provides information about API key generation
+- Shows API documentation URL</p>
+<p><strong>Post-configuration</strong>:
+- Generate API keys via: Users &amp; Groups &gt; Users &gt; Edit User &gt; API Keys
+- API Documentation: <code>http://localhost:${DOLIBARR_PORT}/api/index.php/explorer</code></p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a>Enabling REST API module...
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a>API enabled. Generate API keys via Users &amp; Groups &gt; Users &gt; Edit User &gt; API Keys
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a>API Documentation available at http://localhost:18080/api/index.php/explorer
+</code></pre></div></p>
+<hr/>
+<h3 id="task-configlist-modules"><code>task config:list-modules</code><a class="headerlink" href="#task-configlist-modules" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: List all available and enabled modules</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a>task<span class="w"> </span>config:list-modules
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr must be running</p>
+<p><strong>What it does</strong>:
+- Queries the database for all module configurations
+- Shows module names and their status (Enabled/Disabled)
+- Sorted alphabetically by module name</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a>Listing Dolibarr modules...
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>+--------------------+-----------+
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a>| Module             | Status    |
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a>+--------------------+-----------+
+<a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a>| ACTIONCOMM         | Enabled   |
+<a href="#__codelineno-20-6" id="__codelineno-20-6" name="__codelineno-20-6"></a>| API                | Enabled   |
+<a href="#__codelineno-20-7" id="__codelineno-20-7" name="__codelineno-20-7"></a>| CATEGORIE          | Enabled   |
+<a href="#__codelineno-20-8" id="__codelineno-20-8" name="__codelineno-20-8"></a>| COMMANDE           | Enabled   |
+<a href="#__codelineno-20-9" id="__codelineno-20-9" name="__codelineno-20-9"></a>| FACTURE            | Enabled   |
+<a href="#__codelineno-20-10" id="__codelineno-20-10" name="__codelineno-20-10"></a>| PRODUCT            | Enabled   |
+<a href="#__codelineno-20-11" id="__codelineno-20-11" name="__codelineno-20-11"></a>| PROPAL             | Enabled   |
+<a href="#__codelineno-20-12" id="__codelineno-20-12" name="__codelineno-20-12"></a>| PROJET             | Enabled   |
+<a href="#__codelineno-20-13" id="__codelineno-20-13" name="__codelineno-20-13"></a>| SOCIETE            | Enabled   |
+<a href="#__codelineno-20-14" id="__codelineno-20-14" name="__codelineno-20-14"></a>| STOCK              | Enabled   |
+<a href="#__codelineno-20-15" id="__codelineno-20-15" name="__codelineno-20-15"></a>+--------------------+-----------+
+</code></pre></div></p>
+<hr/>
+<h3 id="task-configconfigure-company"><code>task config:configure-company</code><a class="headerlink" href="#task-configconfigure-company" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Configure company information and settings</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a>task<span class="w"> </span>config:configure-company
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr must be running</p>
+<p><strong>What it configures</strong>:
+- Company name: "Demo Company Inc."
+- Company email: "contact@demo-company.com"
+- Currency: "EUR"</p>
+<p><strong>Customization</strong>: Edit the task in <code>.taskfile/config.yml</code> to set your own company information</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a>Configuring company information...
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>Company information configured successfully
+</code></pre></div></p>
+<hr/>
+<h3 id="task-configsetup-dev-environment"><code>task config:setup-dev-environment</code><a class="headerlink" href="#task-configsetup-dev-environment" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Complete development environment setup</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a>task<span class="w"> </span>config:setup-dev-environment
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr must be running with tools (<code>task services:start-with-tools</code>)</p>
+<p><strong>What it does</strong>:
+- Runs <code>task config:enable-modules</code>
+- Runs <code>task config:enable-api</code>
+- Runs <code>task config:configure-company</code>
+- Provides access URLs</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a>Setting up development environment...
+<a href="#__codelineno-24-2" id="__codelineno-24-2" name="__codelineno-24-2"></a>Enabling essential Dolibarr modules...
+<a href="#__codelineno-24-3" id="__codelineno-24-3" name="__codelineno-24-3"></a>Essential modules enabled successfully
+<a href="#__codelineno-24-4" id="__codelineno-24-4" name="__codelineno-24-4"></a>Enabling REST API module...
+<a href="#__codelineno-24-5" id="__codelineno-24-5" name="__codelineno-24-5"></a>API enabled. Generate API keys via Users &amp; Groups &gt; Users &gt; Edit User &gt; API Keys
+<a href="#__codelineno-24-6" id="__codelineno-24-6" name="__codelineno-24-6"></a>API Documentation available at http://localhost:18080/api/index.php/explorer
+<a href="#__codelineno-24-7" id="__codelineno-24-7" name="__codelineno-24-7"></a>Configuring company information...
+<a href="#__codelineno-24-8" id="__codelineno-24-8" name="__codelineno-24-8"></a>Company information configured successfully
+<a href="#__codelineno-24-9" id="__codelineno-24-9" name="__codelineno-24-9"></a>Development environment setup completed!
+<a href="#__codelineno-24-10" id="__codelineno-24-10" name="__codelineno-24-10"></a>Dolibarr http://localhost:18080
+<a href="#__codelineno-24-11" id="__codelineno-24-11" name="__codelineno-24-11"></a>API Explorer http://localhost:18080/api/index.php/explorer
+</code></pre></div></p>
+<hr/>
+<h3 id="task-configshow-config"><code>task config:show-config</code><a class="headerlink" href="#task-configshow-config" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Display current Dolibarr configuration status</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a>task<span class="w"> </span>config:show-config
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr must be running</p>
+<p><strong>What it shows</strong>:
+- List of enabled modules
+- Company information settings
+- Current configuration values</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a>Current Dolibarr Configuration Status
+<a href="#__codelineno-26-2" id="__codelineno-26-2" name="__codelineno-26-2"></a>
+<a href="#__codelineno-26-3" id="__codelineno-26-3" name="__codelineno-26-3"></a>Enabled Modules
+<a href="#__codelineno-26-4" id="__codelineno-26-4" name="__codelineno-26-4"></a>+--------------------+
+<a href="#__codelineno-26-5" id="__codelineno-26-5" name="__codelineno-26-5"></a>| Module             |
+<a href="#__codelineno-26-6" id="__codelineno-26-6" name="__codelineno-26-6"></a>+--------------------+
+<a href="#__codelineno-26-7" id="__codelineno-26-7" name="__codelineno-26-7"></a>| ACTIONCOMM         |
+<a href="#__codelineno-26-8" id="__codelineno-26-8" name="__codelineno-26-8"></a>| API                |
+<a href="#__codelineno-26-9" id="__codelineno-26-9" name="__codelineno-26-9"></a>| CATEGORIE          |
+<a href="#__codelineno-26-10" id="__codelineno-26-10" name="__codelineno-26-10"></a>| COMMANDE           |
+<a href="#__codelineno-26-11" id="__codelineno-26-11" name="__codelineno-26-11"></a>| FACTURE            |
+<a href="#__codelineno-26-12" id="__codelineno-26-12" name="__codelineno-26-12"></a>| PRODUCT            |
+<a href="#__codelineno-26-13" id="__codelineno-26-13" name="__codelineno-26-13"></a>| PROPAL             |
+<a href="#__codelineno-26-14" id="__codelineno-26-14" name="__codelineno-26-14"></a>| PROJET             |
+<a href="#__codelineno-26-15" id="__codelineno-26-15" name="__codelineno-26-15"></a>| SOCIETE            |
+<a href="#__codelineno-26-16" id="__codelineno-26-16" name="__codelineno-26-16"></a>| STOCK              |
+<a href="#__codelineno-26-17" id="__codelineno-26-17" name="__codelineno-26-17"></a>+--------------------+
+<a href="#__codelineno-26-18" id="__codelineno-26-18" name="__codelineno-26-18"></a>
+<a href="#__codelineno-26-19" id="__codelineno-26-19" name="__codelineno-26-19"></a>Company Information
+<a href="#__codelineno-26-20" id="__codelineno-26-20" name="__codelineno-26-20"></a>+-------------------------+------------------------+
+<a href="#__codelineno-26-21" id="__codelineno-26-21" name="__codelineno-26-21"></a>| Setting                 | Value                  |
+<a href="#__codelineno-26-22" id="__codelineno-26-22" name="__codelineno-26-22"></a>+-------------------------+------------------------+
+<a href="#__codelineno-26-23" id="__codelineno-26-23" name="__codelineno-26-23"></a>| MAIN_INFO_SOCIETE_MAIL  | contact@demo-company.com |
+<a href="#__codelineno-26-24" id="__codelineno-26-24" name="__codelineno-26-24"></a>| MAIN_INFO_SOCIETE_NOM   | Demo Company Inc.      |
+<a href="#__codelineno-26-25" id="__codelineno-26-25" name="__codelineno-26-25"></a>| MAIN_MONNAIE           | EUR                    |
+<a href="#__codelineno-26-26" id="__codelineno-26-26" name="__codelineno-26-26"></a>+-------------------------+------------------------+
+</code></pre></div></p>
+<hr/>
+<h2 id="backup-commands">Backup Commands<a class="headerlink" href="#backup-commands" title="Permanent link">¶</a></h2>
+<h3 id="task-backupbackup"><code>task backup:backup</code><a class="headerlink" href="#task-backupbackup" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Create complete backup (database + application data)</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a>task<span class="w"> </span>backup:backup
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Services must be running</p>
+<p><strong>What it creates</strong>:
+- Database backup (compressed SQL dump)
+- Application data backup (documents, custom modules)
+- Timestamped backup directory</p>
+<p><strong>Dependencies</strong>: 
+- Calls <code>task backup:backup-db</code>
+- Calls <code>task backup:backup-app</code></p>
+<p><strong>Backup location</strong>: <code>./backups/YYYY-MM-DD_HH-MM-SS/</code></p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-28-1" id="__codelineno-28-1" name="__codelineno-28-1"></a>✅ Database backup created
+<a href="#__codelineno-28-2" id="__codelineno-28-2" name="__codelineno-28-2"></a>✅ Application backup created
+<a href="#__codelineno-28-3" id="__codelineno-28-3" name="__codelineno-28-3"></a>✅ Complete backup created in ./backups/2024-01-15_14-30-45
+</code></pre></div></p>
+<hr/>
+<h3 id="task-backupbackup-db"><code>task backup:backup-db</code><a class="headerlink" href="#task-backupbackup-db" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Create database backup only</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-29-1" id="__codelineno-29-1" name="__codelineno-29-1"></a>task<span class="w"> </span>backup:backup-db
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Database container must be running</p>
+<p><strong>What it creates</strong>:
+- Compressed SQL dump of the database
+- Includes routines and triggers
+- Uses single-transaction for consistency</p>
+<p><strong>File format</strong>: <code>database_YYYY-MM-DD_HH-MM-SS.sql.gz</code></p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-30-1" id="__codelineno-30-1" name="__codelineno-30-1"></a>✅ Database backup created
+</code></pre></div></p>
+<hr/>
+<h3 id="task-backupbackup-app"><code>task backup:backup-app</code><a class="headerlink" href="#task-backupbackup-app" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Create application data backup (documents, custom modules)</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-31-1" id="__codelineno-31-1" name="__codelineno-31-1"></a>task<span class="w"> </span>backup:backup-app
+</code></pre></div></p>
+<p><strong>What it backs up</strong>:
+- <code>/var/www/documents</code> (uploaded files, generated documents)
+- <code>/var/www/html</code> (application files)
+- <code>./custom/</code> (custom modules)</p>
+<p><strong>File format</strong>: <code>app_data_YYYY-MM-DD_HH-MM-SS.tar.gz</code></p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-32-1" id="__codelineno-32-1" name="__codelineno-32-1"></a>✅ Application backup created
+</code></pre></div></p>
+<hr/>
+<h3 id="task-backuplist-backups"><code>task backup:list-backups</code><a class="headerlink" href="#task-backuplist-backups" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: List available backups</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-33-1" id="__codelineno-33-1" name="__codelineno-33-1"></a>task<span class="w"> </span>backup:list-backups
+</code></pre></div></p>
+<p><strong>What it shows</strong>:
+- All backup directories with timestamps
+- File sizes and creation dates
+- Handles case when no backups exist</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-34-1" id="__codelineno-34-1" name="__codelineno-34-1"></a>📁 Available backups:
+<a href="#__codelineno-34-2" id="__codelineno-34-2" name="__codelineno-34-2"></a>drwxr-xr-x  4 user  staff   128 Jan 15 14:30 2024-01-15_14-30-45
+<a href="#__codelineno-34-3" id="__codelineno-34-3" name="__codelineno-34-3"></a>drwxr-xr-x  4 user  staff   128 Jan 14 10:15 2024-01-14_10-15-22
+<a href="#__codelineno-34-4" id="__codelineno-34-4" name="__codelineno-34-4"></a>-rw-r--r--  1 user  staff  1.2M Jan 15 14:30 database_2024-01-15_14-30-45.sql.gz
+<a href="#__codelineno-34-5" id="__codelineno-34-5" name="__codelineno-34-5"></a>-rw-r--r--  1 user  staff  5.8M Jan 15 14:30 app_data_2024-01-15_14-30-45.tar.gz
+</code></pre></div></p>
+<hr/>
+<h2 id="maintenance-commands">Maintenance Commands<a class="headerlink" href="#maintenance-commands" title="Permanent link">¶</a></h2>
+<h3 id="task-maintenancereset-data"><code>task maintenance:reset-data</code><a class="headerlink" href="#task-maintenancereset-data" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Reset all data (DANGEROUS - removes all volumes and data)</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-35-1" id="__codelineno-35-1" name="__codelineno-35-1"></a>task<span class="w"> </span>maintenance:reset-data
+</code></pre></div></p>
+<p><strong>⚠️ WARNING</strong>: This command will delete ALL Dolibarr data including database and documents</p>
+<p><strong>What it does</strong>:
+- Prompts for confirmation
+- Stops all services
+- Removes all Docker volumes
+- Prunes Docker volumes
+- Clears application logs</p>
+<p><strong>Use cases</strong>:
+- Start fresh installation
+- Clean development environment
+- Remove all test data</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-36-1" id="__codelineno-36-1" name="__codelineno-36-1"></a>This will delete ALL Dolibarr data including database and documents. Continue? [y/N]
+<a href="#__codelineno-36-2" id="__codelineno-36-2" name="__codelineno-36-2"></a>✅ All data reset. Use 'task services:start' to initialize fresh installation
+</code></pre></div></p>
+<hr/>
+<h3 id="task-maintenancereset-logs"><code>task maintenance:reset-logs</code><a class="headerlink" href="#task-maintenancereset-logs" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Clear application logs</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-37-1" id="__codelineno-37-1" name="__codelineno-37-1"></a>task<span class="w"> </span>maintenance:reset-logs
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Removes all files from <code>logs/</code> directory
+- Recreates the logs directory structure</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-38-1" id="__codelineno-38-1" name="__codelineno-38-1"></a>✅ Application logs cleared
+</code></pre></div></p>
+<hr/>
+<h3 id="task-maintenancereset-custom"><code>task maintenance:reset-custom</code><a class="headerlink" href="#task-maintenancereset-custom" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Clear custom modules (keeps directory structure)</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-39-1" id="__codelineno-39-1" name="__codelineno-39-1"></a>task<span class="w"> </span>maintenance:reset-custom
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Prompts for confirmation
+- Removes all <code>.php</code>, <code>.js</code>, and <code>.css</code> files from <code>custom/</code> directory
+- Removes empty directories
+- Preserves the <code>custom/</code> directory structure</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-40-1" id="__codelineno-40-1" name="__codelineno-40-1"></a>This will delete all custom Dolibarr modules. Continue? [y/N]
+<a href="#__codelineno-40-2" id="__codelineno-40-2" name="__codelineno-40-2"></a>✅ Custom modules cleared
+</code></pre></div></p>
+<hr/>
+<h3 id="task-maintenancecleanup"><code>task maintenance:cleanup</code><a class="headerlink" href="#task-maintenancecleanup" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Clean up Docker resources (images, containers, networks)</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-41-1" id="__codelineno-41-1" name="__codelineno-41-1"></a>task<span class="w"> </span>maintenance:cleanup
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Stops and removes containers
+- Removes locally built images
+- Removes volumes and orphaned containers
+- Prunes Docker system resources</p>
+<p><strong>Use cases</strong>:
+- Free up disk space
+- Clean development environment
+- Remove unused Docker resources</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-42-1" id="__codelineno-42-1" name="__codelineno-42-1"></a>✅ Docker cleanup completed
+</code></pre></div></p>
+<hr/>
+<h3 id="task-maintenanceupdate"><code>task maintenance:update</code><a class="headerlink" href="#task-maintenanceupdate" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Update Dolibarr containers to latest versions</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-43-1" id="__codelineno-43-1" name="__codelineno-43-1"></a>task<span class="w"> </span>maintenance:update
+</code></pre></div></p>
+<p><strong>What it does</strong>:
+- Pulls latest container images
+- Recreates containers with new images
+- Maintains data persistence</p>
+<p><strong>Recommendation</strong>: Create a backup before updating</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-44-1" id="__codelineno-44-1" name="__codelineno-44-1"></a>✅ Containers updated and restarted
+</code></pre></div></p>
+<hr/>
+<h2 id="utility-commands">Utility Commands<a class="headerlink" href="#utility-commands" title="Permanent link">¶</a></h2>
+<h3 id="task-utilitiesshell-app"><code>task utilities:shell-app</code><a class="headerlink" href="#task-utilitiesshell-app" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Open shell in Dolibarr application container</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-45-1" id="__codelineno-45-1" name="__codelineno-45-1"></a>task<span class="w"> </span>utilities:shell-app
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr container must be running</p>
+<p><strong>What it does</strong>:
+- Opens an interactive bash shell inside the Dolibarr container
+- Useful for debugging, file inspection, and manual configuration</p>
+<p><strong>Shell access</strong>:
+- Working directory: <code>/var/www/html</code>
+- User: <code>www-data</code>
+- Available tools: PHP CLI, composer, basic Linux utilities</p>
+<p><strong>Example usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-46-1" id="__codelineno-46-1" name="__codelineno-46-1"></a>task<span class="w"> </span>utilities:shell-app
+<a href="#__codelineno-46-2" id="__codelineno-46-2" name="__codelineno-46-2"></a><span class="c1"># Inside container:</span>
+<a href="#__codelineno-46-3" id="__codelineno-46-3" name="__codelineno-46-3"></a>www-data@container:/var/www/html$<span class="w"> </span>ls<span class="w"> </span>-la
+<a href="#__codelineno-46-4" id="__codelineno-46-4" name="__codelineno-46-4"></a>www-data@container:/var/www/html$<span class="w"> </span>php<span class="w"> </span>-v
+<a href="#__codelineno-46-5" id="__codelineno-46-5" name="__codelineno-46-5"></a>www-data@container:/var/www/html$<span class="w"> </span><span class="nb">exit</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="task-utilitiesshell-db"><code>task utilities:shell-db</code><a class="headerlink" href="#task-utilitiesshell-db" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Open MySQL shell in database container</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-47-1" id="__codelineno-47-1" name="__codelineno-47-1"></a>task<span class="w"> </span>utilities:shell-db
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Database container must be running (internal database only)</p>
+<p><strong>What it does</strong>:
+- Opens MySQL command-line interface
+- Automatically connects to the Dolibarr database
+- Uses root credentials from environment variables</p>
+<p><strong>Example usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-48-1" id="__codelineno-48-1" name="__codelineno-48-1"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-48-2" id="__codelineno-48-2" name="__codelineno-48-2"></a><span class="c1"># Inside MySQL shell:</span>
+<a href="#__codelineno-48-3" id="__codelineno-48-3" name="__codelineno-48-3"></a>MariaDB<span class="w"> </span><span class="o">[</span>dolibarr<span class="o">]</span>&gt;<span class="w"> </span>SHOW<span class="w"> </span>TABLES<span class="p">;</span>
+<a href="#__codelineno-48-4" id="__codelineno-48-4" name="__codelineno-48-4"></a>MariaDB<span class="w"> </span><span class="o">[</span>dolibarr<span class="o">]</span>&gt;<span class="w"> </span>SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span>llx_const<span class="w"> </span>WHERE<span class="w"> </span>name<span class="w"> </span>LIKE<span class="w"> </span><span class="s1">'MAIN_MODULE_%'</span><span class="p">;</span>
+<a href="#__codelineno-48-5" id="__codelineno-48-5" name="__codelineno-48-5"></a>MariaDB<span class="w"> </span><span class="o">[</span>dolibarr<span class="o">]</span>&gt;<span class="w"> </span><span class="nb">exit</span>
+</code></pre></div></p>
+<hr/>
+<h3 id="task-utilitiespermissions"><code>task utilities:permissions</code><a class="headerlink" href="#task-utilitiespermissions" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Fix file permissions for Dolibarr</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-49-1" id="__codelineno-49-1" name="__codelineno-49-1"></a>task<span class="w"> </span>utilities:permissions
+</code></pre></div></p>
+<p><strong>Prerequisites</strong>: Dolibarr container must be running</p>
+<p><strong>What it does</strong>:
+- Sets correct ownership for web files (<code>www-data:www-data</code>)
+- Fixes permissions for <code>/var/www/html</code> directory
+- Fixes permissions for <code>/var/www/documents</code> directory</p>
+<p><strong>When to use</strong>:
+- After manual file modifications
+- When encountering permission errors
+- After restoring from backup</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-50-1" id="__codelineno-50-1" name="__codelineno-50-1"></a>✅ File permissions fixed
+</code></pre></div></p>
+<hr/>
+<h3 id="task-utilitieshealth"><code>task utilities:health</code><a class="headerlink" href="#task-utilitieshealth" title="Permanent link">¶</a></h3>
+<p><strong>Description</strong>: Check health of all services</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-51-1" id="__codelineno-51-1" name="__codelineno-51-1"></a>task<span class="w"> </span>utilities:health
+</code></pre></div></p>
+<p><strong>What it checks</strong>:
+- Docker container status
+- Web interface accessibility
+- phpMyAdmin accessibility (if running)</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-52-1" id="__codelineno-52-1" name="__codelineno-52-1"></a>🔍 Checking service health...
+<a href="#__codelineno-52-2" id="__codelineno-52-2" name="__codelineno-52-2"></a>NAME                  IMAGE                          COMMAND                  SERVICE         STATUS          PORTS
+<a href="#__codelineno-52-3" id="__codelineno-52-3" name="__codelineno-52-3"></a>dolibarr-app         dolibarr/dolibarr:latest       "docker-php-entrypoi…"   dolibarr        running         0.0.0.0:8080-&gt;80/tcp
+<a href="#__codelineno-52-4" id="__codelineno-52-4" name="__codelineno-52-4"></a>dolibarr-db          mariadb:10.11                  "docker-entrypoint.s…"   dolibarr-db     running         0.0.0.0:3306-&gt;3306/tcp
+<a href="#__codelineno-52-5" id="__codelineno-52-5" name="__codelineno-52-5"></a>
+<a href="#__codelineno-52-6" id="__codelineno-52-6" name="__codelineno-52-6"></a>🌐 Testing web access...
+<a href="#__codelineno-52-7" id="__codelineno-52-7" name="__codelineno-52-7"></a>Dolibarr web interface: 200
+<a href="#__codelineno-52-8" id="__codelineno-52-8" name="__codelineno-52-8"></a>phpMyAdmin: 200
+</code></pre></div></p>
+<p><strong>HTTP Status Codes</strong>:
+- <code>200</code>: Service is accessible and working
+- <code>unreachable</code> or <code>not available</code>: Service is not accessible</p>
+<hr/>
+<h2 id="global-command-task">Global Command: <code>task</code><a class="headerlink" href="#global-command-task" title="Permanent link">¶</a></h2>
+<p><strong>Description</strong>: Show all available tasks</p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-53-1" id="__codelineno-53-1" name="__codelineno-53-1"></a>task
+<a href="#__codelineno-53-2" id="__codelineno-53-2" name="__codelineno-53-2"></a><span class="c1"># or</span>
+<a href="#__codelineno-53-3" id="__codelineno-53-3" name="__codelineno-53-3"></a>task<span class="w"> </span>--list
+</code></pre></div></p>
+<p><strong>What it shows</strong>:
+- All available tasks grouped by namespace
+- Brief descriptions for each task</p>
+<p><strong>Example output</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-54-1" id="__codelineno-54-1" name="__codelineno-54-1"></a>task: Available tasks for this project:
+<a href="#__codelineno-54-2" id="__codelineno-54-2" name="__codelineno-54-2"></a>
+<a href="#__codelineno-54-3" id="__codelineno-54-3" name="__codelineno-54-3"></a>* backup:backup:                Create complete backup (database + application data)
+<a href="#__codelineno-54-4" id="__codelineno-54-4" name="__codelineno-54-4"></a>* backup:backup-app:            Create application data backup (documents, custom modules)
+<a href="#__codelineno-54-5" id="__codelineno-54-5" name="__codelineno-54-5"></a>* backup:backup-db:             Create database backup
+<a href="#__codelineno-54-6" id="__codelineno-54-6" name="__codelineno-54-6"></a>* backup:list-backups:          List available backups
+<a href="#__codelineno-54-7" id="__codelineno-54-7" name="__codelineno-54-7"></a>* config:configure-company:     Configure company information and settings
+<a href="#__codelineno-54-8" id="__codelineno-54-8" name="__codelineno-54-8"></a>* config:enable-api:            Enable REST API module and configure API access
+<a href="#__codelineno-54-9" id="__codelineno-54-9" name="__codelineno-54-9"></a>* config:enable-modules:        Enable essential Dolibarr modules for full functionality
+<a href="#__codelineno-54-10" id="__codelineno-54-10" name="__codelineno-54-10"></a>* config:list-modules:          List all available and enabled modules
+<a href="#__codelineno-54-11" id="__codelineno-54-11" name="__codelineno-54-11"></a>* config:setup-dev-environment: Complete development environment setup
+<a href="#__codelineno-54-12" id="__codelineno-54-12" name="__codelineno-54-12"></a>* config:show-config:           Display current Dolibarr configuration status
+<a href="#__codelineno-54-13" id="__codelineno-54-13" name="__codelineno-54-13"></a>* default:                      Show available tasks
+<a href="#__codelineno-54-14" id="__codelineno-54-14" name="__codelineno-54-14"></a>* maintenance:cleanup:          Clean up Docker resources (images, containers, networks)
+<a href="#__codelineno-54-15" id="__codelineno-54-15" name="__codelineno-54-15"></a>* maintenance:reset-custom:     Clear custom modules (keeps directory structure)
+<a href="#__codelineno-54-16" id="__codelineno-54-16" name="__codelineno-54-16"></a>* maintenance:reset-data:       Reset all data (DANGEROUS - removes all volumes and data)
+<a href="#__codelineno-54-17" id="__codelineno-54-17" name="__codelineno-54-17"></a>* maintenance:reset-logs:       Clear application logs
+<a href="#__codelineno-54-18" id="__codelineno-54-18" name="__codelineno-54-18"></a>* maintenance:update:           Update Dolibarr containers to latest versions
+<a href="#__codelineno-54-19" id="__codelineno-54-19" name="__codelineno-54-19"></a>* services:logs:                Show logs from all services
+<a href="#__codelineno-54-20" id="__codelineno-54-20" name="__codelineno-54-20"></a>* services:logs-app:            Show Dolibarr application logs
+<a href="#__codelineno-54-21" id="__codelineno-54-21" name="__codelineno-54-21"></a>* services:logs-db:             Show database logs
+<a href="#__codelineno-54-22" id="__codelineno-54-22" name="__codelineno-54-22"></a>* services:start:               Start Dolibarr with internal database
+<a href="#__codelineno-54-23" id="__codelineno-54-23" name="__codelineno-54-23"></a>* services:start-external:      Start Dolibarr with external database
+<a href="#__codelineno-54-24" id="__codelineno-54-24" name="__codelineno-54-24"></a>* services:start-with-tools:    Start Dolibarr with internal database and phpMyAdmin
+<a href="#__codelineno-54-25" id="__codelineno-54-25" name="__codelineno-54-25"></a>* services:status:              Show status of all services
+<a href="#__codelineno-54-26" id="__codelineno-54-26" name="__codelineno-54-26"></a>* services:stop:                Stop all Dolibarr services
+<a href="#__codelineno-54-27" id="__codelineno-54-27" name="__codelineno-54-27"></a>* setup:init:                   Initialize Dolibarr setup (create directories and set permissions)
+<a href="#__codelineno-54-28" id="__codelineno-54-28" name="__codelineno-54-28"></a>* utilities:health:             Check health of all services
+<a href="#__codelineno-54-29" id="__codelineno-54-29" name="__codelineno-54-29"></a>* utilities:permissions:        Fix file permissions for Dolibarr
+<a href="#__codelineno-54-30" id="__codelineno-54-30" name="__codelineno-54-30"></a>* utilities:shell-app:          Open shell in Dolibarr application container
+<a href="#__codelineno-54-31" id="__codelineno-54-31" name="__codelineno-54-31"></a>* utilities:shell-db:           Open MySQL shell in database container
+</code></pre></div></p>
+<hr/>
+<h2 id="common-workflows">Common Workflows<a class="headerlink" href="#common-workflows" title="Permanent link">¶</a></h2>
+<h3 id="first-time-setup">First Time Setup<a class="headerlink" href="#first-time-setup" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-55-1" id="__codelineno-55-1" name="__codelineno-55-1"></a><span class="c1"># 1. Initialize directories</span>
+<a href="#__codelineno-55-2" id="__codelineno-55-2" name="__codelineno-55-2"></a>task<span class="w"> </span>setup:init
+<a href="#__codelineno-55-3" id="__codelineno-55-3" name="__codelineno-55-3"></a>
+<a href="#__codelineno-55-4" id="__codelineno-55-4" name="__codelineno-55-4"></a><span class="c1"># 2. Start with development tools</span>
+<a href="#__codelineno-55-5" id="__codelineno-55-5" name="__codelineno-55-5"></a>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-55-6" id="__codelineno-55-6" name="__codelineno-55-6"></a>
+<a href="#__codelineno-55-7" id="__codelineno-55-7" name="__codelineno-55-7"></a><span class="c1"># 3. Configure development environment</span>
+<a href="#__codelineno-55-8" id="__codelineno-55-8" name="__codelineno-55-8"></a>task<span class="w"> </span>config:setup-dev-environment
+<a href="#__codelineno-55-9" id="__codelineno-55-9" name="__codelineno-55-9"></a>
+<a href="#__codelineno-55-10" id="__codelineno-55-10" name="__codelineno-55-10"></a><span class="c1"># 4. Check health</span>
+<a href="#__codelineno-55-11" id="__codelineno-55-11" name="__codelineno-55-11"></a>task<span class="w"> </span>utilities:health
+</code></pre></div>
+<h3 id="daily-development">Daily Development<a class="headerlink" href="#daily-development" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-56-1" id="__codelineno-56-1" name="__codelineno-56-1"></a><span class="c1"># Start development environment</span>
+<a href="#__codelineno-56-2" id="__codelineno-56-2" name="__codelineno-56-2"></a>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-56-3" id="__codelineno-56-3" name="__codelineno-56-3"></a>
+<a href="#__codelineno-56-4" id="__codelineno-56-4" name="__codelineno-56-4"></a><span class="c1"># View logs</span>
+<a href="#__codelineno-56-5" id="__codelineno-56-5" name="__codelineno-56-5"></a>task<span class="w"> </span>services:logs-app
+<a href="#__codelineno-56-6" id="__codelineno-56-6" name="__codelineno-56-6"></a>
+<a href="#__codelineno-56-7" id="__codelineno-56-7" name="__codelineno-56-7"></a><span class="c1"># Make changes...</span>
+<a href="#__codelineno-56-8" id="__codelineno-56-8" name="__codelineno-56-8"></a>
+<a href="#__codelineno-56-9" id="__codelineno-56-9" name="__codelineno-56-9"></a><span class="c1"># Check configuration</span>
+<a href="#__codelineno-56-10" id="__codelineno-56-10" name="__codelineno-56-10"></a>task<span class="w"> </span>config:show-config
+<a href="#__codelineno-56-11" id="__codelineno-56-11" name="__codelineno-56-11"></a>
+<a href="#__codelineno-56-12" id="__codelineno-56-12" name="__codelineno-56-12"></a><span class="c1"># Stop when done</span>
+<a href="#__codelineno-56-13" id="__codelineno-56-13" name="__codelineno-56-13"></a>task<span class="w"> </span>services:stop
+</code></pre></div>
+<h3 id="production-deployment">Production Deployment<a class="headerlink" href="#production-deployment" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-57-1" id="__codelineno-57-1" name="__codelineno-57-1"></a><span class="c1"># Start production services (without tools)</span>
+<a href="#__codelineno-57-2" id="__codelineno-57-2" name="__codelineno-57-2"></a>task<span class="w"> </span>services:start
+<a href="#__codelineno-57-3" id="__codelineno-57-3" name="__codelineno-57-3"></a>
+<a href="#__codelineno-57-4" id="__codelineno-57-4" name="__codelineno-57-4"></a><span class="c1"># Configure for business</span>
+<a href="#__codelineno-57-5" id="__codelineno-57-5" name="__codelineno-57-5"></a>task<span class="w"> </span>config:configure-company
+<a href="#__codelineno-57-6" id="__codelineno-57-6" name="__codelineno-57-6"></a>task<span class="w"> </span>config:enable-modules
+<a href="#__codelineno-57-7" id="__codelineno-57-7" name="__codelineno-57-7"></a>
+<a href="#__codelineno-57-8" id="__codelineno-57-8" name="__codelineno-57-8"></a><span class="c1"># Create backup</span>
+<a href="#__codelineno-57-9" id="__codelineno-57-9" name="__codelineno-57-9"></a>task<span class="w"> </span>backup:backup
+<a href="#__codelineno-57-10" id="__codelineno-57-10" name="__codelineno-57-10"></a>
+<a href="#__codelineno-57-11" id="__codelineno-57-11" name="__codelineno-57-11"></a><span class="c1"># Check health</span>
+<a href="#__codelineno-57-12" id="__codelineno-57-12" name="__codelineno-57-12"></a>task<span class="w"> </span>utilities:health
+</code></pre></div>
+<h3 id="maintenance-tasks">Maintenance Tasks<a class="headerlink" href="#maintenance-tasks" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-58-1" id="__codelineno-58-1" name="__codelineno-58-1"></a><span class="c1"># Create backup before maintenance</span>
+<a href="#__codelineno-58-2" id="__codelineno-58-2" name="__codelineno-58-2"></a>task<span class="w"> </span>backup:backup
+<a href="#__codelineno-58-3" id="__codelineno-58-3" name="__codelineno-58-3"></a>
+<a href="#__codelineno-58-4" id="__codelineno-58-4" name="__codelineno-58-4"></a><span class="c1"># Update containers</span>
+<a href="#__codelineno-58-5" id="__codelineno-58-5" name="__codelineno-58-5"></a>task<span class="w"> </span>maintenance:update
+<a href="#__codelineno-58-6" id="__codelineno-58-6" name="__codelineno-58-6"></a>
+<a href="#__codelineno-58-7" id="__codelineno-58-7" name="__codelineno-58-7"></a><span class="c1"># Clean up if needed</span>
+<a href="#__codelineno-58-8" id="__codelineno-58-8" name="__codelineno-58-8"></a>task<span class="w"> </span>maintenance:cleanup
+<a href="#__codelineno-58-9" id="__codelineno-58-9" name="__codelineno-58-9"></a>
+<a href="#__codelineno-58-10" id="__codelineno-58-10" name="__codelineno-58-10"></a><span class="c1"># Verify after maintenance</span>
+<a href="#__codelineno-58-11" id="__codelineno-58-11" name="__codelineno-58-11"></a>task<span class="w"> </span>utilities:health
+</code></pre></div>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:12:54 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

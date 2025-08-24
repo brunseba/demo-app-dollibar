@@ -1,0 +1,1035 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/use-cases/" rel="canonical"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>Dolibarr Docker Use Cases - Dolibarr Docker Documentation</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#dolibarr-docker-use-cases">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Dolibarr Docker Use Cases
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/troubleshooting/">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/taskfile-commands/">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/environment-variables/">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../backup-restore/">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../modules-status/">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#business-use-cases">
+<span class="md-ellipsis">
+      Business Use Cases
+    </span>
+</a>
+<nav aria-label="Business Use Cases" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#small-business-management">
+<span class="md-ellipsis">
+      🏢 Small Business Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manufacturing-inventory-management">
+<span class="md-ellipsis">
+      🏭 Manufacturing &amp; Inventory Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#professional-services-firm">
+<span class="md-ellipsis">
+      💼 Professional Services Firm
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sales-marketing-organization">
+<span class="md-ellipsis">
+      🎯 Sales &amp; Marketing Organization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#non-profit-organization">
+<span class="md-ellipsis">
+      🏘️ Non-Profit Organization
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#technical-use-cases">
+<span class="md-ellipsis">
+      Technical Use Cases
+    </span>
+</a>
+<nav aria-label="Technical Use Cases" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-testing-environment">
+<span class="md-ellipsis">
+      🔧 Development &amp; Testing Environment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-deployment">
+<span class="md-ellipsis">
+      🚀 Production Deployment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-migration-integration">
+<span class="md-ellipsis">
+      📊 Data Migration &amp; Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-environment-setup">
+<span class="md-ellipsis">
+      🔄 Multi-Environment Setup
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-use-cases">
+<span class="md-ellipsis">
+      Integration Use Cases
+    </span>
+</a>
+<nav aria-label="Integration Use Cases" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-first-integration">
+<span class="md-ellipsis">
+      🔗 API-First Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mobile-app-backend">
+<span class="md-ellipsis">
+      📱 Mobile App Backend
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#e-commerce-integration">
+<span class="md-ellipsis">
+      🔄 E-commerce Integration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scaling-scenarios">
+<span class="md-ellipsis">
+      Scaling Scenarios
+    </span>
+</a>
+<nav aria-label="Scaling Scenarios" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#growth-planning">
+<span class="md-ellipsis">
+      📈 Growth Planning
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-location-deployment">
+<span class="md-ellipsis">
+      🌐 Multi-Location Deployment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#best-practices-by-use-case">
+<span class="md-ellipsis">
+      Best Practices by Use Case
+    </span>
+</a>
+<nav aria-label="Best Practices by Use Case" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-considerations">
+<span class="md-ellipsis">
+      🔒 Security Considerations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-optimization">
+<span class="md-ellipsis">
+      ⚡ Performance Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-maintenance">
+<span class="md-ellipsis">
+      📊 Monitoring &amp; Maintenance
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started-by-use-case">
+<span class="md-ellipsis">
+      Getting Started by Use Case
+    </span>
+</a>
+<nav aria-label="Getting Started by Use Case" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-setup-matrix">
+<span class="md-ellipsis">
+      Quick Setup Matrix
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup-commands-by-use-case">
+<span class="md-ellipsis">
+      Setup Commands by Use Case
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#conclusion">
+<span class="md-ellipsis">
+      Conclusion
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="dolibarr-docker-use-cases">Dolibarr Docker Use Cases<a class="headerlink" href="#dolibarr-docker-use-cases" title="Permanent link">¶</a></h1>
+<p>This document outlines practical use cases for the Dolibarr Docker deployment, demonstrating how different organizations and scenarios can benefit from this setup.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>The Dolibarr Docker setup is designed to be flexible and scalable, supporting various business needs from small startups to larger organizations. With 13 enabled modules and comprehensive task automation, it provides a complete ERP/CRM solution.</p>
+<h2 id="business-use-cases">Business Use Cases<a class="headerlink" href="#business-use-cases" title="Permanent link">¶</a></h2>
+<h3 id="small-business-management">🏢 Small Business Management<a class="headerlink" href="#small-business-management" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: A small consulting company with 5-15 employees needs integrated customer management, project tracking, and invoicing.</p>
+<p><strong>Enabled Modules Used</strong>:
+- <strong>SOCIETE</strong> - Customer and supplier management
+- <strong>PROJET</strong> - Project tracking and time management
+- <strong>FACTURE</strong> - Invoice generation and billing
+- <strong>ACTIONCOMM</strong> - Calendar and meeting management
+- <strong>PRODUCT</strong> - Service catalog management</p>
+<p><strong>Workflow</strong>:
+<pre class="mermaid"><code>flowchart LR
+    PROSPECT[👤 New Prospect] --&gt; CONTACT[📞 Initial Contact]
+    CONTACT --&gt; PROPOSAL[📄 Create Proposal]
+    PROPOSAL --&gt; PROJECT[📋 Start Project]
+    PROJECT --&gt; TIMETRACK[⏱️ Track Time]
+    TIMETRACK --&gt; INVOICE[💰 Generate Invoice]
+    INVOICE --&gt; PAYMENT[💳 Payment]</code></pre></p>
+<p><strong>Setup Commands</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Quick setup for small business</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>task<span class="w"> </span>config:setup-dev-environment
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Enable additional modules if needed</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>task<span class="w"> </span>config:enable-modules
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="c1"># Check configuration</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>task<span class="w"> </span>config:show-config
+</code></pre></div></p>
+<h3 id="manufacturing-inventory-management">🏭 Manufacturing &amp; Inventory Management<a class="headerlink" href="#manufacturing-inventory-management" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: A small manufacturing company needs to track inventory, manage suppliers, and handle product orders.</p>
+<p><strong>Enabled Modules Used</strong>:
+- <strong>PRODUCT</strong> - Product catalog and specifications
+- <strong>STOCK</strong> - Inventory management
+- <strong>COMMANDE</strong> - Order management
+- <strong>FOURNISSEUR</strong> - Supplier relationship management
+- <strong>FACTURE</strong> - Invoice processing</p>
+<p><strong>Key Features</strong>:
+- Real-time stock levels
+- Automated reorder points
+- Supplier comparison
+- Product cost tracking
+- Order fulfillment workflow</p>
+<h3 id="professional-services-firm">💼 Professional Services Firm<a class="headerlink" href="#professional-services-firm" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: A law firm, accounting firm, or consultancy needing client management, project billing, and document tracking.</p>
+<p><strong>Enabled Modules Used</strong>:
+- <strong>SOCIETE</strong> - Client management
+- <strong>PROJET</strong> - Case/project management
+- <strong>ACTIONCOMM</strong> - Client communication tracking
+- <strong>FACTURE</strong> - Professional billing
+- <strong>CATEGORIE</strong> - Client and service categorization</p>
+<p><strong>Benefits</strong>:
+- Centralized client information
+- Time-based billing
+- Document management
+- Compliance tracking
+- Performance analytics</p>
+<h3 id="sales-marketing-organization">🎯 Sales &amp; Marketing Organization<a class="headerlink" href="#sales-marketing-organization" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: A sales-focused company needing CRM functionality, proposal management, and sales pipeline tracking.</p>
+<p><strong>Enabled Modules Used</strong>:
+- <strong>SOCIETE</strong> - Lead and customer management
+- <strong>PROPAL</strong> - Proposal creation and tracking
+- <strong>COMMANDE</strong> - Order processing
+- <strong>ACTIONCOMM</strong> - Sales activity tracking
+- <strong>CATEGORIE</strong> - Lead categorization</p>
+<p><strong>Sales Pipeline</strong>:
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Lead
+    Lead --&gt; Qualified : Contact &amp; Qualify
+    Qualified --&gt; Proposal : Create Proposal
+    Proposal --&gt; Negotiation : Follow-up
+    Negotiation --&gt; Won : Close Deal
+    Negotiation --&gt; Lost : Reject
+    Won --&gt; Order : Process Order
+    Order --&gt; [*]
+    Lost --&gt; [*]</code></pre></p>
+<h3 id="non-profit-organization">🏘️ Non-Profit Organization<a class="headerlink" href="#non-profit-organization" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: A non-profit organization managing members, donations, events, and volunteer projects.</p>
+<p><strong>Enabled Modules Used</strong>:
+- <strong>ADHERENT</strong> - Member management
+- <strong>ACTIONCOMM</strong> - Event planning and tracking
+- <strong>PROJET</strong> - Volunteer project coordination
+- <strong>FACTURE</strong> - Donation receipts
+- <strong>CATEGORIE</strong> - Member and donor categorization</p>
+<p><strong>Features</strong>:
+- Membership tracking
+- Donation management
+- Volunteer coordination
+- Event planning
+- Grant tracking</p>
+<h2 id="technical-use-cases">Technical Use Cases<a class="headerlink" href="#technical-use-cases" title="Permanent link">¶</a></h2>
+<h3 id="development-testing-environment">🔧 Development &amp; Testing Environment<a class="headerlink" href="#development-testing-environment" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Developers need a local Dolibarr instance for testing integrations, custom modules, or API development.</p>
+<p><strong>Setup</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Start development environment</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># Enable API for testing</span>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>task<span class="w"> </span>config:enable-api
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1"># Load demo data for testing</span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>task<span class="w"> </span>config:load-demo-data
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="c1"># Access API documentation</span>
+<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="c1"># http://localhost:18080/api/index.php/explorer</span>
+</code></pre></div></p>
+<p><strong>Features</strong>:
+- API testing environment
+- Demo data for development
+- phpMyAdmin for database inspection
+- Custom module development support</p>
+<h3 id="production-deployment">🚀 Production Deployment<a class="headerlink" href="#production-deployment" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Deploy Dolibarr for production use with external database and proper security.</p>
+<p><strong>Setup Steps</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># 1. Configure external database</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1"># Edit .env with production settings</span>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="c1"># 2. Start with external database</span>
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>task<span class="w"> </span>services:start-external
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="c1"># 3. Configure for production</span>
+<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a>task<span class="w"> </span>config:configure-company
+<a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a>task<span class="w"> </span>config:enable-modules
+<a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a>
+<a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="c1"># 4. Setup backup schedule</span>
+<a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a>task<span class="w"> </span>backup:backup<span class="w">  </span><span class="c1"># Add to cron</span>
+</code></pre></div></p>
+<p><strong>Production Checklist</strong>:
+- ✅ External database configured
+- ✅ Strong passwords set
+- ✅ Regular backups scheduled
+- ✅ SSL/TLS configured
+- ✅ Monitoring enabled</p>
+<h3 id="data-migration-integration">📊 Data Migration &amp; Integration<a class="headerlink" href="#data-migration-integration" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Migrating from another system or integrating with existing business tools.</p>
+<p><strong>Approach</strong>:
+1. <strong>Data Export</strong>: Export data from existing system
+2. <strong>Database Preparation</strong>: Use database init scripts
+3. <strong>API Integration</strong>: Use REST API for ongoing sync
+4. <strong>Testing</strong>: Validate data integrity</p>
+<p><strong>Tools Available</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># Database access for migration</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="c1"># API access for integration</span>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="c1"># REST API available at /api/index.php</span>
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="c1"># Backup before migration</span>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a>task<span class="w"> </span>backup:backup
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a>
+<a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="c1"># Custom module directory</span>
+<a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="c1"># ./custom/ for integration modules</span>
+</code></pre></div></p>
+<h3 id="multi-environment-setup">🔄 Multi-Environment Setup<a class="headerlink" href="#multi-environment-setup" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Separate development, staging, and production environments.</p>
+<p><strong>Environment Structure</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>dolibarr-dev/     # Development environment
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>├── .env          # Dev-specific settings
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>└── custom/       # Development modules
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>dolibarr-staging/ # Staging environment
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>├── .env          # Staging settings
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>└── backups/      # Staging backups
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>
+<a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a>dolibarr-prod/    # Production environment
+<a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a>├── .env          # Production settings
+<a href="#__codelineno-4-11" id="__codelineno-4-11" name="__codelineno-4-11"></a>├── backups/      # Production backups
+<a href="#__codelineno-4-12" id="__codelineno-4-12" name="__codelineno-4-12"></a>└── custom/       # Production modules
+</code></pre></div></p>
+<p><strong>Management</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Development</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nb">cd</span><span class="w"> </span>dolibarr-dev<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="c1"># Staging</span>
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="nb">cd</span><span class="w"> </span>dolibarr-staging<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>task<span class="w"> </span>services:start
+<a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="c1"># Production</span>
+<a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="nb">cd</span><span class="w"> </span>dolibarr-prod<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>task<span class="w"> </span>services:start-external
+</code></pre></div></p>
+<h2 id="integration-use-cases">Integration Use Cases<a class="headerlink" href="#integration-use-cases" title="Permanent link">¶</a></h2>
+<h3 id="api-first-integration">🔗 API-First Integration<a class="headerlink" href="#api-first-integration" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Using Dolibarr as a backend service with custom frontend applications.</p>
+<p><strong>Enabled Features</strong>:
+- <strong>API Module</strong>: REST API access
+- <strong>Authentication</strong>: API key management
+- <strong>Data Access</strong>: Complete CRUD operations</p>
+<p><strong>Example Integration</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1">// JavaScript example</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">DolibarrAPI</span><span class="p">(</span><span class="s1">'http://localhost:18080/api/index.php'</span><span class="p">);</span>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nx">api</span><span class="p">.</span><span class="nx">setApiKey</span><span class="p">(</span><span class="s1">'your-api-key'</span><span class="p">);</span>
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="c1">// Get customers</span>
+<a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="kd">const</span><span class="w"> </span><span class="nx">customers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/thirdparties'</span><span class="p">);</span>
+<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>
+<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="c1">// Create invoice</span>
+<a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="kd">const</span><span class="w"> </span><span class="nx">invoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/invoices'</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">  </span><span class="nx">socid</span><span class="o">:</span><span class="w"> </span><span class="nx">customerId</span><span class="p">,</span>
+<a href="#__codelineno-6-11" id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">  </span><span class="nx">date</span><span class="o">:</span><span class="w"> </span><span class="s1">'2024-01-01'</span>
+<a href="#__codelineno-6-12" id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="p">});</span>
+</code></pre></div></p>
+<h3 id="mobile-app-backend">📱 Mobile App Backend<a class="headerlink" href="#mobile-app-backend" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Mobile app for field sales or service teams.</p>
+<p><strong>API Endpoints Used</strong>:
+- <code>/thirdparties</code> - Customer data
+- <code>/proposals</code> - Create quotes on-site
+- <code>/orders</code> - Order management
+- <code>/invoices</code> - Invoice generation
+- <code>/agendaevents</code> - Calendar sync</p>
+<h3 id="e-commerce-integration">🔄 E-commerce Integration<a class="headerlink" href="#e-commerce-integration" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Connect online store with Dolibarr for order management.</p>
+<p><strong>Integration Flow</strong>:
+<pre class="mermaid"><code>flowchart LR
+    ECOM[🛒 E-commerce Site] --&gt; ORDER[📦 New Order]
+    ORDER --&gt; API[🔗 Dolibarr API]
+    API --&gt; CUSTOMER[👤 Create/Update Customer]
+    API --&gt; INVOICE[💰 Generate Invoice]
+    API --&gt; STOCK[📊 Update Inventory]
+    STOCK --&gt; FULFILLMENT[📫 Fulfillment]</code></pre></p>
+<h2 id="scaling-scenarios">Scaling Scenarios<a class="headerlink" href="#scaling-scenarios" title="Permanent link">¶</a></h2>
+<h3 id="growth-planning">📈 Growth Planning<a class="headerlink" href="#growth-planning" title="Permanent link">¶</a></h3>
+<p><strong>Small → Medium Business Transition</strong>:</p>
+<p><strong>Phase 1</strong>: Basic Setup (1-10 users)
+- Internal database
+- Core modules
+- Single server</p>
+<p><strong>Phase 2</strong>: Expansion (10-50 users)
+- External database
+- Additional modules
+- Performance optimization</p>
+<p><strong>Phase 3</strong>: Enterprise (50+ users)
+- High availability setup
+- Multiple environments
+- Advanced monitoring</p>
+<h3 id="multi-location-deployment">🌐 Multi-Location Deployment<a class="headerlink" href="#multi-location-deployment" title="Permanent link">¶</a></h3>
+<p><strong>Scenario</strong>: Multiple offices or locations needing centralized management.</p>
+<p><strong>Architecture Options</strong>:
+1. <strong>Centralized</strong>: Single instance, multi-entity
+2. <strong>Distributed</strong>: Multiple instances with data sync
+3. <strong>Hybrid</strong>: Regional instances with central reporting</p>
+<h2 id="best-practices-by-use-case">Best Practices by Use Case<a class="headerlink" href="#best-practices-by-use-case" title="Permanent link">¶</a></h2>
+<h3 id="security-considerations">🔒 Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">¶</a></h3>
+<p><strong>For Production Use</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Change default passwords</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="c1"># Edit .env file with strong passwords</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="c1"># Remove development tools</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="c1"># Don't use --profile internal-db-tools in production</span>
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1"># Regular updates</span>
+<a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a>task<span class="w"> </span>maintenance:update
+<a href="#__codelineno-7-9" id="__codelineno-7-9" name="__codelineno-7-9"></a>
+<a href="#__codelineno-7-10" id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="c1"># Regular backups</span>
+<a href="#__codelineno-7-11" id="__codelineno-7-11" name="__codelineno-7-11"></a>task<span class="w"> </span>backup:backup
+</code></pre></div></p>
+<h3 id="performance-optimization">⚡ Performance Optimization<a class="headerlink" href="#performance-optimization" title="Permanent link">¶</a></h3>
+<p><strong>For High-Volume Use</strong>:
+- Use external database with optimized configuration
+- Regular maintenance tasks
+- Monitor resource usage
+- Implement caching strategies</p>
+<h3 id="monitoring-maintenance">📊 Monitoring &amp; Maintenance<a class="headerlink" href="#monitoring-maintenance" title="Permanent link">¶</a></h3>
+<p><strong>Regular Tasks</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># Health checks</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>task<span class="w"> </span>utilities:health
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="c1"># Log monitoring</span>
+<a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a>task<span class="w"> </span>services:logs-app
+<a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a>
+<a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="c1"># Database optimization</span>
+<a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a>task<span class="w"> </span>utilities:shell-db
+<a href="#__codelineno-8-9" id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="c1"># Run OPTIMIZE TABLE commands</span>
+<a href="#__codelineno-8-10" id="__codelineno-8-10" name="__codelineno-8-10"></a>
+<a href="#__codelineno-8-11" id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="c1"># Backup verification</span>
+<a href="#__codelineno-8-12" id="__codelineno-8-12" name="__codelineno-8-12"></a>task<span class="w"> </span>backup:list-backups
+</code></pre></div></p>
+<h2 id="getting-started-by-use-case">Getting Started by Use Case<a class="headerlink" href="#getting-started-by-use-case" title="Permanent link">¶</a></h2>
+<h3 id="quick-setup-matrix">Quick Setup Matrix<a class="headerlink" href="#quick-setup-matrix" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Profile</th>
+<th>Additional Modules</th>
+<th>API Needed</th>
+<th>Custom Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small Business</td>
+<td><code>internal-db-tools</code></td>
+<td>✅ All enabled</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Manufacturing</td>
+<td><code>internal-db</code></td>
+<td>✅ Stock, Suppliers</td>
+<td>❌</td>
+<td>Maybe</td>
+</tr>
+<tr>
+<td>Development</td>
+<td><code>internal-db-tools</code></td>
+<td>✅ All enabled</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Production</td>
+<td><code>external-db</code></td>
+<td>✅ Business-specific</td>
+<td>✅</td>
+<td>Maybe</td>
+</tr>
+<tr>
+<td>Integration</td>
+<td><code>internal-db</code></td>
+<td>✅ API required</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="setup-commands-by-use-case">Setup Commands by Use Case<a class="headerlink" href="#setup-commands-by-use-case" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># Small Business</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>task<span class="w"> </span>config:setup-dev-environment
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="c1"># Production</span>
+<a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a>task<span class="w"> </span>services:start-external
+<a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a>task<span class="w"> </span>config:configure-company
+<a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a>task<span class="w"> </span>config:enable-modules
+<a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a>
+<a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="c1"># Development</span>
+<a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a>task<span class="w"> </span>services:start-with-tools
+<a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a>task<span class="w"> </span>config:enable-api
+<a href="#__codelineno-9-13" id="__codelineno-9-13" name="__codelineno-9-13"></a>task<span class="w"> </span>config:load-demo-data
+<a href="#__codelineno-9-14" id="__codelineno-9-14" name="__codelineno-9-14"></a>
+<a href="#__codelineno-9-15" id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="c1"># Integration Testing</span>
+<a href="#__codelineno-9-16" id="__codelineno-9-16" name="__codelineno-9-16"></a>task<span class="w"> </span>services:start
+<a href="#__codelineno-9-17" id="__codelineno-9-17" name="__codelineno-9-17"></a>task<span class="w"> </span>config:enable-api
+<a href="#__codelineno-9-18" id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="c1"># Custom setup as needed</span>
+</code></pre></div>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h2>
+<p>The Dolibarr Docker setup provides flexibility for various business scenarios, from simple small business management to complex enterprise integrations. The modular architecture and comprehensive task automation make it suitable for rapid deployment and easy maintenance across different use cases.</p>
+<p>Choose the appropriate setup based on your specific needs, and leverage the extensive module system to customize functionality for your business requirements.</p>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:24:46 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 15:24:46 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

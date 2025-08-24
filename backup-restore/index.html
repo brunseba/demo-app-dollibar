@@ -1,0 +1,1756 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/backup-restore/" rel="canonical"/>
+<link href="../reference/troubleshooting/" rel="prev"/>
+<link href="../architecture/" rel="next"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>Backup &amp; Restore - Dolibarr Docker Documentation</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#backup-and-restore-guide">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Backup &amp; Restore
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../reference/troubleshooting/">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/taskfile-commands/">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/environment-variables/">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+<nav aria-label="Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-components">
+<span class="md-ellipsis">
+      Backup Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-backup-operations">
+<span class="md-ellipsis">
+      Quick Backup Operations
+    </span>
+</a>
+<nav aria-label="Quick Backup Operations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automated-backup-tasks">
+<span class="md-ellipsis">
+      Automated Backup Tasks
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-directory-structure">
+<span class="md-ellipsis">
+      Backup Directory Structure
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-backup">
+<span class="md-ellipsis">
+      Database Backup
+    </span>
+</a>
+<nav aria-label="Database Backup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automated-database-backup">
+<span class="md-ellipsis">
+      Automated Database Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-database-backup">
+<span class="md-ellipsis">
+      Manual Database Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-backup-options">
+<span class="md-ellipsis">
+      Database Backup Options
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-verification">
+<span class="md-ellipsis">
+      Backup Verification
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-data-backup">
+<span class="md-ellipsis">
+      Application Data Backup
+    </span>
+</a>
+<nav aria-label="Application Data Backup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automated-application-backup">
+<span class="md-ellipsis">
+      Automated Application Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-application-backup">
+<span class="md-ellipsis">
+      Manual Application Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#selective-application-backup">
+<span class="md-ellipsis">
+      Selective Application Backup
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-system-backup">
+<span class="md-ellipsis">
+      Complete System Backup
+    </span>
+</a>
+<nav aria-label="Complete System Backup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-backup-procedure">
+<span class="md-ellipsis">
+      Full Backup Procedure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-schedule-automation">
+<span class="md-ellipsis">
+      Backup Schedule Automation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-monitoring">
+<span class="md-ellipsis">
+      Backup Monitoring
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#restore-operations">
+<span class="md-ellipsis">
+      Restore Operations
+    </span>
+</a>
+<nav aria-label="Restore Operations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-restore">
+<span class="md-ellipsis">
+      Database Restore
+    </span>
+</a>
+<nav aria-label="Database Restore" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-database-restore">
+<span class="md-ellipsis">
+      Quick Database Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-database-restore">
+<span class="md-ellipsis">
+      Manual Database Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-restore-to-different-database">
+<span class="md-ellipsis">
+      Database Restore to Different Database
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-data-restore">
+<span class="md-ellipsis">
+      Application Data Restore
+    </span>
+</a>
+<nav aria-label="Application Data Restore" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-application-restore">
+<span class="md-ellipsis">
+      Quick Application Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-application-restore">
+<span class="md-ellipsis">
+      Manual Application Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#selective-application-restore">
+<span class="md-ellipsis">
+      Selective Application Restore
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#disaster-recovery">
+<span class="md-ellipsis">
+      Disaster Recovery
+    </span>
+</a>
+<nav aria-label="Disaster Recovery" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-system-recovery">
+<span class="md-ellipsis">
+      Complete System Recovery
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#point-in-time-recovery">
+<span class="md-ellipsis">
+      Point-in-Time Recovery
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recovery-validation">
+<span class="md-ellipsis">
+      Recovery Validation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-backup-strategies">
+<span class="md-ellipsis">
+      Advanced Backup Strategies
+    </span>
+</a>
+<nav aria-label="Advanced Backup Strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#incremental-backups">
+<span class="md-ellipsis">
+      Incremental Backups
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#remote-backup-storage">
+<span class="md-ellipsis">
+      Remote Backup Storage
+    </span>
+</a>
+<nav aria-label="Remote Backup Storage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aws-s3-integration">
+<span class="md-ellipsis">
+      AWS S3 Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sftpscp-remote-backup">
+<span class="md-ellipsis">
+      SFTP/SCP Remote Backup
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-best-practices">
+<span class="md-ellipsis">
+      Backup Best Practices
+    </span>
+</a>
+<nav aria-label="Backup Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-considerations">
+<span class="md-ellipsis">
+      Security Considerations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-optimization">
+<span class="md-ellipsis">
+      Performance Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#retention-policies">
+<span class="md-ellipsis">
+      Retention Policies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-and-alerting">
+<span class="md-ellipsis">
+      Monitoring and Alerting
+    </span>
+</a>
+<nav aria-label="Monitoring and Alerting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-health-monitoring">
+<span class="md-ellipsis">
+      Backup Health Monitoring
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-monitoring-systems">
+<span class="md-ellipsis">
+      Integration with Monitoring Systems
+    </span>
+</a>
+<nav aria-label="Integration with Monitoring Systems" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prometheus-metrics">
+<span class="md-ellipsis">
+      Prometheus Metrics
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../modules-status/">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+<nav aria-label="Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-components">
+<span class="md-ellipsis">
+      Backup Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-backup-operations">
+<span class="md-ellipsis">
+      Quick Backup Operations
+    </span>
+</a>
+<nav aria-label="Quick Backup Operations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automated-backup-tasks">
+<span class="md-ellipsis">
+      Automated Backup Tasks
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-directory-structure">
+<span class="md-ellipsis">
+      Backup Directory Structure
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-backup">
+<span class="md-ellipsis">
+      Database Backup
+    </span>
+</a>
+<nav aria-label="Database Backup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automated-database-backup">
+<span class="md-ellipsis">
+      Automated Database Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-database-backup">
+<span class="md-ellipsis">
+      Manual Database Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-backup-options">
+<span class="md-ellipsis">
+      Database Backup Options
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-verification">
+<span class="md-ellipsis">
+      Backup Verification
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-data-backup">
+<span class="md-ellipsis">
+      Application Data Backup
+    </span>
+</a>
+<nav aria-label="Application Data Backup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automated-application-backup">
+<span class="md-ellipsis">
+      Automated Application Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-application-backup">
+<span class="md-ellipsis">
+      Manual Application Backup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#selective-application-backup">
+<span class="md-ellipsis">
+      Selective Application Backup
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-system-backup">
+<span class="md-ellipsis">
+      Complete System Backup
+    </span>
+</a>
+<nav aria-label="Complete System Backup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-backup-procedure">
+<span class="md-ellipsis">
+      Full Backup Procedure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-schedule-automation">
+<span class="md-ellipsis">
+      Backup Schedule Automation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-monitoring">
+<span class="md-ellipsis">
+      Backup Monitoring
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#restore-operations">
+<span class="md-ellipsis">
+      Restore Operations
+    </span>
+</a>
+<nav aria-label="Restore Operations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-restore">
+<span class="md-ellipsis">
+      Database Restore
+    </span>
+</a>
+<nav aria-label="Database Restore" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-database-restore">
+<span class="md-ellipsis">
+      Quick Database Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-database-restore">
+<span class="md-ellipsis">
+      Manual Database Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-restore-to-different-database">
+<span class="md-ellipsis">
+      Database Restore to Different Database
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-data-restore">
+<span class="md-ellipsis">
+      Application Data Restore
+    </span>
+</a>
+<nav aria-label="Application Data Restore" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-application-restore">
+<span class="md-ellipsis">
+      Quick Application Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#manual-application-restore">
+<span class="md-ellipsis">
+      Manual Application Restore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#selective-application-restore">
+<span class="md-ellipsis">
+      Selective Application Restore
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#disaster-recovery">
+<span class="md-ellipsis">
+      Disaster Recovery
+    </span>
+</a>
+<nav aria-label="Disaster Recovery" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-system-recovery">
+<span class="md-ellipsis">
+      Complete System Recovery
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#point-in-time-recovery">
+<span class="md-ellipsis">
+      Point-in-Time Recovery
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recovery-validation">
+<span class="md-ellipsis">
+      Recovery Validation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-backup-strategies">
+<span class="md-ellipsis">
+      Advanced Backup Strategies
+    </span>
+</a>
+<nav aria-label="Advanced Backup Strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#incremental-backups">
+<span class="md-ellipsis">
+      Incremental Backups
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#remote-backup-storage">
+<span class="md-ellipsis">
+      Remote Backup Storage
+    </span>
+</a>
+<nav aria-label="Remote Backup Storage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aws-s3-integration">
+<span class="md-ellipsis">
+      AWS S3 Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sftpscp-remote-backup">
+<span class="md-ellipsis">
+      SFTP/SCP Remote Backup
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-best-practices">
+<span class="md-ellipsis">
+      Backup Best Practices
+    </span>
+</a>
+<nav aria-label="Backup Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-considerations">
+<span class="md-ellipsis">
+      Security Considerations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-optimization">
+<span class="md-ellipsis">
+      Performance Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#retention-policies">
+<span class="md-ellipsis">
+      Retention Policies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-and-alerting">
+<span class="md-ellipsis">
+      Monitoring and Alerting
+    </span>
+</a>
+<nav aria-label="Monitoring and Alerting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backup-health-monitoring">
+<span class="md-ellipsis">
+      Backup Health Monitoring
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-monitoring-systems">
+<span class="md-ellipsis">
+      Integration with Monitoring Systems
+    </span>
+</a>
+<nav aria-label="Integration with Monitoring Systems" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prometheus-metrics">
+<span class="md-ellipsis">
+      Prometheus Metrics
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="backup-and-restore-guide">Backup and Restore Guide<a class="headerlink" href="#backup-and-restore-guide" title="Permanent link">¶</a></h1>
+<p>This guide provides comprehensive instructions for backing up and restoring your Dolibarr Docker deployment, including automated procedures, manual operations, and disaster recovery scenarios.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>The Dolibarr Docker setup includes comprehensive backup and restore capabilities through the task automation system, supporting both full system backups and granular component restoration.</p>
+<h3 id="backup-components">Backup Components<a class="headerlink" href="#backup-components" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Backup Components"
+        DB[🗄️ Database Content&lt;br/&gt;Business Data]
+        APP[📁 Application Data&lt;br/&gt;Documents &amp; Files]
+        CONFIG[⚙️ Configuration&lt;br/&gt;Custom Settings]
+        CUSTOM[📦 Custom Modules&lt;br/&gt;Extensions &amp; Code]
+    end
+
+    subgraph "Backup Storage"
+        LOCAL[💾 Local Backup&lt;br/&gt;./backups/]
+        REMOTE[🌍 Remote Storage&lt;br/&gt;S3, NFS, etc.]
+        ARCHIVE[📦 Archive Storage&lt;br/&gt;Long-term retention]
+    end
+
+    subgraph "Backup Types"
+        FULL[🔄 Full Backup&lt;br/&gt;Everything]
+        INCREMENTAL[📈 Incremental&lt;br/&gt;Changes only]
+        DIFFERENTIAL[📊 Differential&lt;br/&gt;Since last full]
+    end
+
+    DB --&gt; LOCAL
+    APP --&gt; LOCAL
+    CONFIG --&gt; LOCAL
+    CUSTOM --&gt; LOCAL
+
+    LOCAL --&gt; REMOTE
+    LOCAL --&gt; ARCHIVE
+
+    style DB fill:#f3e5f5
+    style APP fill:#e1f5fe
+    style CONFIG fill:#fff3e0
+    style CUSTOM fill:#e8f5e8</code></pre>
+<h2 id="quick-backup-operations">Quick Backup Operations<a class="headerlink" href="#quick-backup-operations" title="Permanent link">¶</a></h2>
+<h3 id="automated-backup-tasks">Automated Backup Tasks<a class="headerlink" href="#automated-backup-tasks" title="Permanent link">¶</a></h3>
+<p>The task automation system provides simple commands for common backup operations:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Create complete backup (recommended)</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>task<span class="w"> </span>backup:backup
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Database only backup</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>task<span class="w"> </span>backup:backup-db
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="c1"># Application data only backup</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>task<span class="w"> </span>backup:backup-app
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="c1"># List available backups</span>
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>task<span class="w"> </span>backup:list-backups
+</code></pre></div>
+<h3 id="backup-directory-structure">Backup Directory Structure<a class="headerlink" href="#backup-directory-structure" title="Permanent link">¶</a></h3>
+<p>Backups are organized with timestamps for easy identification:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>backups/
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>├── 2024-08-24_14-30-15/              # Timestamp directory
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>│   ├── database_2024-08-24_14-30-15.sql.gz    # Compressed database dump
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>│   └── app_data_2024-08-24_14-30-15.tar.gz    # Application data archive
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>├── 2024-08-24_12-15-30/
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>│   ├── database_2024-08-24_12-15-30.sql.gz
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>│   └── app_data_2024-08-24_12-15-30.tar.gz
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>└── README.txt                        # Backup documentation
+</code></pre></div>
+<h2 id="database-backup">Database Backup<a class="headerlink" href="#database-backup" title="Permanent link">¶</a></h2>
+<h3 id="automated-database-backup">Automated Database Backup<a class="headerlink" href="#automated-database-backup" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Full database backup with compression</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>task<span class="w"> </span>backup:backup-db
+</code></pre></div>
+<p><strong>What it includes</strong>:
+- All Dolibarr tables and data
+- Database structure (DDL)
+- Stored procedures and triggers
+- User permissions and grants
+- Compressed with gzip for space efficiency</p>
+<h3 id="manual-database-backup">Manual Database Backup<a class="headerlink" href="#manual-database-backup" title="Permanent link">¶</a></h3>
+<p>For advanced users who need custom backup parameters:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># Manual backup with custom options</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>dolibarr-db<span class="w"> </span>mysqldump<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="nv">$DB_ROOT_PASSWORD</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span>--single-transaction<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span>--routines<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span>--triggers<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span>--complete-insert<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">  </span>--hex-blob<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span>dolibarr<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>manual_backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span>.sql.gz
+</code></pre></div>
+<h3 id="database-backup-options">Database Backup Options<a class="headerlink" href="#database-backup-options" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Purpose</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--single-transaction</code></td>
+<td>Consistent backup</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><code>--routines</code></td>
+<td>Include stored procedures</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><code>--triggers</code></td>
+<td>Include triggers</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><code>--complete-insert</code></td>
+<td>Full INSERT statements</td>
+<td>⚠️ Optional</td>
+</tr>
+<tr>
+<td><code>--hex-blob</code></td>
+<td>Binary data safety</td>
+<td>⚠️ Optional</td>
+</tr>
+<tr>
+<td><code>--flush-logs</code></td>
+<td>Rotate binary logs</td>
+<td>❌ No (Docker)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="backup-verification">Backup Verification<a class="headerlink" href="#backup-verification" title="Permanent link">¶</a></h3>
+<p>Always verify backup integrity:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Test backup file integrity</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>gunzip<span class="w"> </span>-t<span class="w"> </span>./backups/*/database_*.sql.gz
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="c1"># Check backup file size (should not be too small)</span>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>ls<span class="w"> </span>-lh<span class="w"> </span>./backups/*/database_*.sql.gz
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="c1"># Test restore to temporary database (advanced)</span>
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span>mysql:8.0<span class="w"> </span>mysql<span class="w"> </span>-h<span class="w"> </span>host<span class="w"> </span>-u<span class="w"> </span>user<span class="w"> </span>-p<span class="w"> </span>&lt;<span class="w"> </span>backup.sql
+</code></pre></div>
+<h2 id="application-data-backup">Application Data Backup<a class="headerlink" href="#application-data-backup" title="Permanent link">¶</a></h2>
+<h3 id="automated-application-backup">Automated Application Backup<a class="headerlink" href="#automated-application-backup" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Backup application data and documents</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>task<span class="w"> </span>backup:backup-app
+</code></pre></div>
+<p><strong>What it includes</strong>:
+- Document storage volume (<code>/var/www/html/documents</code>)
+- Application files volume (<code>/var/www/html</code>)
+- Custom modules directory (<code>./custom/</code>)
+- Configuration files
+- User uploads and generated files</p>
+<h3 id="manual-application-backup">Manual Application Backup<a class="headerlink" href="#manual-application-backup" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># Create manual application backup</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span>-v<span class="w"> </span>dolibarr_dolibarr-documents:/source/documents:ro<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">  </span>-v<span class="w"> </span>dolibarr_dolibarr-html:/source/html:ro<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/custom:/source/custom:ro<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">  </span>alpine:latest<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">  </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'</span>
+<a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="s1">    cd /backup</span>
+<a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="s1">    TIMESTAMP=$(date +%Y%m%d_%H%M%S)</span>
+<a href="#__codelineno-6-11" id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="s1">    tar -czf app_manual_$TIMESTAMP.tar.gz \</span>
+<a href="#__codelineno-6-12" id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="s1">      -C /source documents html custom</span>
+<a href="#__codelineno-6-13" id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="s1">    echo "Manual backup completed: app_manual_$TIMESTAMP.tar.gz"</span>
+<a href="#__codelineno-6-14" id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="s1">  '</span>
+</code></pre></div>
+<h3 id="selective-application-backup">Selective Application Backup<a class="headerlink" href="#selective-application-backup" title="Permanent link">¶</a></h3>
+<p>For backing up specific components:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Documents only</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">  </span>-v<span class="w"> </span>dolibarr_dolibarr-documents:/source:ro<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span>alpine:latest<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">  </span>tar<span class="w"> </span>-czf<span class="w"> </span>/backup/documents_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span>.tar.gz<span class="w"> </span>-C<span class="w"> </span>/source<span class="w"> </span>.
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a>
+<a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="c1"># Custom modules only</span>
+<a href="#__codelineno-7-9" id="__codelineno-7-9" name="__codelineno-7-9"></a>tar<span class="w"> </span>-czf<span class="w"> </span>./backups/custom_modules_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span>.tar.gz<span class="w"> </span>./custom/
+<a href="#__codelineno-7-10" id="__codelineno-7-10" name="__codelineno-7-10"></a>
+<a href="#__codelineno-7-11" id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="c1"># Configuration only</span>
+<a href="#__codelineno-7-12" id="__codelineno-7-12" name="__codelineno-7-12"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>tar<span class="w"> </span>-czf<span class="w"> </span>/tmp/config.tar.gz<span class="w"> </span>/var/www/html/conf/
+<a href="#__codelineno-7-13" id="__codelineno-7-13" name="__codelineno-7-13"></a>docker-compose<span class="w"> </span>cp<span class="w"> </span>dolibarr:/tmp/config.tar.gz<span class="w"> </span>./backups/config_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span>.tar.gz
+</code></pre></div>
+<h2 id="complete-system-backup">Complete System Backup<a class="headerlink" href="#complete-system-backup" title="Permanent link">¶</a></h2>
+<h3 id="full-backup-procedure">Full Backup Procedure<a class="headerlink" href="#full-backup-procedure" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># Complete system backup (recommended daily)</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>task<span class="w"> </span>backup:backup
+</code></pre></div>
+<p>This creates a complete backup including:
+1. Database dump (compressed)
+2. Application data archive
+3. Custom modules
+4. Configuration files
+5. Timestamp-based organization</p>
+<h3 id="backup-schedule-automation">Backup Schedule Automation<a class="headerlink" href="#backup-schedule-automation" title="Permanent link">¶</a></h3>
+<p>Set up automated backups using cron:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># Edit crontab</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>crontab<span class="w"> </span>-e
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="c1"># Add daily backup at 2 AM</span>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/path/to/dolibarr<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>/usr/local/bin/task<span class="w"> </span>backup:backup<span class="w"> </span>&gt;&gt;<span class="w"> </span>/var/log/dolibarr-backup.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a>
+<a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="c1"># Add weekly cleanup (keep last 30 days)</span>
+<a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="m">0</span><span class="w"> </span><span class="m">3</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span><span class="m">0</span><span class="w"> </span>find<span class="w"> </span>/path/to/dolibarr/backups<span class="w"> </span>-name<span class="w"> </span><span class="s2">"20*"</span><span class="w"> </span>-mtime<span class="w"> </span>+30<span class="w"> </span>-exec<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+</code></pre></div>
+<h3 id="backup-monitoring">Backup Monitoring<a class="headerlink" href="#backup-monitoring" title="Permanent link">¶</a></h3>
+<p>Monitor backup success with scripts:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="ch">#!/bin/bash</span>
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="c1"># backup-monitor.sh</span>
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">"/path/to/dolibarr/backups"</span>
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nv">LATEST_BACKUP</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-1t<span class="w"> </span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="k">)</span>
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="nv">BACKUP_AGE</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">/</span><span class="nv">$LATEST_BACKUP</span><span class="s2">"</span><span class="w"> </span>-mtime<span class="w"> </span>+1<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+<a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a>
+<a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$BACKUP_AGE</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"WARNING: Latest backup is older than 24 hours"</span>
+<a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">    </span><span class="c1"># Send alert email</span>
+<a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Backup alert: </span><span class="nv">$LATEST_BACKUP</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>mail<span class="w"> </span>-s<span class="w"> </span><span class="s2">"Dolibarr Backup Alert"</span><span class="w"> </span>admin@example.com
+<a href="#__codelineno-10-11" id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="k">else</span>
+<a href="#__codelineno-10-12" id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Backup is current: </span><span class="nv">$LATEST_BACKUP</span><span class="s2">"</span>
+<a href="#__codelineno-10-13" id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="k">fi</span>
+</code></pre></div>
+<h2 id="restore-operations">Restore Operations<a class="headerlink" href="#restore-operations" title="Permanent link">¶</a></h2>
+<h3 id="database-restore">Database Restore<a class="headerlink" href="#database-restore" title="Permanent link">¶</a></h3>
+<h4 id="quick-database-restore">Quick Database Restore<a class="headerlink" href="#quick-database-restore" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># Restore from specific backup</span>
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>task<span class="w"> </span>backup:restore-db<span class="w"> </span><span class="nv">BACKUP_FILE</span><span class="o">=</span>./backups/2024-08-24_14-30-15/database_2024-08-24_14-30-15.sql.gz
+</code></pre></div>
+<h4 id="manual-database-restore">Manual Database Restore<a class="headerlink" href="#manual-database-restore" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c1"># Stop application during restore</span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>task<span class="w"> </span>services:stop
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="c1"># Start database only</span>
+<a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>dolibarr-db
+<a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a>
+<a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="c1"># Wait for database to be ready</span>
+<a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>dolibarr-db<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"ready for connections"</span>
+<a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a>
+<a href="#__codelineno-12-10" id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="c1"># Restore database</span>
+<a href="#__codelineno-12-11" id="__codelineno-12-11" name="__codelineno-12-11"></a>gunzip<span class="w"> </span>-c<span class="w"> </span>./backups/2024-08-24_14-30-15/database_2024-08-24_14-30-15.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-12-12" id="__codelineno-12-12" name="__codelineno-12-12"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>dolibarr-db<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="nv">$DB_ROOT_PASSWORD</span><span class="w"> </span>dolibarr
+<a href="#__codelineno-12-13" id="__codelineno-12-13" name="__codelineno-12-13"></a>
+<a href="#__codelineno-12-14" id="__codelineno-12-14" name="__codelineno-12-14"></a><span class="c1"># Restart all services</span>
+<a href="#__codelineno-12-15" id="__codelineno-12-15" name="__codelineno-12-15"></a>task<span class="w"> </span>services:start
+</code></pre></div>
+<h4 id="database-restore-to-different-database">Database Restore to Different Database<a class="headerlink" href="#database-restore-to-different-database" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1"># Create new database for restore testing</span>
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr-db<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="nv">$DB_ROOT_PASSWORD</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"CREATE DATABASE dolibarr_restore;"</span>
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="c1"># Restore to test database</span>
+<a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a>gunzip<span class="w"> </span>-c<span class="w"> </span>backup.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-13-6" id="__codelineno-13-6" name="__codelineno-13-6"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>dolibarr-db<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="nv">$DB_ROOT_PASSWORD</span><span class="w"> </span>dolibarr_restore
+<a href="#__codelineno-13-7" id="__codelineno-13-7" name="__codelineno-13-7"></a>
+<a href="#__codelineno-13-8" id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="c1"># Compare or switch databases as needed</span>
+</code></pre></div>
+<h3 id="application-data-restore">Application Data Restore<a class="headerlink" href="#application-data-restore" title="Permanent link">¶</a></h3>
+<h4 id="quick-application-restore">Quick Application Restore<a class="headerlink" href="#quick-application-restore" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="c1"># Restore application data (will stop services temporarily)</span>
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>task<span class="w"> </span>backup:restore-app<span class="w"> </span><span class="nv">BACKUP_FILE</span><span class="o">=</span>./backups/2024-08-24_14-30-15/app_data_2024-08-24_14-30-15.tar.gz
+</code></pre></div>
+<h4 id="manual-application-restore">Manual Application Restore<a class="headerlink" href="#manual-application-restore" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># Stop services</span>
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a>task<span class="w"> </span>services:stop
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="c1"># Restore application data</span>
+<a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">  </span>-v<span class="w"> </span>dolibarr_dolibarr-documents:/target/documents<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">  </span>-v<span class="w"> </span>dolibarr_dolibarr-html:/target/html<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-15-8" id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/custom:/target/custom<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-15-9" id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups/2024-08-24_14-30-15:/backup:ro<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-15-10" id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="w">  </span>alpine:latest<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-15-11" id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="w">  </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'</span>
+<a href="#__codelineno-15-12" id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="s1">    cd /target</span>
+<a href="#__codelineno-15-13" id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="s1">    tar -xzf /backup/app_data_2024-08-24_14-30-15.tar.gz</span>
+<a href="#__codelineno-15-14" id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="s1">    echo "Application data restored"</span>
+<a href="#__codelineno-15-15" id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="s1">  '</span>
+<a href="#__codelineno-15-16" id="__codelineno-15-16" name="__codelineno-15-16"></a>
+<a href="#__codelineno-15-17" id="__codelineno-15-17" name="__codelineno-15-17"></a><span class="c1"># Fix permissions</span>
+<a href="#__codelineno-15-18" id="__codelineno-15-18" name="__codelineno-15-18"></a>task<span class="w"> </span>utilities:permissions
+<a href="#__codelineno-15-19" id="__codelineno-15-19" name="__codelineno-15-19"></a>
+<a href="#__codelineno-15-20" id="__codelineno-15-20" name="__codelineno-15-20"></a><span class="c1"># Restart services</span>
+<a href="#__codelineno-15-21" id="__codelineno-15-21" name="__codelineno-15-21"></a>task<span class="w"> </span>services:start
+</code></pre></div>
+<h4 id="selective-application-restore">Selective Application Restore<a class="headerlink" href="#selective-application-restore" title="Permanent link">¶</a></h4>
+<p>Restore specific components only:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="c1"># Documents only</span>
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-3" id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">  </span>-v<span class="w"> </span>dolibarr_dolibarr-documents:/target<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-4" id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup:ro<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-5" id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="w">  </span>alpine:latest<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-6" id="__codelineno-16-6" name="__codelineno-16-6"></a><span class="w">  </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'cd /target &amp;&amp; tar -xzf /backup/documents_backup.tar.gz'</span>
+<a href="#__codelineno-16-7" id="__codelineno-16-7" name="__codelineno-16-7"></a>
+<a href="#__codelineno-16-8" id="__codelineno-16-8" name="__codelineno-16-8"></a><span class="c1"># Custom modules only</span>
+<a href="#__codelineno-16-9" id="__codelineno-16-9" name="__codelineno-16-9"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>./backups/custom_modules_backup.tar.gz
+<a href="#__codelineno-16-10" id="__codelineno-16-10" name="__codelineno-16-10"></a>
+<a href="#__codelineno-16-11" id="__codelineno-16-11" name="__codelineno-16-11"></a><span class="c1"># Configuration files only</span>
+<a href="#__codelineno-16-12" id="__codelineno-16-12" name="__codelineno-16-12"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-13" id="__codelineno-16-13" name="__codelineno-16-13"></a><span class="w">  </span>-v<span class="w"> </span>dolibarr_dolibarr-html:/target<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-14" id="__codelineno-16-14" name="__codelineno-16-14"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup:ro<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-15" id="__codelineno-16-15" name="__codelineno-16-15"></a><span class="w">  </span>alpine:latest<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-16-16" id="__codelineno-16-16" name="__codelineno-16-16"></a><span class="w">  </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'cd /target &amp;&amp; tar -xzf /backup/config_backup.tar.gz'</span>
+</code></pre></div>
+<h2 id="disaster-recovery">Disaster Recovery<a class="headerlink" href="#disaster-recovery" title="Permanent link">¶</a></h2>
+<h3 id="complete-system-recovery">Complete System Recovery<a class="headerlink" href="#complete-system-recovery" title="Permanent link">¶</a></h3>
+<p>In case of complete system failure:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="c1"># 1. Prepare clean environment</span>
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a<span class="w"> </span>-f<span class="w"> </span>--volumes
+<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a>task<span class="w"> </span>setup:init
+<a href="#__codelineno-17-4" id="__codelineno-17-4" name="__codelineno-17-4"></a>
+<a href="#__codelineno-17-5" id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="c1"># 2. Start services to create volumes</span>
+<a href="#__codelineno-17-6" id="__codelineno-17-6" name="__codelineno-17-6"></a>task<span class="w"> </span>services:start
+<a href="#__codelineno-17-7" id="__codelineno-17-7" name="__codelineno-17-7"></a>task<span class="w"> </span>services:stop
+<a href="#__codelineno-17-8" id="__codelineno-17-8" name="__codelineno-17-8"></a>
+<a href="#__codelineno-17-9" id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="c1"># 3. Restore database</span>
+<a href="#__codelineno-17-10" id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="nv">LATEST_BACKUP</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-1t<span class="w"> </span>./backups<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="k">)</span>
+<a href="#__codelineno-17-11" id="__codelineno-17-11" name="__codelineno-17-11"></a>task<span class="w"> </span>backup:restore-db<span class="w"> </span><span class="nv">BACKUP_FILE</span><span class="o">=</span>./backups/<span class="nv">$LATEST_BACKUP</span>/database_*.sql.gz
+<a href="#__codelineno-17-12" id="__codelineno-17-12" name="__codelineno-17-12"></a>
+<a href="#__codelineno-17-13" id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="c1"># 4. Restore application data</span>
+<a href="#__codelineno-17-14" id="__codelineno-17-14" name="__codelineno-17-14"></a>task<span class="w"> </span>backup:restore-app<span class="w"> </span><span class="nv">BACKUP_FILE</span><span class="o">=</span>./backups/<span class="nv">$LATEST_BACKUP</span>/app_data_*.tar.gz
+<a href="#__codelineno-17-15" id="__codelineno-17-15" name="__codelineno-17-15"></a>
+<a href="#__codelineno-17-16" id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="c1"># 5. Start services</span>
+<a href="#__codelineno-17-17" id="__codelineno-17-17" name="__codelineno-17-17"></a>task<span class="w"> </span>services:start
+<a href="#__codelineno-17-18" id="__codelineno-17-18" name="__codelineno-17-18"></a>
+<a href="#__codelineno-17-19" id="__codelineno-17-19" name="__codelineno-17-19"></a><span class="c1"># 6. Verify restoration</span>
+<a href="#__codelineno-17-20" id="__codelineno-17-20" name="__codelineno-17-20"></a>task<span class="w"> </span>utilities:health
+</code></pre></div>
+<h3 id="point-in-time-recovery">Point-in-Time Recovery<a class="headerlink" href="#point-in-time-recovery" title="Permanent link">¶</a></h3>
+<p>For more granular recovery options:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="c1"># List available backups</span>
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a>task<span class="w"> </span>backup:list-backups
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a>
+<a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="c1"># Choose specific backup point</span>
+<a href="#__codelineno-18-5" id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="nv">RESTORE_DATE</span><span class="o">=</span><span class="s2">"2024-08-24_12-15-30"</span>
+<a href="#__codelineno-18-6" id="__codelineno-18-6" name="__codelineno-18-6"></a>
+<a href="#__codelineno-18-7" id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="c1"># Restore to specific point in time</span>
+<a href="#__codelineno-18-8" id="__codelineno-18-8" name="__codelineno-18-8"></a>task<span class="w"> </span>backup:restore-db<span class="w"> </span><span class="nv">BACKUP_FILE</span><span class="o">=</span>./backups/<span class="nv">$RESTORE_DATE</span>/database_<span class="nv">$RESTORE_DATE</span>.sql.gz
+<a href="#__codelineno-18-9" id="__codelineno-18-9" name="__codelineno-18-9"></a>task<span class="w"> </span>backup:restore-app<span class="w"> </span><span class="nv">BACKUP_FILE</span><span class="o">=</span>./backups/<span class="nv">$RESTORE_DATE</span>/app_data_<span class="nv">$RESTORE_DATE</span>.tar.gz
+</code></pre></div>
+<h3 id="recovery-validation">Recovery Validation<a class="headerlink" href="#recovery-validation" title="Permanent link">¶</a></h3>
+<p>After restore operations, always validate the recovery:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="c1"># Check system health</span>
+<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>task<span class="w"> </span>utilities:health
+<a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a>
+<a href="#__codelineno-19-4" id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="c1"># Verify database integrity</span>
+<a href="#__codelineno-19-5" id="__codelineno-19-5" name="__codelineno-19-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr-db<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="nv">$DB_ROOT_PASSWORD</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"CHECK TABLE dolibarr.llx_user, dolibarr.llx_societe;"</span>
+<a href="#__codelineno-19-6" id="__codelineno-19-6" name="__codelineno-19-6"></a>
+<a href="#__codelineno-19-7" id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="c1"># Test web access</span>
+<a href="#__codelineno-19-8" id="__codelineno-19-8" name="__codelineno-19-8"></a>curl<span class="w"> </span>-I<span class="w"> </span>http://localhost:8080
+<a href="#__codelineno-19-9" id="__codelineno-19-9" name="__codelineno-19-9"></a>
+<a href="#__codelineno-19-10" id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="c1"># Check application logs</span>
+<a href="#__codelineno-19-11" id="__codelineno-19-11" name="__codelineno-19-11"></a>task<span class="w"> </span>services:logs-app<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-20
+<a href="#__codelineno-19-12" id="__codelineno-19-12" name="__codelineno-19-12"></a>
+<a href="#__codelineno-19-13" id="__codelineno-19-13" name="__codelineno-19-13"></a><span class="c1"># Verify file permissions</span>
+<a href="#__codelineno-19-14" id="__codelineno-19-14" name="__codelineno-19-14"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr<span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span>/var/www/html/conf/
+</code></pre></div>
+<h2 id="advanced-backup-strategies">Advanced Backup Strategies<a class="headerlink" href="#advanced-backup-strategies" title="Permanent link">¶</a></h2>
+<h3 id="incremental-backups">Incremental Backups<a class="headerlink" href="#incremental-backups" title="Permanent link">¶</a></h3>
+<p>For large databases, implement incremental backups:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="ch">#!/bin/bash</span>
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="c1"># incremental-backup.sh</span>
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">"./backups"</span>
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="nv">TIMESTAMP</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span>
+<a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="nv">LAST_BACKUP</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.sql.gz"</span><span class="w"> </span>-mtime<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="k">)</span>
+<a href="#__codelineno-20-6" id="__codelineno-20-6" name="__codelineno-20-6"></a>
+<a href="#__codelineno-20-7" id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$LAST_BACKUP</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a href="#__codelineno-20-8" id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"No recent backup found, performing full backup"</span>
+<a href="#__codelineno-20-9" id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="w">    </span>task<span class="w"> </span>backup:backup
+<a href="#__codelineno-20-10" id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="k">else</span>
+<a href="#__codelineno-20-11" id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Performing incremental backup since </span><span class="nv">$LAST_BACKUP</span><span class="s2">"</span>
+<a href="#__codelineno-20-12" id="__codelineno-20-12" name="__codelineno-20-12"></a><span class="w">    </span><span class="c1"># Implement binary log based incremental backup</span>
+<a href="#__codelineno-20-13" id="__codelineno-20-13" name="__codelineno-20-13"></a><span class="w">    </span>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>dolibarr-db<span class="w"> </span>mysqldump<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-20-14" id="__codelineno-20-14" name="__codelineno-20-14"></a><span class="w">        </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="nv">$DB_ROOT_PASSWORD</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-20-15" id="__codelineno-20-15" name="__codelineno-20-15"></a><span class="w">        </span>--single-transaction<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-20-16" id="__codelineno-20-16" name="__codelineno-20-16"></a><span class="w">        </span>--flush-logs<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-20-17" id="__codelineno-20-17" name="__codelineno-20-17"></a><span class="w">        </span>--master-data<span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-20-18" id="__codelineno-20-18" name="__codelineno-20-18"></a><span class="w">        </span>dolibarr<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">/incremental_</span><span class="nv">$TIMESTAMP</span><span class="s2">.sql.gz"</span>
+<a href="#__codelineno-20-19" id="__codelineno-20-19" name="__codelineno-20-19"></a><span class="k">fi</span>
+</code></pre></div>
+<h3 id="remote-backup-storage">Remote Backup Storage<a class="headerlink" href="#remote-backup-storage" title="Permanent link">¶</a></h3>
+<h4 id="aws-s3-integration">AWS S3 Integration<a class="headerlink" href="#aws-s3-integration" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="ch">#!/bin/bash</span>
+<a href="#__codelineno-21-2" id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="c1"># s3-backup.sh</span>
+<a href="#__codelineno-21-3" id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="nv">LOCAL_BACKUP</span><span class="o">=</span><span class="s2">"./backups/</span><span class="k">$(</span>ls<span class="w"> </span>-1t<span class="w"> </span>./backups<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="k">)</span><span class="s2">"</span>
+<a href="#__codelineno-21-4" id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="nv">S3_BUCKET</span><span class="o">=</span><span class="s2">"your-dolibarr-backups"</span>
+<a href="#__codelineno-21-5" id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="nv">AWS_REGION</span><span class="o">=</span><span class="s2">"us-west-2"</span>
+<a href="#__codelineno-21-6" id="__codelineno-21-6" name="__codelineno-21-6"></a>
+<a href="#__codelineno-21-7" id="__codelineno-21-7" name="__codelineno-21-7"></a><span class="c1"># Upload to S3</span>
+<a href="#__codelineno-21-8" id="__codelineno-21-8" name="__codelineno-21-8"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">"</span><span class="nv">$LOCAL_BACKUP</span><span class="s2">"</span><span class="w"> </span><span class="s2">"s3://</span><span class="nv">$S3_BUCKET</span><span class="s2">/dolibarr-backups/"</span><span class="w"> </span>--recursive
+<a href="#__codelineno-21-9" id="__codelineno-21-9" name="__codelineno-21-9"></a>
+<a href="#__codelineno-21-10" id="__codelineno-21-10" name="__codelineno-21-10"></a><span class="c1"># Set lifecycle policy for automatic cleanup</span>
+<a href="#__codelineno-21-11" id="__codelineno-21-11" name="__codelineno-21-11"></a>aws<span class="w"> </span>s3api<span class="w"> </span>put-bucket-lifecycle-configuration<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-21-12" id="__codelineno-21-12" name="__codelineno-21-12"></a><span class="w">    </span>--bucket<span class="w"> </span><span class="s2">"</span><span class="nv">$S3_BUCKET</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-21-13" id="__codelineno-21-13" name="__codelineno-21-13"></a><span class="w">    </span>--lifecycle-configuration<span class="w"> </span>file://lifecycle.json
+</code></pre></div>
+<h4 id="sftpscp-remote-backup">SFTP/SCP Remote Backup<a class="headerlink" href="#sftpscp-remote-backup" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="ch">#!/bin/bash</span>
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="c1"># remote-backup.sh</span>
+<a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="nv">REMOTE_HOST</span><span class="o">=</span><span class="s2">"backup-server.example.com"</span>
+<a href="#__codelineno-22-4" id="__codelineno-22-4" name="__codelineno-22-4"></a><span class="nv">REMOTE_USER</span><span class="o">=</span><span class="s2">"backup"</span>
+<a href="#__codelineno-22-5" id="__codelineno-22-5" name="__codelineno-22-5"></a><span class="nv">REMOTE_PATH</span><span class="o">=</span><span class="s2">"/backups/dolibarr"</span>
+<a href="#__codelineno-22-6" id="__codelineno-22-6" name="__codelineno-22-6"></a><span class="nv">LOCAL_BACKUP</span><span class="o">=</span><span class="s2">"./backups/</span><span class="k">$(</span>ls<span class="w"> </span>-1t<span class="w"> </span>./backups<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="k">)</span><span class="s2">"</span>
+<a href="#__codelineno-22-7" id="__codelineno-22-7" name="__codelineno-22-7"></a>
+<a href="#__codelineno-22-8" id="__codelineno-22-8" name="__codelineno-22-8"></a><span class="c1"># Copy to remote server</span>
+<a href="#__codelineno-22-9" id="__codelineno-22-9" name="__codelineno-22-9"></a>scp<span class="w"> </span>-r<span class="w"> </span><span class="s2">"</span><span class="nv">$LOCAL_BACKUP</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$REMOTE_USER</span><span class="s2">@</span><span class="nv">$REMOTE_HOST</span><span class="s2">:</span><span class="nv">$REMOTE_PATH</span><span class="s2">/"</span>
+<a href="#__codelineno-22-10" id="__codelineno-22-10" name="__codelineno-22-10"></a>
+<a href="#__codelineno-22-11" id="__codelineno-22-11" name="__codelineno-22-11"></a><span class="c1"># Verify upload</span>
+<a href="#__codelineno-22-12" id="__codelineno-22-12" name="__codelineno-22-12"></a>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$REMOTE_USER</span><span class="s2">@</span><span class="nv">$REMOTE_HOST</span><span class="s2">"</span><span class="w"> </span><span class="s2">"ls -la </span><span class="nv">$REMOTE_PATH</span><span class="s2">/"</span>
+</code></pre></div>
+<h2 id="backup-best-practices">Backup Best Practices<a class="headerlink" href="#backup-best-practices" title="Permanent link">¶</a></h2>
+<h3 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p><strong>Encrypt Backup Files</strong>:
+   <div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="c1"># GPG encryption</span>
+<a href="#__codelineno-23-2" id="__codelineno-23-2" name="__codelineno-23-2"></a>gpg<span class="w"> </span>--cipher-algo<span class="w"> </span>AES256<span class="w"> </span>--compress-algo<span class="w"> </span><span class="m">1</span><span class="w"> </span>--symmetric<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-23-3" id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="w">    </span>--output<span class="w"> </span>backup_encrypted.sql.gz.gpg<span class="w"> </span>backup.sql.gz
+<a href="#__codelineno-23-4" id="__codelineno-23-4" name="__codelineno-23-4"></a>
+<a href="#__codelineno-23-5" id="__codelineno-23-5" name="__codelineno-23-5"></a><span class="c1"># Verify encryption</span>
+<a href="#__codelineno-23-6" id="__codelineno-23-6" name="__codelineno-23-6"></a>gpg<span class="w"> </span>--decrypt<span class="w"> </span>backup_encrypted.sql.gz.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-10
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Secure Storage Permissions</strong>:
+   <div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="c1"># Set restrictive permissions</span>
+<a href="#__codelineno-24-2" id="__codelineno-24-2" name="__codelineno-24-2"></a>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>./backups/
+<a href="#__codelineno-24-3" id="__codelineno-24-3" name="__codelineno-24-3"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>./backups/*/*.gz
+<a href="#__codelineno-24-4" id="__codelineno-24-4" name="__codelineno-24-4"></a>
+<a href="#__codelineno-24-5" id="__codelineno-24-5" name="__codelineno-24-5"></a><span class="c1"># Use dedicated backup user</span>
+<a href="#__codelineno-24-6" id="__codelineno-24-6" name="__codelineno-24-6"></a>chown<span class="w"> </span>-R<span class="w"> </span>backup:backup<span class="w"> </span>./backups/
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Password Protection</strong>:
+   <div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="c1"># Use environment variables for sensitive data</span>
+<a href="#__codelineno-25-2" id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">BACKUP_PASSPHRASE</span><span class="o">=</span><span class="s2">"your-secure-passphrase"</span>
+<a href="#__codelineno-25-3" id="__codelineno-25-3" name="__codelineno-25-3"></a>
+<a href="#__codelineno-25-4" id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="c1"># Encrypt with password</span>
+<a href="#__codelineno-25-5" id="__codelineno-25-5" name="__codelineno-25-5"></a>openssl<span class="w"> </span>enc<span class="w"> </span>-aes-256-cbc<span class="w"> </span>-salt<span class="w"> </span>-in<span class="w"> </span>backup.sql.gz<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-25-6" id="__codelineno-25-6" name="__codelineno-25-6"></a><span class="w">    </span>-out<span class="w"> </span>backup.sql.gz.enc<span class="w"> </span>-pass<span class="w"> </span>env:BACKUP_PASSPHRASE
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="performance-optimization">Performance Optimization<a class="headerlink" href="#performance-optimization" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p><strong>Parallel Compression</strong>:
+   <div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="c1"># Use pigz for faster compression</span>
+<a href="#__codelineno-26-2" id="__codelineno-26-2" name="__codelineno-26-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>dolibarr-db<span class="w"> </span>mysqldump<span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-26-3" id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="w">    </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="nv">$DB_ROOT_PASSWORD</span><span class="w"> </span>dolibarr<span class="w"> </span><span class="p">|</span><span class="w"> </span>pigz<span class="w"> </span>&gt;<span class="w"> </span>backup.sql.gz
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Bandwidth Throttling</strong>:
+   <div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="c1"># Limit network bandwidth during backup transfer</span>
+<a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a>rsync<span class="w"> </span>--bwlimit<span class="o">=</span><span class="m">1000</span><span class="w"> </span>./backups/<span class="w"> </span>backup-server:/path/to/backups/
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Storage Optimization</strong>:
+   <div class="highlight"><pre><span></span><code><a href="#__codelineno-28-1" id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="c1"># Compress older backups further</span>
+<a href="#__codelineno-28-2" id="__codelineno-28-2" name="__codelineno-28-2"></a>find<span class="w"> </span>./backups<span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.tar.gz"</span><span class="w"> </span>-mtime<span class="w"> </span>+7<span class="w"> </span>-exec<span class="w"> </span>xz<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="retention-policies">Retention Policies<a class="headerlink" href="#retention-policies" title="Permanent link">¶</a></h3>
+<p>Implement automated cleanup based on retention requirements:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-29-1" id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="ch">#!/bin/bash</span>
+<a href="#__codelineno-29-2" id="__codelineno-29-2" name="__codelineno-29-2"></a><span class="c1"># backup-retention.sh</span>
+<a href="#__codelineno-29-3" id="__codelineno-29-3" name="__codelineno-29-3"></a>
+<a href="#__codelineno-29-4" id="__codelineno-29-4" name="__codelineno-29-4"></a><span class="c1"># Keep daily backups for 7 days</span>
+<a href="#__codelineno-29-5" id="__codelineno-29-5" name="__codelineno-29-5"></a>find<span class="w"> </span>./backups<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-type<span class="w"> </span>d<span class="w"> </span>-name<span class="w"> </span><span class="s2">"20*"</span><span class="w"> </span>-mtime<span class="w"> </span>+7<span class="w"> </span>-exec<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+<a href="#__codelineno-29-6" id="__codelineno-29-6" name="__codelineno-29-6"></a>
+<a href="#__codelineno-29-7" id="__codelineno-29-7" name="__codelineno-29-7"></a><span class="c1"># Keep weekly backups for 30 days</span>
+<a href="#__codelineno-29-8" id="__codelineno-29-8" name="__codelineno-29-8"></a><span class="c1"># (implement weekly backup identification logic)</span>
+<a href="#__codelineno-29-9" id="__codelineno-29-9" name="__codelineno-29-9"></a>
+<a href="#__codelineno-29-10" id="__codelineno-29-10" name="__codelineno-29-10"></a><span class="c1"># Keep monthly backups for 365 days</span>
+<a href="#__codelineno-29-11" id="__codelineno-29-11" name="__codelineno-29-11"></a><span class="c1"># (implement monthly backup identification logic)</span>
+<a href="#__codelineno-29-12" id="__codelineno-29-12" name="__codelineno-29-12"></a>
+<a href="#__codelineno-29-13" id="__codelineno-29-13" name="__codelineno-29-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Backup retention policy applied"</span>
+</code></pre></div>
+<h2 id="monitoring-and-alerting">Monitoring and Alerting<a class="headerlink" href="#monitoring-and-alerting" title="Permanent link">¶</a></h2>
+<h3 id="backup-health-monitoring">Backup Health Monitoring<a class="headerlink" href="#backup-health-monitoring" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-30-1" id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="ch">#!/bin/bash</span>
+<a href="#__codelineno-30-2" id="__codelineno-30-2" name="__codelineno-30-2"></a><span class="c1"># backup-health-check.sh</span>
+<a href="#__codelineno-30-3" id="__codelineno-30-3" name="__codelineno-30-3"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">"./backups"</span>
+<a href="#__codelineno-30-4" id="__codelineno-30-4" name="__codelineno-30-4"></a><span class="nv">ALERT_EMAIL</span><span class="o">=</span><span class="s2">"admin@example.com"</span>
+<a href="#__codelineno-30-5" id="__codelineno-30-5" name="__codelineno-30-5"></a><span class="nv">ERROR_COUNT</span><span class="o">=</span><span class="m">0</span>
+<a href="#__codelineno-30-6" id="__codelineno-30-6" name="__codelineno-30-6"></a>
+<a href="#__codelineno-30-7" id="__codelineno-30-7" name="__codelineno-30-7"></a><span class="c1"># Check if backup exists from last 24 hours</span>
+<a href="#__codelineno-30-8" id="__codelineno-30-8" name="__codelineno-30-8"></a><span class="nv">RECENT_BACKUP</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">"20*"</span><span class="w"> </span>-mtime<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+<a href="#__codelineno-30-9" id="__codelineno-30-9" name="__codelineno-30-9"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$RECENT_BACKUP</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a href="#__codelineno-30-10" id="__codelineno-30-10" name="__codelineno-30-10"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ERROR: No backup found in last 24 hours"</span>
+<a href="#__codelineno-30-11" id="__codelineno-30-11" name="__codelineno-30-11"></a><span class="w">    </span><span class="nv">ERROR_COUNT</span><span class="o">=</span><span class="k">$((</span><span class="nv">ERROR_COUNT</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="k">))</span>
+<a href="#__codelineno-30-12" id="__codelineno-30-12" name="__codelineno-30-12"></a><span class="k">fi</span>
+<a href="#__codelineno-30-13" id="__codelineno-30-13" name="__codelineno-30-13"></a>
+<a href="#__codelineno-30-14" id="__codelineno-30-14" name="__codelineno-30-14"></a><span class="c1"># Check backup file sizes</span>
+<a href="#__codelineno-30-15" id="__codelineno-30-15" name="__codelineno-30-15"></a><span class="k">for</span><span class="w"> </span>backup<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.sql.gz"</span><span class="w"> </span>-mtime<span class="w"> </span>-1<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a href="#__codelineno-30-16" id="__codelineno-30-16" name="__codelineno-30-16"></a><span class="w">    </span><span class="nv">SIZE</span><span class="o">=</span><span class="k">$(</span>stat<span class="w"> </span>-f%z<span class="w"> </span><span class="s2">"</span><span class="nv">$backup</span><span class="s2">"</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span>stat<span class="w"> </span>-c%s<span class="w"> </span><span class="s2">"</span><span class="nv">$backup</span><span class="s2">"</span><span class="k">)</span>
+<a href="#__codelineno-30-17" id="__codelineno-30-17" name="__codelineno-30-17"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$SIZE</span><span class="w"> </span>-lt<span class="w"> </span><span class="m">1000000</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w">  </span><span class="c1"># Less than 1MB</span>
+<a href="#__codelineno-30-18" id="__codelineno-30-18" name="__codelineno-30-18"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ERROR: Backup file </span><span class="nv">$backup</span><span class="s2"> is too small (</span><span class="nv">$SIZE</span><span class="s2"> bytes)"</span>
+<a href="#__codelineno-30-19" id="__codelineno-30-19" name="__codelineno-30-19"></a><span class="w">        </span><span class="nv">ERROR_COUNT</span><span class="o">=</span><span class="k">$((</span><span class="nv">ERROR_COUNT</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="k">))</span>
+<a href="#__codelineno-30-20" id="__codelineno-30-20" name="__codelineno-30-20"></a><span class="w">    </span><span class="k">fi</span>
+<a href="#__codelineno-30-21" id="__codelineno-30-21" name="__codelineno-30-21"></a><span class="k">done</span>
+<a href="#__codelineno-30-22" id="__codelineno-30-22" name="__codelineno-30-22"></a>
+<a href="#__codelineno-30-23" id="__codelineno-30-23" name="__codelineno-30-23"></a><span class="c1"># Send alert if errors found</span>
+<a href="#__codelineno-30-24" id="__codelineno-30-24" name="__codelineno-30-24"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ERROR_COUNT</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a href="#__codelineno-30-25" id="__codelineno-30-25" name="__codelineno-30-25"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Backup health check failed with </span><span class="nv">$ERROR_COUNT</span><span class="s2"> errors"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<a href="#__codelineno-30-26" id="__codelineno-30-26" name="__codelineno-30-26"></a><span class="w">        </span>mail<span class="w"> </span>-s<span class="w"> </span><span class="s2">"Dolibarr Backup Alert"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ALERT_EMAIL</span><span class="s2">"</span>
+<a href="#__codelineno-30-27" id="__codelineno-30-27" name="__codelineno-30-27"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<a href="#__codelineno-30-28" id="__codelineno-30-28" name="__codelineno-30-28"></a><span class="k">else</span>
+<a href="#__codelineno-30-29" id="__codelineno-30-29" name="__codelineno-30-29"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Backup health check passed"</span>
+<a href="#__codelineno-30-30" id="__codelineno-30-30" name="__codelineno-30-30"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<a href="#__codelineno-30-31" id="__codelineno-30-31" name="__codelineno-30-31"></a><span class="k">fi</span>
+</code></pre></div>
+<h3 id="integration-with-monitoring-systems">Integration with Monitoring Systems<a class="headerlink" href="#integration-with-monitoring-systems" title="Permanent link">¶</a></h3>
+<h4 id="prometheus-metrics">Prometheus Metrics<a class="headerlink" href="#prometheus-metrics" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-31-1" id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="c1"># backup-metrics.sh</span>
+<a href="#__codelineno-31-2" id="__codelineno-31-2" name="__codelineno-31-2"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">"./backups"</span>
+<a href="#__codelineno-31-3" id="__codelineno-31-3" name="__codelineno-31-3"></a><span class="nv">METRICS_FILE</span><span class="o">=</span><span class="s2">"/var/lib/node_exporter/textfile_collector/backup_metrics.prom"</span>
+<a href="#__codelineno-31-4" id="__codelineno-31-4" name="__codelineno-31-4"></a>
+<a href="#__codelineno-31-5" id="__codelineno-31-5" name="__codelineno-31-5"></a><span class="c1"># Calculate metrics</span>
+<a href="#__codelineno-31-6" id="__codelineno-31-6" name="__codelineno-31-6"></a><span class="nv">LAST_BACKUP_TIME</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">"20*"</span><span class="w"> </span>-type<span class="w"> </span>d<span class="w"> </span>-exec<span class="w"> </span>stat<span class="w"> </span>-f<span class="w"> </span>%m<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="k">)</span>
+<a href="#__codelineno-31-7" id="__codelineno-31-7" name="__codelineno-31-7"></a><span class="nv">BACKUP_COUNT</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-1<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+<a href="#__codelineno-31-8" id="__codelineno-31-8" name="__codelineno-31-8"></a><span class="nv">BACKUP_SIZE</span><span class="o">=</span><span class="k">$(</span>du<span class="w"> </span>-s<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f1<span class="k">)</span>
+<a href="#__codelineno-31-9" id="__codelineno-31-9" name="__codelineno-31-9"></a>
+<a href="#__codelineno-31-10" id="__codelineno-31-10" name="__codelineno-31-10"></a><span class="c1"># Write metrics</span>
+<a href="#__codelineno-31-11" id="__codelineno-31-11" name="__codelineno-31-11"></a>cat<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$METRICS_FILE</span><span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<a href="#__codelineno-31-12" id="__codelineno-31-12" name="__codelineno-31-12"></a><span class="s"># HELP dolibarr_last_backup_timestamp Unix timestamp of last backup</span>
+<a href="#__codelineno-31-13" id="__codelineno-31-13" name="__codelineno-31-13"></a><span class="s"># TYPE dolibarr_last_backup_timestamp gauge</span>
+<a href="#__codelineno-31-14" id="__codelineno-31-14" name="__codelineno-31-14"></a><span class="s">dolibarr_last_backup_timestamp $LAST_BACKUP_TIME</span>
+<a href="#__codelineno-31-15" id="__codelineno-31-15" name="__codelineno-31-15"></a>
+<a href="#__codelineno-31-16" id="__codelineno-31-16" name="__codelineno-31-16"></a><span class="s"># HELP dolibarr_backup_count Total number of backups</span>
+<a href="#__codelineno-31-17" id="__codelineno-31-17" name="__codelineno-31-17"></a><span class="s"># TYPE dolibarr_backup_count gauge</span>
+<a href="#__codelineno-31-18" id="__codelineno-31-18" name="__codelineno-31-18"></a><span class="s">dolibarr_backup_count $BACKUP_COUNT</span>
+<a href="#__codelineno-31-19" id="__codelineno-31-19" name="__codelineno-31-19"></a>
+<a href="#__codelineno-31-20" id="__codelineno-31-20" name="__codelineno-31-20"></a><span class="s"># HELP dolibarr_backup_size_bytes Total size of backup directory</span>
+<a href="#__codelineno-31-21" id="__codelineno-31-21" name="__codelineno-31-21"></a><span class="s"># TYPE dolibarr_backup_size_bytes gauge</span>
+<a href="#__codelineno-31-22" id="__codelineno-31-22" name="__codelineno-31-22"></a><span class="s">dolibarr_backup_size_bytes $BACKUP_SIZE</span>
+<a href="#__codelineno-31-23" id="__codelineno-31-23" name="__codelineno-31-23"></a><span class="s">EOF</span>
+</code></pre></div>
+<p>This comprehensive backup and restore guide ensures data protection and provides multiple recovery options for various scenarios.</p>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 14:14:24 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 14:14:24 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

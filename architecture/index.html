@@ -1,0 +1,1712 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis" name="description"/>
+<meta content="Dolibarr Docker Team" name="author"/>
+<link href="https://brunseba.github.io/demo-app-dollibar/architecture/" rel="canonical"/>
+<link href="../backup-restore/" rel="prev"/>
+<link href="../database-model/" rel="next"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.15" name="generator"/>
+<title>System Architecture - Dolibarr Docker Documentation</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#system-architecture">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Dolibarr Docker Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Dolibarr Docker Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              System Architecture
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/cheat-sheet/">
+          
+  
+  
+  Quick Start
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../reference/">
+          
+  
+  
+  Reference Documentation
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../reference/troubleshooting/">
+          
+  
+  
+  Operations &amp; Troubleshooting
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../database-model/">
+          
+  
+  
+  Database Analysis
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Dolibarr Docker Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="Dolibarr Docker Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Dolibarr Docker Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/brunseba/demo-app-dollibar" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    brunseba/demo-app-dollibar
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/cheat-sheet/">
+<span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../docker-setup/">
+<span class="md-ellipsis">
+    Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../task-automation/">
+<span class="md-ellipsis">
+    Task Automation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment-scenarios/">
+<span class="md-ellipsis">
+    Deployment Scenarios
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference Documentation
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference Documentation
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/taskfile-commands/">
+<span class="md-ellipsis">
+    Taskfile Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/environment-variables/">
+<span class="md-ellipsis">
+    Environment Variables
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/docker-services/">
+<span class="md-ellipsis">
+    Docker Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/configuration-reference/">
+<span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/uri/">
+<span class="md-ellipsis">
+    Tools &amp; Resources
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Operations &amp; Troubleshooting
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Operations &amp; Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../reference/troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../backup-restore/">
+<span class="md-ellipsis">
+    Backup &amp; Restore
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#high-level-architecture">
+<span class="md-ellipsis">
+      High-Level Architecture
+    </span>
+</a>
+<nav aria-label="High-Level Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-overview">
+<span class="md-ellipsis">
+      System Overview
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-architecture">
+<span class="md-ellipsis">
+      Container Architecture
+    </span>
+</a>
+<nav aria-label="Container Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-composition">
+<span class="md-ellipsis">
+      Service Composition
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-relationships">
+<span class="md-ellipsis">
+      Container Relationships
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-profiles">
+<span class="md-ellipsis">
+      Deployment Profiles
+    </span>
+</a>
+<nav aria-label="Deployment Profiles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-internal-db">
+<span class="md-ellipsis">
+      Profile: internal-db
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-internal-db-tools">
+<span class="md-ellipsis">
+      Profile: internal-db-tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-external-db">
+<span class="md-ellipsis">
+      Profile: external-db
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-flow-architecture">
+<span class="md-ellipsis">
+      Data Flow Architecture
+    </span>
+</a>
+<nav aria-label="Data Flow Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-data-flow">
+<span class="md-ellipsis">
+      Application Data Flow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-schema-architecture">
+<span class="md-ellipsis">
+      Database Schema Architecture
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-architecture">
+<span class="md-ellipsis">
+      Network Architecture
+    </span>
+</a>
+<nav aria-label="Network Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#internal-networking">
+<span class="md-ellipsis">
+      Internal Networking
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#port-configuration">
+<span class="md-ellipsis">
+      Port Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-boundaries">
+<span class="md-ellipsis">
+      Security Boundaries
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#storage-architecture">
+<span class="md-ellipsis">
+      Storage Architecture
+    </span>
+</a>
+<nav aria-label="Storage Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#volume-management">
+<span class="md-ellipsis">
+      Volume Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-persistence-strategy">
+<span class="md-ellipsis">
+      Data Persistence Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scalability-architecture">
+<span class="md-ellipsis">
+      Scalability Architecture
+    </span>
+</a>
+<nav aria-label="Scalability Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#horizontal-scaling-options">
+<span class="md-ellipsis">
+      Horizontal Scaling Options
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-considerations">
+<span class="md-ellipsis">
+      Performance Considerations
+    </span>
+</a>
+<nav aria-label="Performance Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-performance">
+<span class="md-ellipsis">
+      Database Performance
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-performance">
+<span class="md-ellipsis">
+      Application Performance
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-resources">
+<span class="md-ellipsis">
+      Container Resources
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-architecture">
+<span class="md-ellipsis">
+      Security Architecture
+    </span>
+</a>
+<nav aria-label="Security Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-layers">
+<span class="md-ellipsis">
+      Security Layers
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-best-practices">
+<span class="md-ellipsis">
+      Security Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-architecture">
+<span class="md-ellipsis">
+      Monitoring Architecture
+    </span>
+</a>
+<nav aria-label="Monitoring Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-monitoring">
+<span class="md-ellipsis">
+      System Monitoring
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health-monitoring">
+<span class="md-ellipsis">
+      Health Monitoring
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Database Analysis
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Database Analysis
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../database-model/">
+<span class="md-ellipsis">
+    Database Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../modules-status/">
+<span class="md-ellipsis">
+    Modules Status
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#high-level-architecture">
+<span class="md-ellipsis">
+      High-Level Architecture
+    </span>
+</a>
+<nav aria-label="High-Level Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-overview">
+<span class="md-ellipsis">
+      System Overview
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-architecture">
+<span class="md-ellipsis">
+      Container Architecture
+    </span>
+</a>
+<nav aria-label="Container Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service-composition">
+<span class="md-ellipsis">
+      Service Composition
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-relationships">
+<span class="md-ellipsis">
+      Container Relationships
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-profiles">
+<span class="md-ellipsis">
+      Deployment Profiles
+    </span>
+</a>
+<nav aria-label="Deployment Profiles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-internal-db">
+<span class="md-ellipsis">
+      Profile: internal-db
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-internal-db-tools">
+<span class="md-ellipsis">
+      Profile: internal-db-tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profile-external-db">
+<span class="md-ellipsis">
+      Profile: external-db
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-flow-architecture">
+<span class="md-ellipsis">
+      Data Flow Architecture
+    </span>
+</a>
+<nav aria-label="Data Flow Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-data-flow">
+<span class="md-ellipsis">
+      Application Data Flow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-schema-architecture">
+<span class="md-ellipsis">
+      Database Schema Architecture
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-architecture">
+<span class="md-ellipsis">
+      Network Architecture
+    </span>
+</a>
+<nav aria-label="Network Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#internal-networking">
+<span class="md-ellipsis">
+      Internal Networking
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#port-configuration">
+<span class="md-ellipsis">
+      Port Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-boundaries">
+<span class="md-ellipsis">
+      Security Boundaries
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#storage-architecture">
+<span class="md-ellipsis">
+      Storage Architecture
+    </span>
+</a>
+<nav aria-label="Storage Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#volume-management">
+<span class="md-ellipsis">
+      Volume Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-persistence-strategy">
+<span class="md-ellipsis">
+      Data Persistence Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scalability-architecture">
+<span class="md-ellipsis">
+      Scalability Architecture
+    </span>
+</a>
+<nav aria-label="Scalability Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#horizontal-scaling-options">
+<span class="md-ellipsis">
+      Horizontal Scaling Options
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-considerations">
+<span class="md-ellipsis">
+      Performance Considerations
+    </span>
+</a>
+<nav aria-label="Performance Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-performance">
+<span class="md-ellipsis">
+      Database Performance
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#application-performance">
+<span class="md-ellipsis">
+      Application Performance
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-resources">
+<span class="md-ellipsis">
+      Container Resources
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-architecture">
+<span class="md-ellipsis">
+      Security Architecture
+    </span>
+</a>
+<nav aria-label="Security Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-layers">
+<span class="md-ellipsis">
+      Security Layers
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-best-practices">
+<span class="md-ellipsis">
+      Security Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-architecture">
+<span class="md-ellipsis">
+      Monitoring Architecture
+    </span>
+</a>
+<nav aria-label="Monitoring Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-monitoring">
+<span class="md-ellipsis">
+      System Monitoring
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health-monitoring">
+<span class="md-ellipsis">
+      Health Monitoring
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="system-architecture">System Architecture<a class="headerlink" href="#system-architecture" title="Permanent link">¶</a></h1>
+<p>This document provides a comprehensive overview of the Dolibarr Docker deployment architecture, covering container orchestration, service relationships, data flow, and system design principles.</p>
+<h2 id="high-level-architecture">High-Level Architecture<a class="headerlink" href="#high-level-architecture" title="Permanent link">¶</a></h2>
+<h3 id="system-overview">System Overview<a class="headerlink" href="#system-overview" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "External Network"
+        USER[👤 End Users]
+        ADMIN[👨‍💼 Administrators]
+        API_CLIENT[🔗 API Clients]
+    end
+
+    subgraph "Docker Host Environment"
+        subgraph "Reverse Proxy Layer (Optional)"
+            NGINX[🌐 Nginx/Traefik&lt;br/&gt;SSL Termination]
+        end
+
+        subgraph "Application Layer"
+            DOLIBARR[🏢 Dolibarr ERP/CRM&lt;br/&gt;Port: 8080]
+        end
+
+        subgraph "Database Layer"
+            INTERNAL_DB[🗄️ MariaDB Internal&lt;br/&gt;Port: 3306]
+            EXTERNAL_DB[🌍 External Database&lt;br/&gt;MySQL/MariaDB]
+        end
+
+        subgraph "Management Layer"
+            PHPMYADMIN[🔧 phpMyAdmin&lt;br/&gt;Port: 8081]
+        end
+
+        subgraph "Storage Layer"
+            HTML_VOL[(📁 HTML Volume&lt;br/&gt;Application Files)]
+            DOC_VOL[(📄 Documents Volume&lt;br/&gt;User Data)]
+            DB_VOL[(💾 Database Volume&lt;br/&gt;MariaDB Data)]
+            CUSTOM_DIR[📦 Custom Modules&lt;br/&gt;Host Mount]
+            LOGS_DIR[📋 Logs Directory&lt;br/&gt;Host Mount]
+            BACKUP_DIR[💾 Backup Storage&lt;br/&gt;Host Mount]
+        end
+
+        subgraph "Automation Layer"
+            TASKFILE[⚙️ Task Automation&lt;br/&gt;Management Scripts]
+        end
+    end
+
+    USER --&gt;|HTTPS/HTTP| NGINX
+    ADMIN --&gt;|HTTPS/HTTP| NGINX
+    API_CLIENT --&gt;|REST API| NGINX
+    NGINX --&gt;|HTTP| DOLIBARR
+    ADMIN --&gt;|Direct Access| PHPMYADMIN
+
+    DOLIBARR -.-&gt;|Profile: internal-db| INTERNAL_DB
+    DOLIBARR -.-&gt;|Profile: external-db| EXTERNAL_DB
+    PHPMYADMIN --&gt; INTERNAL_DB
+
+    DOLIBARR --&gt; HTML_VOL
+    DOLIBARR --&gt; DOC_VOL
+    DOLIBARR --&gt; CUSTOM_DIR
+    DOLIBARR --&gt; LOGS_DIR
+    INTERNAL_DB --&gt; DB_VOL
+
+    TASKFILE -.-&gt; DOLIBARR
+    TASKFILE -.-&gt; INTERNAL_DB
+    TASKFILE -.-&gt; PHPMYADMIN
+    TASKFILE -.-&gt; BACKUP_DIR
+
+    style DOLIBARR fill:#e1f5fe
+    style INTERNAL_DB fill:#f3e5f5
+    style EXTERNAL_DB fill:#ffebee
+    style PHPMYADMIN fill:#fff3e0
+    style TASKFILE fill:#e8f5e8</code></pre>
+<h2 id="container-architecture">Container Architecture<a class="headerlink" href="#container-architecture" title="Permanent link">¶</a></h2>
+<h3 id="service-composition">Service Composition<a class="headerlink" href="#service-composition" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Container</th>
+<th>Image</th>
+<th>Purpose</th>
+<th>Profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>dolibarr</strong></td>
+<td>Application Server</td>
+<td><code>dolibarr/dolibarr:latest</code></td>
+<td>Main ERP/CRM application</td>
+<td>All profiles</td>
+</tr>
+<tr>
+<td><strong>dolibarr-db</strong></td>
+<td>Database Server</td>
+<td><code>mariadb:10.11</code></td>
+<td>Internal database</td>
+<td><code>internal-db</code></td>
+</tr>
+<tr>
+<td><strong>phpmyadmin</strong></td>
+<td>Database Admin</td>
+<td><code>phpmyadmin/phpmyadmin:latest</code></td>
+<td>Database management UI</td>
+<td><code>internal-db-tools</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="container-relationships">Container Relationships<a class="headerlink" href="#container-relationships" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph LR
+    subgraph "Docker Network: dolibarr_default"
+        APP[dolibarr&lt;br/&gt;Application]
+        DB[dolibarr-db&lt;br/&gt;Database]
+        PMA[phpmyadmin&lt;br/&gt;Admin]
+
+        APP --&gt;|MySQL Protocol| DB
+        PMA --&gt;|MySQL Protocol| DB
+        APP -.-&gt;|Health Checks| APP
+        DB -.-&gt;|Health Checks| DB
+    end
+
+    subgraph "External Access"
+        WEB[Web Browser&lt;br/&gt;:8080]
+        ADMIN_UI[Admin Panel&lt;br/&gt;:8081]
+        DB_CLIENT[DB Client&lt;br/&gt;:3306]
+    end
+
+    WEB --&gt; APP
+    ADMIN_UI --&gt; PMA
+    DB_CLIENT -.-&gt; DB
+
+    style APP fill:#e1f5fe
+    style DB fill:#f3e5f5
+    style PMA fill:#fff3e0</code></pre>
+<h2 id="deployment-profiles">Deployment Profiles<a class="headerlink" href="#deployment-profiles" title="Permanent link">¶</a></h2>
+<p>The system supports three distinct deployment profiles, each optimized for different use cases:</p>
+<h3 id="profile-internal-db">Profile: internal-db<a class="headerlink" href="#profile-internal-db" title="Permanent link">¶</a></h3>
+<p><strong>Architecture</strong>: Standalone deployment with containerized database</p>
+<pre class="mermaid"><code>graph TB
+    subgraph "Docker Compose Profile: internal-db"
+        APP[🏢 Dolibarr Application]
+        DB[🗄️ MariaDB Database]
+
+        APP --&gt;|MySQL Connection| DB
+
+        subgraph "Volumes"
+            V1[(HTML Volume)]
+            V2[(Documents Volume)]
+            V3[(Database Volume)]
+        end
+
+        APP --&gt; V1
+        APP --&gt; V2
+        DB --&gt; V3
+    end
+
+    USER[👤 User] --&gt;|HTTP :8080| APP
+
+    style APP fill:#e1f5fe
+    style DB fill:#f3e5f5</code></pre>
+<p><strong>Use Cases</strong>:
+- Development environments
+- Testing deployments
+- Small-scale production (single server)
+- Proof of concept installations</p>
+<p><strong>Resource Requirements</strong>:
+- <strong>CPU</strong>: 1-2 cores
+- <strong>Memory</strong>: 2-4 GB RAM
+- <strong>Storage</strong>: 10-20 GB</p>
+<h3 id="profile-internal-db-tools">Profile: internal-db-tools<a class="headerlink" href="#profile-internal-db-tools" title="Permanent link">¶</a></h3>
+<p><strong>Architecture</strong>: Development environment with administration tools</p>
+<pre class="mermaid"><code>graph TB
+    subgraph "Docker Compose Profile: internal-db-tools"
+        APP[🏢 Dolibarr Application]
+        DB[🗄️ MariaDB Database]
+        PMA[🔧 phpMyAdmin]
+
+        APP --&gt;|MySQL Connection| DB
+        PMA --&gt;|MySQL Connection| DB
+
+        subgraph "Volumes"
+            V1[(HTML Volume)]
+            V2[(Documents Volume)]
+            V3[(Database Volume)]
+        end
+
+        APP --&gt; V1
+        APP --&gt; V2
+        DB --&gt; V3
+    end
+
+    USER[👤 User] --&gt;|HTTP :8080| APP
+    ADMIN[👨‍💼 Admin] --&gt;|HTTP :8081| PMA
+
+    style APP fill:#e1f5fe
+    style DB fill:#f3e5f5
+    style PMA fill:#fff3e0</code></pre>
+<p><strong>Use Cases</strong>:
+- Development with database administration
+- Training environments
+- Database troubleshooting
+- Development team collaboration</p>
+<p><strong>Additional Features</strong>:
+- Web-based database management
+- SQL query execution
+- Database schema visualization
+- Import/export functionality</p>
+<h3 id="profile-external-db">Profile: external-db<a class="headerlink" href="#profile-external-db" title="Permanent link">¶</a></h3>
+<p><strong>Architecture</strong>: Production deployment with external database</p>
+<pre class="mermaid"><code>graph TB
+    subgraph "Docker Compose Profile: external-db"
+        APP[🏢 Dolibarr Application]
+
+        subgraph "Volumes"
+            V1[(HTML Volume)]
+            V2[(Documents Volume)]
+        end
+
+        APP --&gt; V1
+        APP --&gt; V2
+    end
+
+    subgraph "External Infrastructure"
+        EXT_DB[(🌍 External Database&lt;br/&gt;MySQL/MariaDB)]
+    end
+
+    APP --&gt;|Network Connection| EXT_DB
+    USER[👤 User] --&gt;|HTTP :8080| APP
+
+    style APP fill:#e1f5fe
+    style EXT_DB fill:#ffebee</code></pre>
+<p><strong>Use Cases</strong>:
+- Production environments
+- High-availability deployments
+- Multi-instance scaling
+- Existing database infrastructure integration</p>
+<p><strong>Requirements</strong>:
+- External MySQL 5.7+ or MariaDB 10.3+
+- Network connectivity from Docker host
+- Proper database user privileges
+- Backup/replication handled externally</p>
+<h2 id="data-flow-architecture">Data Flow Architecture<a class="headerlink" href="#data-flow-architecture" title="Permanent link">¶</a></h2>
+<h3 id="application-data-flow">Application Data Flow<a class="headerlink" href="#application-data-flow" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>flowchart TB
+    subgraph "User Interface Layer"
+        WEB[Web Browser]
+        API[API Clients]
+    end
+
+    subgraph "Application Layer"
+        PHP[PHP Application]
+        MODULES[Dolibarr Modules]
+    end
+
+    subgraph "Data Access Layer"
+        DAL[Data Access Layer]
+        CACHE[Application Cache]
+    end
+
+    subgraph "Storage Layer"
+        DB[(Database)]
+        FILES[(File System)]
+    end
+
+    WEB --&gt;|HTTP/HTTPS| PHP
+    API --&gt;|REST/SOAP| PHP
+    PHP --&gt; MODULES
+    MODULES --&gt; DAL
+    DAL --&gt; CACHE
+    DAL --&gt; DB
+    PHP --&gt; FILES
+
+    style PHP fill:#e1f5fe
+    style DB fill:#f3e5f5
+    style FILES fill:#fff3e0</code></pre>
+<h3 id="database-schema-architecture">Database Schema Architecture<a class="headerlink" href="#database-schema-architecture" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>erDiagram
+    CORE_BUSINESS {
+        societe "Companies"
+        user "Users"
+        product "Products"
+        facture "Invoices"
+        commande "Orders"
+        propal "Proposals"
+    }
+
+    CONFIGURATION {
+        const "System Configuration"
+        menu "Menu Structure"
+        dictionaries "Reference Data"
+    }
+
+    MODULES {
+        adherent "Members"
+        projet "Projects"
+        actioncomm "Activities"
+        stock "Inventory"
+    }
+
+    SYSTEM {
+        extrafields "Custom Fields"
+        categories "Classifications"
+        element_categorie "Category Links"
+    }
+
+    CORE_BUSINESS ||--o{ MODULES : "extends"
+    CONFIGURATION ||--o{ CORE_BUSINESS : "configures"
+    SYSTEM ||--o{ CORE_BUSINESS : "enhances"
+    SYSTEM ||--o{ MODULES : "enhances"</code></pre>
+<h2 id="network-architecture">Network Architecture<a class="headerlink" href="#network-architecture" title="Permanent link">¶</a></h2>
+<h3 id="internal-networking">Internal Networking<a class="headerlink" href="#internal-networking" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph LR
+    subgraph "Docker Network: dolibarr_default"
+        subgraph "Service Discovery"
+            DNS[Docker DNS&lt;br/&gt;127.0.0.11]
+        end
+
+        APP[dolibarr&lt;br/&gt;172.20.0.2]
+        DB[dolibarr-db&lt;br/&gt;172.20.0.3]
+        PMA[phpmyadmin&lt;br/&gt;172.20.0.4]
+
+        APP -.-&gt;|Hostname Resolution| DNS
+        DB -.-&gt;|Hostname Resolution| DNS
+        PMA -.-&gt;|Hostname Resolution| DNS
+    end
+
+    subgraph "Host Network"
+        HOST[Host Interface&lt;br/&gt;Docker Bridge]
+    end
+
+    APP --&gt;|Port Mapping 8080:80| HOST
+    DB --&gt;|Port Mapping 3306:3306| HOST
+    PMA --&gt;|Port Mapping 8081:80| HOST</code></pre>
+<h3 id="port-configuration">Port Configuration<a class="headerlink" href="#port-configuration" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Internal Port</th>
+<th>External Port</th>
+<th>Protocol</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dolibarr</td>
+<td>80</td>
+<td>8080</td>
+<td>HTTP</td>
+<td>Web interface</td>
+</tr>
+<tr>
+<td>MariaDB</td>
+<td>3306</td>
+<td>3306</td>
+<td>MySQL</td>
+<td>Database access</td>
+</tr>
+<tr>
+<td>phpMyAdmin</td>
+<td>80</td>
+<td>8081</td>
+<td>HTTP</td>
+<td>Database admin</td>
+</tr>
+</tbody>
+</table>
+<h3 id="security-boundaries">Security Boundaries<a class="headerlink" href="#security-boundaries" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Security Zones"
+        subgraph "Public Zone"
+            INTERNET[🌍 Internet]
+            USERS[👥 Users]
+        end
+
+        subgraph "DMZ (Optional)"
+            PROXY[🛡️ Reverse Proxy&lt;br/&gt;SSL Termination]
+            FIREWALL[🔥 Firewall Rules]
+        end
+
+        subgraph "Application Zone"
+            APP[🏢 Dolibarr&lt;br/&gt;Application]
+        end
+
+        subgraph "Data Zone"
+            DB[🗄️ Database&lt;br/&gt;Storage]
+            FILES[(📁 File Storage)]
+        end
+    end
+
+    INTERNET --&gt; PROXY
+    USERS --&gt; PROXY
+    PROXY --&gt; FIREWALL
+    FIREWALL --&gt; APP
+    APP --&gt; DB
+    APP --&gt; FILES
+
+    style PROXY fill:#fff3e0
+    style FIREWALL fill:#ffebee
+    style APP fill:#e1f5fe
+    style DB fill:#f3e5f5</code></pre>
+<h2 id="storage-architecture">Storage Architecture<a class="headerlink" href="#storage-architecture" title="Permanent link">¶</a></h2>
+<h3 id="volume-management">Volume Management<a class="headerlink" href="#volume-management" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Docker Volume System"
+        subgraph "Named Volumes"
+            HTML_VOL[dolibarr-html&lt;br/&gt;📁 Application Files]
+            DOC_VOL[dolibarr-documents&lt;br/&gt;📄 User Documents]
+            DB_VOL[dolibarr-db-data&lt;br/&gt;💾 Database Files]
+        end
+
+        subgraph "Host Mounts"
+            CUSTOM[./custom/&lt;br/&gt;📦 Custom Modules]
+            LOGS[./logs/&lt;br/&gt;📋 Application Logs]
+            BACKUPS[./backups/&lt;br/&gt;💾 Backup Storage]
+            INIT[./db-init/&lt;br/&gt;⚙️ Init Scripts]
+        end
+    end
+
+    subgraph "Container Access"
+        APP[Dolibarr Container]
+        DB[Database Container]
+    end
+
+    APP --&gt; HTML_VOL
+    APP --&gt; DOC_VOL
+    APP --&gt; CUSTOM
+    APP --&gt; LOGS
+    DB --&gt; DB_VOL
+    DB --&gt; INIT
+
+    style HTML_VOL fill:#e1f5fe
+    style DOC_VOL fill:#fff3e0
+    style DB_VOL fill:#f3e5f5
+    style CUSTOM fill:#e8f5e8</code></pre>
+<h3 id="data-persistence-strategy">Data Persistence Strategy<a class="headerlink" href="#data-persistence-strategy" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Storage Type</th>
+<th>Purpose</th>
+<th>Backup Priority</th>
+<th>Persistence Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Database</strong></td>
+<td>Core business data</td>
+<td><strong>Critical</strong></td>
+<td>Docker volume + automated backups</td>
+</tr>
+<tr>
+<td><strong>Documents</strong></td>
+<td>User uploads, files</td>
+<td><strong>High</strong></td>
+<td>Docker volume + file-level backups</td>
+</tr>
+<tr>
+<td><strong>Application</strong></td>
+<td>Dolibarr installation</td>
+<td>Medium</td>
+<td>Docker volume (recoverable from image)</td>
+</tr>
+<tr>
+<td><strong>Custom Modules</strong></td>
+<td>Custom code</td>
+<td><strong>High</strong></td>
+<td>Host mount + version control</td>
+</tr>
+<tr>
+<td><strong>Logs</strong></td>
+<td>Application logs</td>
+<td>Low</td>
+<td>Host mount (rotated/cleaned)</td>
+</tr>
+<tr>
+<td><strong>Backups</strong></td>
+<td>Data backups</td>
+<td><strong>Critical</strong></td>
+<td>Host mount + external storage</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scalability-architecture">Scalability Architecture<a class="headerlink" href="#scalability-architecture" title="Permanent link">¶</a></h2>
+<h3 id="horizontal-scaling-options">Horizontal Scaling Options<a class="headerlink" href="#horizontal-scaling-options" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Load Balancer"
+        LB[🔄 Load Balancer&lt;br/&gt;Nginx/HAProxy]
+    end
+
+    subgraph "Application Tier"
+        APP1[Dolibarr Instance 1]
+        APP2[Dolibarr Instance 2]
+        APP3[Dolibarr Instance 3]
+    end
+
+    subgraph "Database Tier"
+        subgraph "Master-Slave Configuration"
+            MASTER[(🗄️ Master Database&lt;br/&gt;Read/Write)]
+            SLAVE1[(🗄️ Slave Database 1&lt;br/&gt;Read Only)]
+            SLAVE2[(🗄️ Slave Database 2&lt;br/&gt;Read Only)]
+        end
+    end
+
+    subgraph "Shared Storage"
+        NFS[📁 NFS/GFS&lt;br/&gt;Shared Documents]
+    end
+
+    LB --&gt; APP1
+    LB --&gt; APP2
+    LB --&gt; APP3
+
+    APP1 --&gt; MASTER
+    APP2 --&gt; MASTER
+    APP3 --&gt; MASTER
+
+    APP1 -.-&gt;|Read Operations| SLAVE1
+    APP2 -.-&gt;|Read Operations| SLAVE2
+    APP3 -.-&gt;|Read Operations| SLAVE1
+
+    MASTER -.-&gt;|Replication| SLAVE1
+    MASTER -.-&gt;|Replication| SLAVE2
+
+    APP1 --&gt; NFS
+    APP2 --&gt; NFS
+    APP3 --&gt; NFS
+
+    style LB fill:#fff3e0
+    style MASTER fill:#f3e5f5
+    style SLAVE1 fill:#e8f5e8
+    style SLAVE2 fill:#e8f5e8</code></pre>
+<h3 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">¶</a></h3>
+<h4 id="database-performance">Database Performance<a class="headerlink" href="#database-performance" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1">-- Recommended MySQL/MariaDB configuration</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="o">#</span><span class="w"> </span><span class="n">Performance</span><span class="w"> </span><span class="n">tuning</span>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">innodb_buffer_pool_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="k">G</span><span class="w">          </span><span class="o">#</span><span class="w"> </span><span class="mi">70</span><span class="o">-</span><span class="mi">80</span><span class="o">%</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="n">RAM</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">innodb_log_file_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="n">M</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="n">innodb_flush_log_at_trx_commit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">innodb_flush_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">O_DIRECT</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="o">#</span><span class="w"> </span><span class="k">Connection</span><span class="w"> </span><span class="n">handling</span>
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="n">max_connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span>
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">thread_cache_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span>
+<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="n">query_cache_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="n">M</span>
+<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="n">query_cache_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a>
+<a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="o">#</span><span class="w"> </span><span class="n">Replication</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="k">using</span><span class="p">)</span>
+<a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="n">server</span><span class="o">-</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="n">log</span><span class="o">-</span><span class="n">bin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mysql</span><span class="o">-</span><span class="n">bin</span>
+<a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="n">binlog_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mixed</span>
+</code></pre></div>
+<h4 id="application-performance">Application Performance<a class="headerlink" href="#application-performance" title="Permanent link">¶</a></h4>
+<ul>
+<li>
+<p><strong>PHP Configuration</strong>:
+  <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="na">memory_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">512M</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="na">max_execution_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">300</span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="na">upload_max_filesize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">100M</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="na">post_max_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">100M</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Caching Strategy</strong>:</p>
+</li>
+<li>Redis/Memcached for session storage</li>
+<li>File-based caching for static content</li>
+<li>Database query caching</li>
+</ul>
+<h4 id="container-resources">Container Resources<a class="headerlink" href="#container-resources" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Resource limits in docker-compose.yml</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">services</span><span class="p">:</span>
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nt">dolibarr</span><span class="p">:</span>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1G</span>
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">'1.0'</span>
+<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
+<a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
+<a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">'0.5'</span>
+<a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">  </span><span class="nt">dolibarr-db</span><span class="p">:</span>
+<a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a href="#__codelineno-2-16" id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<a href="#__codelineno-2-17" id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2G</span>
+<a href="#__codelineno-2-18" id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">'2.0'</span>
+<a href="#__codelineno-2-19" id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
+<a href="#__codelineno-2-20" id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1G</span>
+<a href="#__codelineno-2-21" id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">'1.0'</span>
+</code></pre></div>
+<h2 id="security-architecture">Security Architecture<a class="headerlink" href="#security-architecture" title="Permanent link">¶</a></h2>
+<h3 id="security-layers">Security Layers<a class="headerlink" href="#security-layers" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Security Implementation"
+        subgraph "Network Security"
+            FW[🔥 Firewall Rules]
+            VPN[🔒 VPN Access]
+            SSL[🛡️ SSL/TLS Encryption]
+        end
+
+        subgraph "Application Security"
+            AUTH[👤 Authentication]
+            AUTHZ[🔑 Authorization]
+            CSRF[🛡️ CSRF Protection]
+        end
+
+        subgraph "Data Security"
+            ENCRYPT[🔐 Data Encryption]
+            BACKUP[💾 Encrypted Backups]
+            AUDIT[📋 Audit Logging]
+        end
+
+        subgraph "Container Security"
+            SECRETS[🔑 Docker Secrets]
+            SCAN[🔍 Image Scanning]
+            RUNTIME[🛡️ Runtime Security]
+        end
+    end
+
+    FW --&gt; AUTH
+    SSL --&gt; AUTH
+    AUTH --&gt; AUTHZ
+    AUTHZ --&gt; ENCRYPT
+    ENCRYPT --&gt; BACKUP
+    SECRETS --&gt; RUNTIME
+    SCAN --&gt; RUNTIME</code></pre>
+<h3 id="security-best-practices">Security Best Practices<a class="headerlink" href="#security-best-practices" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Network Security</strong>:</li>
+<li>Use reverse proxy with SSL termination</li>
+<li>Restrict database port access</li>
+<li>Implement firewall rules</li>
+<li>
+<p>Consider VPN for administrative access</p>
+</li>
+<li>
+<p><strong>Application Security</strong>:</p>
+</li>
+<li>Change default passwords</li>
+<li>Implement strong password policies</li>
+<li>Enable two-factor authentication</li>
+<li>
+<p>Regular security updates</p>
+</li>
+<li>
+<p><strong>Container Security</strong>:</p>
+</li>
+<li>Use Docker secrets for sensitive data</li>
+<li>Regular image updates</li>
+<li>Non-root container execution</li>
+<li>
+<p>Resource limits and constraints</p>
+</li>
+<li>
+<p><strong>Data Security</strong>:</p>
+</li>
+<li>Encrypted backups</li>
+<li>Secure backup storage</li>
+<li>Audit trail logging</li>
+<li>Data retention policies</li>
+</ol>
+<h2 id="monitoring-architecture">Monitoring Architecture<a class="headerlink" href="#monitoring-architecture" title="Permanent link">¶</a></h2>
+<h3 id="system-monitoring">System Monitoring<a class="headerlink" href="#system-monitoring" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Monitoring Stack"
+        subgraph "Metrics Collection"
+            CADVISOR[📊 cAdvisor&lt;br/&gt;Container Metrics]
+            NODEEXP[📊 Node Exporter&lt;br/&gt;System Metrics]
+        end
+
+        subgraph "Metrics Storage"
+            PROMETHEUS[🗄️ Prometheus&lt;br/&gt;Time Series DB]
+        end
+
+        subgraph "Visualization"
+            GRAFANA[📈 Grafana&lt;br/&gt;Dashboards]
+        end
+
+        subgraph "Alerting"
+            ALERTMANAGER[🚨 Alert Manager&lt;br/&gt;Notifications]
+        end
+
+        subgraph "Log Management"
+            LOGS[📋 Container Logs]
+            LOKI[🗄️ Loki&lt;br/&gt;Log Aggregation]
+        end
+    end
+
+    CADVISOR --&gt; PROMETHEUS
+    NODEEXP --&gt; PROMETHEUS
+    PROMETHEUS --&gt; GRAFANA
+    PROMETHEUS --&gt; ALERTMANAGER
+    LOGS --&gt; LOKI
+    LOKI --&gt; GRAFANA
+
+    style PROMETHEUS fill:#f3e5f5
+    style GRAFANA fill:#e1f5fe
+    style ALERTMANAGER fill:#ffebee</code></pre>
+<h3 id="health-monitoring">Health Monitoring<a class="headerlink" href="#health-monitoring" title="Permanent link">¶</a></h3>
+<p>The system includes comprehensive health monitoring:</p>
+<ul>
+<li><strong>Container Health</strong>: Docker health checks</li>
+<li><strong>Application Health</strong>: HTTP endpoint monitoring  </li>
+<li><strong>Database Health</strong>: Connection and query testing</li>
+<li><strong>Resource Monitoring</strong>: CPU, memory, disk usage</li>
+<li><strong>Performance Metrics</strong>: Response times, throughput</li>
+</ul>
+<p>This architecture provides a robust, scalable, and secure foundation for Dolibarr ERP/CRM deployment in containerized environments.</p>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="Last update">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 14:14:24 UTC">August 24, 2025</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="Created">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 24, 2025 14:14:24 UTC">August 24, 2025</span>
+</span>
+</aside>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/brunseba/demo-app-dollibar" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>
