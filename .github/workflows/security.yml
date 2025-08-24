@@ -1,0 +1,297 @@
+name: Security Analysis
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * 1' # Run every Monday at 2 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  codeql-analysis:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript', 'python' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
+
+  container-security-scan:
+    name: Container Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image for scanning
+        run: |
+          if [ -f Dockerfile ]; then
+            docker build -t scan-target:latest .
+          elif [ -f docker-compose.yml ]; then
+            docker-compose build
+            # Get the first service image name
+            IMAGE=$(docker-compose config --services | head -n 1)
+            docker tag "${IMAGE}:latest" scan-target:latest
+          else
+            echo "No Docker configuration found, skipping container scan"
+            exit 0
+          fi
+
+      - name: Run Trivy container scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'scan-target:latest'
+          format: 'sarif'
+          output: 'trivy-container-results.sarif'
+
+      - name: Upload Trivy container scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-container-results.sarif'
+
+      - name: Run Grype vulnerability scanner
+        uses: anchore/scan-action@v3
+        id: grype-scan
+        with:
+          image: "scan-target:latest"
+          fail-build: false
+          severity-cutoff: high
+
+      - name: Upload Grype scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: ${{ steps.grype-scan.outputs.sarif }}
+
+  filesystem-security-scan:
+    name: Filesystem Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Trivy filesystem scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-fs-results.sarif'
+
+      - name: Upload Trivy filesystem scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-fs-results.sarif'
+
+  secrets-detection:
+    name: Secrets Detection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run TruffleHog OSS
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+          extra_args: --debug --only-verified
+
+      - name: Run GitLeaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  supply-chain-security:
+    name: Supply Chain Security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run OSSF Scorecard
+        uses: ossf/scorecard-action@v2.3.1
+        with:
+          results_file: ossf-scorecard-results.sarif
+          results_format: sarif
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload OSSF Scorecard results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ossf-scorecard-results.sarif
+
+  dependency-security-scan:
+    name: Dependency Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+        if: hashFiles('package.json') != ''
+
+      - name: Install Node.js dependencies
+        run: npm ci
+        if: hashFiles('package.json') != ''
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+        if: hashFiles('package.json') != ''
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install safety bandit semgrep
+
+      - name: Run Safety check for Python dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            safety check --file requirements.txt --json --output safety-report.json || true
+          fi
+        continue-on-error: true
+
+      - name: Run Bandit security linter
+        run: |
+          if [ -d "." ]; then
+            bandit -r . -f json -o bandit-report.json || true
+          fi
+        continue-on-error: true
+
+      - name: Run Semgrep SAST
+        run: |
+          semgrep --config=auto --json --output=semgrep-results.json . || true
+        continue-on-error: true
+
+      - name: Upload security scan artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            safety-report.json
+            bandit-report.json
+            semgrep-results.json
+        if: always()
+
+  docker-security-best-practices:
+    name: Docker Security Best Practices
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Dockerfile security scan with Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          format: sarif
+          output-file: hadolint-results.sarif
+          no-fail: true
+        if: hashFiles('Dockerfile') != ''
+
+      - name: Upload Hadolint results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: hadolint-results.sarif
+        if: hashFiles('Dockerfile') != ''
+
+      - name: Run Dockle container image linter
+        run: |
+          if [ -f Dockerfile ]; then
+            # Install Dockle
+            curl -L -o dockle.tar.gz https://github.com/goodwithtech/dockle/releases/latest/download/dockle_Linux-64bit.tar.gz
+            tar zxf dockle.tar.gz
+            
+            # Build image for scanning
+            docker build -t dockle-scan:latest .
+            
+            # Run Dockle scan
+            ./dockle --exit-code 1 --exit-level warn --format json --output dockle-results.json dockle-scan:latest || true
+          fi
+
+      - name: Upload Dockle results
+        uses: actions/upload-artifact@v4
+        with:
+          name: dockle-results
+          path: dockle-results.json
+        if: hashFiles('Dockerfile') != ''
+
+  security-summary:
+    name: Security Summary
+    runs-on: ubuntu-latest
+    needs: [
+      codeql-analysis,
+      container-security-scan,
+      filesystem-security-scan,
+      secrets-detection,
+      supply-chain-security,
+      dependency-security-scan,
+      docker-security-best-practices
+    ]
+    if: always()
+    steps:
+      - name: Security Analysis Summary
+        run: |
+          echo "## 🔐 Security Analysis Summary"
+          echo ""
+          echo "| Check | Status |"
+          echo "|-------|--------|"
+          echo "| CodeQL Analysis | ${{ needs.codeql-analysis.result }} |"
+          echo "| Container Security Scan | ${{ needs.container-security-scan.result }} |"
+          echo "| Filesystem Security Scan | ${{ needs.filesystem-security-scan.result }} |"
+          echo "| Secrets Detection | ${{ needs.secrets-detection.result }} |"
+          echo "| Supply Chain Security | ${{ needs.supply-chain-security.result }} |"
+          echo "| Dependency Security Scan | ${{ needs.dependency-security-scan.result }} |"
+          echo "| Docker Security Best Practices | ${{ needs.docker-security-best-practices.result }} |"
+          echo ""
+          
+          # Check if any critical security checks failed
+          if [[ "${{ needs.secrets-detection.result }}" == "failure" ]]; then
+            echo "🚨 **CRITICAL**: Secrets detected in repository!"
+            exit 1
+          fi
+          
+          echo "✅ Security analysis completed. Check individual job results for details."

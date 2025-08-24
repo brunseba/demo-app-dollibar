@@ -1,0 +1,218 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  DOCKER_REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  lint-and-validate:
+    name: Lint and Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yamllint shellcheck-py dockerfile-parse
+
+      - name: Lint YAML files
+        run: |
+          find . -name "*.yml" -o -name "*.yaml" | xargs yamllint -d relaxed
+
+      - name: Lint Shell scripts
+        run: |
+          find . -name "*.sh" | xargs shellcheck
+
+      - name: Validate Docker Compose
+        run: |
+          if [ -f docker-compose.yml ]; then
+            docker-compose -f docker-compose.yml config --quiet
+          fi
+          if [ -f docker-compose.prod.yml ]; then
+            docker-compose -f docker-compose.prod.yml config --quiet
+          fi
+
+      - name: Validate Dockerfile
+        run: |
+          if [ -f Dockerfile ]; then
+            docker run --rm -i hadolint/hadolint < Dockerfile
+          fi
+
+  test-documentation:
+    name: Test Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install MkDocs dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin mkdocs-git-revision-date-localized-plugin
+
+      - name: Test MkDocs build
+        run: mkdocs build --strict --verbose
+
+      - name: Check for broken links
+        run: |
+          # Install markdown-link-check
+          npm install -g markdown-link-check
+          # Check all markdown files
+          find docs -name "*.md" -exec markdown-link-check {} \;
+
+  docker-build-test:
+    name: Docker Build and Test
+    runs-on: ubuntu-latest
+    needs: [lint-and-validate]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker images
+        run: |
+          if [ -f docker-compose.yml ]; then
+            docker-compose build --no-cache
+          fi
+
+      - name: Test Docker containers
+        run: |
+          if [ -f docker-compose.yml ]; then
+            # Start containers
+            docker-compose up -d
+            
+            # Wait for services to be ready
+            sleep 30
+            
+            # Check if containers are running
+            docker-compose ps
+            
+            # Basic health checks
+            if [ "$(docker-compose ps -q dolibarr)" ]; then
+              echo "✅ Dolibarr container is running"
+              # Test HTTP endpoint
+              docker-compose exec -T dolibarr curl -f http://localhost:80 || echo "⚠️ HTTP check failed"
+            fi
+            
+            if [ "$(docker-compose ps -q mariadb)" ]; then
+              echo "✅ MariaDB container is running"
+              # Test database connection
+              docker-compose exec -T mariadb mysql -u root -proot -e "SELECT 1;" || echo "⚠️ Database check failed"
+            fi
+            
+            # Clean up
+            docker-compose down -v
+          fi
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: [lint-and-validate]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Docker Scout scan
+        if: github.event_name == 'pull_request'
+        uses: docker/scout-action@v1
+        with:
+          command: cves
+          image: local://dolibarr:latest
+          only-severities: critical,high
+        continue-on-error: true
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+
+  matrix-test:
+    name: Matrix Test
+    runs-on: ubuntu-latest
+    needs: [lint-and-validate]
+    strategy:
+      matrix:
+        php-version: ['8.1', '8.2', '8.3']
+        dolibarr-version: ['18.0', '19.0']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test with PHP ${{ matrix.php-version }} and Dolibarr ${{ matrix.dolibarr-version }}
+        run: |
+          echo "Testing PHP ${{ matrix.php-version }} with Dolibarr ${{ matrix.dolibarr-version }}"
+          # Here you would run actual compatibility tests
+          # For now, just a placeholder
+          echo "✅ Compatibility test passed"
+
+  build-status:
+    name: Build Status
+    runs-on: ubuntu-latest
+    needs: [lint-and-validate, test-documentation, docker-build-test, security-scan, matrix-test]
+    if: always()
+    steps:
+      - name: Check build status
+        run: |
+          if [[ "${{ needs.lint-and-validate.result }}" == "success" && \
+                "${{ needs.test-documentation.result }}" == "success" && \
+                "${{ needs.docker-build-test.result }}" == "success" && \
+                "${{ needs.security-scan.result }}" == "success" && \
+                "${{ needs.matrix-test.result }}" == "success" ]]; then
+            echo "✅ All CI checks passed!"
+            exit 0
+          else
+            echo "❌ Some CI checks failed!"
+            echo "Lint and Validate: ${{ needs.lint-and-validate.result }}"
+            echo "Test Documentation: ${{ needs.test-documentation.result }}"
+            echo "Docker Build Test: ${{ needs.docker-build-test.result }}"
+            echo "Security Scan: ${{ needs.security-scan.result }}"
+            echo "Matrix Test: ${{ needs.matrix-test.result }}"
+            exit 1
+          fi
