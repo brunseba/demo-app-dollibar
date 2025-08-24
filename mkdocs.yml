@@ -1,11 +1,11 @@
 site_name: Dolibarr Docker Documentation
 site_description: Complete documentation for deploying and managing Dolibarr ERP/CRM with Docker, including setup guides, task automation, and database analysis
 site_author: Dolibarr Docker Team
-site_url: https://brunseba.github.io/demo-app-dollibar/
+site_url: https://brun_s.github.io/dollibar/
 
 # Repository
-repo_name: brunseba/demo-app-dollibar
-repo_url: https://github.com/brunseba/demo-app-dollibar
+repo_name: brun_s/dollibar
+repo_url: https://github.com/brun_s/dollibar
 
 # Theme configuration
 theme:
@@ -99,7 +99,7 @@ extra:
     provider: mike
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/brunseba/demo-app-dollibar
+      link: https://github.com/brun_s/dollibar
 
 # PDF export support
 extra_css:
