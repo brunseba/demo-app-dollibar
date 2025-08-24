@@ -51,8 +51,13 @@ nav:
     - Configuration Files: reference/configuration-reference.md
     - API Reference: reference/api-reference.md
     - Tools & Resources: reference/uri.md
+  - API & Integration:
+    - API Reference: api-reference.md
+    - Integration Examples: api-integration-examples.md
+    - Use Cases: use-cases.md
   - Operations & Troubleshooting:
     - Troubleshooting Guide: reference/troubleshooting.md
+    - General Troubleshooting: troubleshooting.md
     - Backup & Restore: backup-restore.md
     - System Architecture: architecture.md
   - Database Analysis:
