@@ -55,26 +55,45 @@ Prospect → Contact → Proposal → Order → Delivery → Invoice → Payment
 
 ## Currently Enabled Modules
 
-This Dolibarr instance has the following core modules **currently enabled**:
+This Dolibarr instance has the following modules **currently enabled**:
 
-- ✅ **ADHERENT** - Member Management (subscriptions, membership types)
+### 📈 **Core Business Modules** (13 modules active)
+- ✅ **ACTIONCOMM** - Events/Agenda (calendar, meetings, tasks)
+- ✅ **ADHERENT** - Member Management (subscriptions, membership types) 
+- ✅ **API** - REST API (programmatic access, integrations)
+- ✅ **CATEGORIE** - Categories (hierarchical organization)
+- ✅ **COMMANDE** - Orders (customer orders, order management)
+- ✅ **FACTURE** - Invoices (billing, invoice generation)
 - ✅ **FOURNISSEUR** - Supplier Management (supplier orders, invoices)
+- ✅ **PRODUCT** - Products/Services (catalog, pricing)
+- ✅ **PROJET** - Projects (project management, time tracking)
+- ✅ **PROPAL** - Proposals (quotes, commercial proposals)
 - ✅ **SOCIETE** - Third Party Management (companies, customers, suppliers)
+- ✅ **STOCK** - Stock Management (inventory, warehouses)
 - ✅ **USER** - User Management (accounts, permissions, groups)
 
-*See [Modules Status](modules-status.md) for a complete list of available modules and activation instructions.*
+### 🚀 **Configuration Management**
+The system includes automated configuration management through task automation:
+- **`task config:setup-dev-environment`** - Complete one-command setup
+- **`task config:show-config`** - Display current module status
+- **`task config:enable-modules`** - Enable essential business modules
+- **`task config:enable-api`** - Enable REST API with documentation
+
+*See [Task Automation](task-automation.md) for complete configuration management options.*
 
 ## Database Statistics
 
 Based on the analysis of the running Dolibarr instance:
 
 - **Total Tables**: 389 tables
-- **✅ Enabled Modules**: 4 core modules  
+- **✅ Enabled Modules**: 13 core modules (significantly expanded functionality)
 - **📦 Available Modules**: 35+ module categories
 - **Core Business Entities**: 15+ main entities
 - **Configuration Tables**: 50+ configuration/reference tables
 - **Supporting Tables**: 280+ supporting and junction tables
 - **Multi-language Support**: Built-in internationalization tables
+- **📈 Business Coverage**: Complete business cycle from prospect to payment
+- **🚀 API Access**: REST API enabled for integrations
 
 ## Getting Started
 

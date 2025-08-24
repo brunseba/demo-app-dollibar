@@ -403,6 +403,7 @@ Tasks are organized into separate files in the `.taskfile/` directory for better
 .taskfile/
 ├── setup.yml        # Initialization and setup tasks
 ├── services.yml     # Service management (start/stop/status/logs)
+├── config.yml       # Dolibarr configuration and module management
 ├── backup.yml       # Backup and restore operations
 ├── maintenance.yml  # Cleanup and maintenance tasks
 └── utilities.yml    # Utility functions (shell, health checks)
@@ -445,6 +446,16 @@ task maintenance:update       # Update containers to latest versions
 task maintenance:reset-data   # Reset all data (DANGEROUS)
 task maintenance:reset-logs   # Clear application logs
 task maintenance:reset-custom # Clear custom modules
+```
+
+#### 🔧 Configuration Management
+```bash
+task config:enable-modules        # Enable essential business modules (invoices, orders, products, etc.)
+task config:enable-api           # Enable REST API module with documentation
+task config:configure-company    # Configure company information and settings
+task config:setup-dev-environment # Complete one-command development setup
+task config:show-config          # Display current configuration and enabled modules
+task config:list-modules         # List all available modules with status
 ```
 
 #### 🔧 Utilities
