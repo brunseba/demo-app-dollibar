@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/</loc>
+         <loc>https://brun_s.github.io/dollibar/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/api-integration-examples/</loc>
+         <loc>https://brun_s.github.io/dollibar/api-integration-examples/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/api-reference/</loc>
+         <loc>https://brun_s.github.io/dollibar/api-reference/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/architecture/</loc>
+         <loc>https://brun_s.github.io/dollibar/architecture/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/backup-restore/</loc>
+         <loc>https://brun_s.github.io/dollibar/backup-restore/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/database-model/</loc>
+         <loc>https://brun_s.github.io/dollibar/database-model/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/deployment-scenarios/</loc>
+         <loc>https://brun_s.github.io/dollibar/deployment-scenarios/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/docker-setup/</loc>
+         <loc>https://brun_s.github.io/dollibar/docker-setup/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/modules-status/</loc>
+         <loc>https://brun_s.github.io/dollibar/modules-status/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/task-automation/</loc>
+         <loc>https://brun_s.github.io/dollibar/task-automation/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/troubleshooting/</loc>
+         <loc>https://brun_s.github.io/dollibar/troubleshooting/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/use-cases/</loc>
+         <loc>https://brun_s.github.io/dollibar/use-cases/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/api-reference/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/api-reference/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/cheat-sheet/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/cheat-sheet/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/configuration-reference/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/configuration-reference/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/docker-services/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/docker-services/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/environment-variables/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/environment-variables/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/taskfile-commands/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/taskfile-commands/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/troubleshooting/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/troubleshooting/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
     <url>
-         <loc>https://brunseba.github.io/demo-app-dollibar/reference/uri/</loc>
+         <loc>https://brun_s.github.io/dollibar/reference/uri/</loc>
          <lastmod>2025-08-24</lastmod>
     </url>
 </urlset>
