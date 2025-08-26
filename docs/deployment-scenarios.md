@@ -11,6 +11,7 @@ This document outlines various deployment scenarios for the Dolibarr Docker setu
 | [Enterprise Production](#enterprise-production) | `external-db` | External | 🔴 High | Multi-user, high availability |
 | [Multi-Environment](#multi-environment-setup) | Various | External | 🔴 High | Dev/Staging/Prod pipeline |
 | [Cloud Deployment](#cloud-deployment) | `external-db` | Cloud | 🔴 High | Scalable cloud infrastructure |
+| [Kubernetes Helm](#kubernetes-helm-deployment) | `external-db` | External | 🔴 High | Kubernetes orchestration |
 
 ## Local Development
 
@@ -736,6 +737,665 @@ steps:
     - 'DOLI_DB_HOST=${_DB_HOST},DOLI_DB_NAME=${_DB_NAME}'
     - '--set-secrets'
     - 'DOLI_DB_PASSWORD=dolibarr-db-password:latest'
+```
+
+## Kubernetes Helm Deployment
+
+### Scenario Overview
+
+**Perfect for**: Kubernetes-native deployments, enterprise environments, GitOps workflows, scalable production systems.
+
+**Characteristics**:
+- Kubernetes-native deployment with Helm charts
+- Production-ready configurations
+- Auto-scaling and high availability
+- Integrated with cloud provider services
+- Simplified deployment and upgrades
+- Configuration management through values
+
+### Architecture
+
+```mermaid
+graph TB
+    subgraph "Kubernetes Cluster"
+        subgraph "Ingress"
+            ING[Ingress Controller<br/>nginx/traefik]
+        end
+        
+        subgraph "Application Pods"
+            POD1[Dolibarr Pod 1]
+            POD2[Dolibarr Pod 2]
+            POD3[Dolibarr Pod 3]
+        end
+        
+        subgraph "Services"
+            SVC[Dolibarr Service<br/>ClusterIP]
+        end
+        
+        subgraph "Storage"
+            PVC[PersistentVolumeClaim<br/>Documents Storage]
+            PV[PersistentVolume<br/>NFS/Cloud Storage]
+        end
+        
+        subgraph "Configuration"
+            CM[ConfigMaps]
+            SEC[Secrets]
+        end
+        
+        subgraph "Database"
+            DB[(External Database<br/>Cloud SQL/RDS)]
+        end
+        
+        subgraph "Monitoring"
+            SM[ServiceMonitor<br/>Prometheus]
+        end
+    end
+    
+    ING --> SVC
+    SVC --> POD1
+    SVC --> POD2
+    SVC --> POD3
+    POD1 --> PVC
+    POD2 --> PVC
+    POD3 --> PVC
+    PVC --> PV
+    POD1 --> DB
+    POD2 --> DB
+    POD3 --> DB
+    POD1 --> CM
+    POD1 --> SEC
+    SM --> SVC
+```
+
+### Quick Helm Deployment
+
+```bash
+# Add the Helm repository
+helm repo add cowboysysop https://cowboysysop.github.io/charts/
+helm repo update
+
+# Create namespace
+kubectl create namespace dolibarr
+
+# Deploy with basic configuration
+helm install dolibarr cowboysysop/dolibarr \
+  --namespace dolibarr \
+  --set dolibarr.host=dolibarr.yourdomain.com \
+  --set mysql.auth.password=your-secure-password
+
+# Check deployment status
+kubectl get pods -n dolibarr
+helm status dolibarr -n dolibarr
+```
+
+### Production Values Configuration
+
+Create a comprehensive `values-production.yaml` file:
+
+```yaml
+# values-production.yaml
+# Production configuration for Dolibarr Helm chart
+
+# Global settings
+global:
+  storageClass: "fast-ssd"  # Use appropriate storage class
+
+# Dolibarr application configuration
+dolibarr:
+  # Application settings
+  host: dolibarr.company.com
+  username: admin
+  password: "your-admin-password"  # Better to use external secrets
+  
+  # Database connection
+  externalDatabase:
+    enabled: true
+    host: "dolibarr-db.cluster-xyz.region.rds.amazonaws.com"
+    port: 3306
+    database: dolibarr_prod
+    username: dolibarr_user
+    password: "your-db-password"  # Use external secrets
+    
+  # Application configuration
+  configuration: |
+    <?php
+    // Custom Dolibarr configuration
+    $dolibarr_main_url_root='https://dolibarr.company.com';
+    $dolibarr_main_document_root='/var/www/html';
+    $dolibarr_main_url_root_alt='/custom';
+    $dolibarr_main_document_root_alt='/var/www/html/custom';
+    $dolibarr_main_prod=1;
+    $dolibarr_main_force_https=1;
+    $dolibarr_main_restrict_os_commands=1;
+    $dolibarr_nocsrfcheck=0;
+    
+# Deployment configuration
+replicaCount: 3
+
+image:
+  repository: dolibarr/dolibarr
+  tag: "20.0.0"  # Pin to specific version
+  pullPolicy: IfNotPresent
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+  
+# Ingress configuration
+ingress:
+  enabled: true
+  className: "nginx"  # or "traefik"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: dolibarr.company.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: dolibarr-tls
+      hosts:
+        - dolibarr.company.com
+
+# Resource limits and requests
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+# Horizontal Pod Autoscaler
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Pod Disruption Budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2
+
+# Persistence configuration
+persistence:
+  enabled: true
+  storageClass: "fast-ssd"
+  size: 100Gi
+  accessModes:
+    - ReadWriteMany  # Required for multi-pod access
+    
+# Security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+  
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
+# Probes configuration
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  timeoutSeconds: 10
+  failureThreshold: 3
+  
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+# MySQL configuration (if using internal database)
+mysql:
+  enabled: false  # Using external database
+  
+# MariaDB configuration (alternative)
+mariadb:
+  enabled: false  # Using external database
+  
+# ServiceMonitor for Prometheus
+serviceMonitor:
+  enabled: true
+  labels:
+    app: dolibarr
+  interval: 30s
+  scrapeTimeout: 10s
+
+# Pod annotations for monitoring
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "80"
+  prometheus.io/path: "/"
+
+# Node selector for specific nodes
+nodeSelector:
+  workload-type: application
+
+# Tolerations
+tolerations:
+  - key: "application-workload"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+# Affinity rules
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - dolibarr
+          topologyKey: kubernetes.io/hostname
+
+# Environment variables
+env:
+  - name: DOLI_DB_TYPE
+    value: "mysqli"
+  - name: DOLI_DB_HOST
+    value: "dolibarr-db.cluster-xyz.region.rds.amazonaws.com"
+  - name: DOLI_DB_NAME
+    value: "dolibarr_prod"
+  - name: DOLI_DB_USER
+    valueFrom:
+      secretKeyRef:
+        name: dolibarr-db-secret
+        key: username
+  - name: DOLI_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: dolibarr-db-secret
+        key: password
+  - name: DOLI_ADMIN_LOGIN
+    value: "admin"
+  - name: DOLI_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: dolibarr-admin-secret
+        key: password
+  - name: DOLI_URL_ROOT
+    value: "https://dolibarr.company.com"
+  - name: PHP_INI_DATE_TIMEZONE
+    value: "UTC"
+  - name: PHP_INI_MEMORY_LIMIT
+    value: "512M"
+  - name: PHP_INI_UPLOAD_MAX_FILESIZE
+    value: "100M"
+  - name: PHP_INI_POST_MAX_SIZE
+    value: "100M"
+```
+
+### External Secrets Management
+
+For production deployments, use external secrets management:
+
+```yaml
+# secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dolibarr-db-secret
+  namespace: dolibarr
+type: Opaque
+data:
+  username: ZG9saWJhcnJfdXNlcg==  # base64 encoded
+  password: eW91ci1zZWN1cmUtZGItcGFzc3dvcmQ=  # base64 encoded
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dolibarr-admin-secret
+  namespace: dolibarr
+type: Opaque
+data:
+  password: eW91ci1hZG1pbi1wYXNzd29yZA==  # base64 encoded
+```
+
+Or use External Secrets Operator with cloud providers:
+
+```yaml
+# external-secret.yaml
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: dolibarr-secrets
+  namespace: dolibarr
+spec:
+  refreshInterval: 1m
+  secretStoreRef:
+    name: aws-secrets-store
+    kind: SecretStore
+  target:
+    name: dolibarr-db-secret
+    creationPolicy: Owner
+  data:
+  - secretKey: username
+    remoteRef:
+      key: dolibarr/database
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: dolibarr/database
+      property: password
+```
+
+### Production Deployment
+
+```bash
+# Create namespace
+kubectl create namespace dolibarr
+
+# Create secrets (if not using external secrets)
+kubectl apply -f secrets.yaml
+
+# Deploy with production values
+helm install dolibarr cowboysysop/dolibarr \
+  --namespace dolibarr \
+  --values values-production.yaml
+
+# Verify deployment
+kubectl get pods -n dolibarr
+kubectl get ingress -n dolibarr
+kubectl get pvc -n dolibarr
+
+# Check application logs
+kubectl logs -f deployment/dolibarr -n dolibarr
+```
+
+### Monitoring and Observability
+
+Configure monitoring with Prometheus and Grafana:
+
+```yaml
+# monitoring-values.yaml
+# Additional values for monitoring
+
+serviceMonitor:
+  enabled: true
+  labels:
+    release: prometheus
+  interval: 30s
+  scrapeTimeout: 10s
+  path: /admin/system/phpmemory.php
+  
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "80"
+  prometheus.io/path: "/admin/system/phpmemory.php"
+
+# Grafana dashboard ConfigMap
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dolibarr-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  dolibarr.json: |
+    {
+      "dashboard": {
+        "title": "Dolibarr Monitoring",
+        "panels": [
+          {
+            "title": "Response Time",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, http_request_duration_seconds_bucket{job=\"dolibarr\"})"
+              }
+            ]
+          },
+          {
+            "title": "Memory Usage",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "container_memory_usage_bytes{pod=~\"dolibarr-.*\"}"
+              }
+            ]
+          },
+          {
+            "title": "CPU Usage",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "rate(container_cpu_usage_seconds_total{pod=~\"dolibarr-.*\"}[5m])"
+              }
+            ]
+          }
+        ]
+      }
+    }
+```
+
+### GitOps with ArgoCD
+
+For GitOps deployment with ArgoCD:
+
+```yaml
+# argocd-application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dolibarr-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://cowboysysop.github.io/charts/
+    chart: dolibarr
+    targetRevision: 8.0.0
+    helm:
+      valueFiles:
+        - values-production.yaml
+      parameters:
+        - name: dolibarr.host
+          value: dolibarr.company.com
+        - name: replicaCount
+          value: "3"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dolibarr
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+```
+
+### Backup Strategy for Kubernetes
+
+```bash
+#!/bin/bash
+# k8s-backup.sh
+
+NAMESPACE="dolibarr"
+BACKUP_DIR="/backups/$(date +%Y%m%d_%H%M%S)"
+
+# Create backup directory
+mkdir -p "$BACKUP_DIR"
+
+# Backup database (assuming external RDS)
+echo "Creating database backup..."
+kubectl run mysql-backup --rm -it --restart=Never \
+  --image=mysql:8.0 -- \
+  mysqldump -h dolibarr-db.cluster-xyz.region.rds.amazonaws.com \
+  -u dolibarr_user -p dolibarr_prod > "$BACKUP_DIR/database.sql"
+
+# Backup persistent volumes
+echo "Creating PV backup..."
+kubectl get pvc -n "$NAMESPACE" -o yaml > "$BACKUP_DIR/pvc-backup.yaml"
+
+# Backup application configuration
+echo "Creating configuration backup..."
+kubectl get configmaps -n "$NAMESPACE" -o yaml > "$BACKUP_DIR/configmaps.yaml"
+kubectl get secrets -n "$NAMESPACE" -o yaml > "$BACKUP_DIR/secrets.yaml"
+helm get values dolibarr -n "$NAMESPACE" > "$BACKUP_DIR/helm-values.yaml"
+
+# Compress backup
+tar -czf "$BACKUP_DIR.tar.gz" -C "$BACKUP_DIR" .
+rm -rf "$BACKUP_DIR"
+
+echo "Backup completed: $BACKUP_DIR.tar.gz"
+```
+
+### Disaster Recovery
+
+```bash
+#!/bin/bash
+# k8s-restore.sh
+
+BACKUP_FILE=$1
+NAMESPACE="dolibarr"
+
+if [ -z "$BACKUP_FILE" ]; then
+    echo "Usage: $0 <backup-file.tar.gz>"
+    exit 1
+fi
+
+# Extract backup
+RESTORE_DIR="/tmp/restore_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$RESTORE_DIR"
+tar -xzf "$BACKUP_FILE" -C "$RESTORE_DIR"
+
+# Restore database
+echo "Restoring database..."
+kubectl run mysql-restore --rm -it --restart=Never \
+  --image=mysql:8.0 -- \
+  mysql -h dolibarr-db.cluster-xyz.region.rds.amazonaws.com \
+  -u dolibarr_user -p dolibarr_prod < "$RESTORE_DIR/database.sql"
+
+# Restore configuration
+echo "Restoring configuration..."
+kubectl apply -f "$RESTORE_DIR/configmaps.yaml"
+kubectl apply -f "$RESTORE_DIR/secrets.yaml"
+
+# Restore application
+echo "Restoring application..."
+helm upgrade --install dolibarr cowboysysop/dolibarr \
+  --namespace "$NAMESPACE" \
+  --values "$RESTORE_DIR/helm-values.yaml"
+
+# Cleanup
+rm -rf "$RESTORE_DIR"
+
+echo "Restore completed"
+```
+
+### Upgrade Strategy
+
+```bash
+#!/bin/bash
+# helm-upgrade.sh
+
+NAMESPACE="dolibarr"
+RELEASE_NAME="dolibarr"
+CHART_VERSION="8.0.0"  # Target version
+
+echo "Starting Dolibarr upgrade..."
+
+# Backup current state
+./k8s-backup.sh
+
+# Update Helm repo
+helm repo update cowboysysop
+
+# Perform upgrade
+helm upgrade "$RELEASE_NAME" cowboysysop/dolibarr \
+  --namespace "$NAMESPACE" \
+  --version "$CHART_VERSION" \
+  --values values-production.yaml \
+  --wait --timeout=10m
+
+# Verify upgrade
+kubectl rollout status deployment/dolibarr -n "$NAMESPACE"
+kubectl get pods -n "$NAMESPACE"
+
+# Health check
+echo "Performing health check..."
+kubectl run health-check --rm -it --restart=Never \
+  --image=curlimages/curl -- \
+  curl -f -s http://dolibarr-service.dolibarr.svc.cluster.local/
+
+echo "Upgrade completed successfully"
+```
+
+### Multi-Environment Management
+
+Manage multiple environments with different values files:
+
+```bash
+# Directory structure
+k8s-dolibarr/
+├── charts/
+├── environments/
+│   ├── development/
+│   │   └── values.yaml
+│   ├── staging/
+│   │   └── values.yaml
+│   └── production/
+│       └── values.yaml
+├── scripts/
+│   ├── deploy.sh
+│   └── backup.sh
+└── monitoring/
+    └── dashboards/
+
+# Deploy to specific environment
+./scripts/deploy.sh production
+./scripts/deploy.sh staging
+./scripts/deploy.sh development
+```
+
+### Helm Chart Customization
+
+If you need to customize the Helm chart:
+
+```bash
+# Pull the chart for customization
+helm pull cowboysysop/dolibarr --untar
+
+# Modify templates in dolibarr/templates/
+# Update Chart.yaml and values.yaml as needed
+
+# Package custom chart
+helm package dolibarr/
+
+# Install custom chart
+helm install dolibarr ./dolibarr-8.0.0.tgz \
+  --namespace dolibarr \
+  --values values-production.yaml
 ```
 
 ## Deployment Best Practices
